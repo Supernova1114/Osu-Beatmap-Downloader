@@ -2,11 +2,13 @@ package classes;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +25,7 @@ public class WebScraper extends Thread{
 
 
 
-    public void startChrome(){
+    public int startChrome(){
 
         String chromeDriverDir = System.getProperty("user.dir") + "\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
@@ -49,7 +51,20 @@ public class WebScraper extends Thread{
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-        driver.get("https://osu.ppy.sh/beatmapsets");
+
+
+        driver.navigate().to("https://www.google.com");
+
+        String error = driver.findElement(By.xpath("//html")).getAttribute("class").toString();
+
+        if( error.equals("offline") ) {
+            System.out.println("No Internet Connection");
+            return 1;
+        } else {
+            System.out.println("Internet Connected");
+            driver.get("https://osu.ppy.sh/beatmapsets");
+        }
+
 
 
         js = (JavascriptExecutor) driver;
@@ -58,7 +73,7 @@ public class WebScraper extends Thread{
         //login();
         // FIXME: 12/5/2019 Add login thing
 
-
+        return 0;
     }//startChrome()
 
 
