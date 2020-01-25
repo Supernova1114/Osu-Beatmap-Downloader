@@ -46,19 +46,24 @@
               <MenuItem mnemonicParsing="false" onAction="#toggleSettings" text="Settings" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Select">
+              <items>
+                <MenuItem mnemonicParsing="false" text="WIP" />
+              </items>
+            </Menu>
           <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#toggleAbout" text="About" />
+              <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#openHelp" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
       <Pane layoutX="233.0" layoutY="653.0" prefHeight="47.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="653.0">
          <children>
-            <Button fx:id="downloadButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#download" text="Download" />
-            <Label fx:id="selectedLabel" layoutX="92.0" layoutY="15.0" text="Selected:" />
-            <Label fx:id="numLabel" layoutX="146.0" layoutY="15.0" text="0" />
-            <Label fx:id="filterLabel" disable="true" layoutX="175.0" text="DL filter (stars): WIP" />
+            <Button fx:id="downloadButton" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#download" text="Download" />
+            <Label fx:id="selectedLabel" layoutX="92.0" layoutY="23.0" text="Selected:" />
+            <Label fx:id="numLabel" layoutX="146.0" layoutY="23.0" text="0" />
+            <Label fx:id="filterLabel" disable="true" layoutX="316.0" layoutY="1.0" text="DL filter (stars): WIP" />
             <CheckBox fx:id="stars0" disable="true" layoutX="220.0" layoutY="17.0" mnemonicParsing="false" text="0" />
             <CheckBox fx:id="stars1" disable="true" layoutX="257.0" layoutY="17.0" mnemonicParsing="false" text="1" />
             <CheckBox fx:id="stars2" disable="true" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" text="2" />
@@ -73,5 +78,6 @@
          </children>
       </Pane>
       <ProgressBar fx:id="loadingBar" layoutX="194.0" layoutY="313.0" prefWidth="200.0" />
+      <Label layoutX="6.0" layoutY="653.0" text="*If maps do not download, check login credentials" />
    </children>
 </AnchorPane>

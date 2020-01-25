@@ -6,6 +6,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -26,6 +27,7 @@ public class MapPane extends Pane {
 
     protected String mapLink;
     protected final Rectangle rectangle;
+    protected final Rectangle sensor;
     protected final ImageView imageView;
     //private ImageView exLink;
     protected final Rectangle rectangle0;
@@ -51,6 +53,7 @@ public class MapPane extends Pane {
     public MapPane() throws Exception {
 
         rectangle = new Rectangle();
+        sensor = new Rectangle();
         imageView = new ImageView();
         rectangle0 = new Rectangle();
         title = new Label();
@@ -81,6 +84,13 @@ public class MapPane extends Pane {
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.setStrokeWidth(0.0);
         rectangle.setWidth(277.0);
+
+        sensor.setFill(Color.TRANSPARENT);
+        sensor.setHeight(130.0);
+        sensor.setStroke(Color.TRANSPARENT);
+        sensor.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
+        sensor.setStrokeWidth(0.0);
+        sensor.setWidth(277.0);
 
         imageView.setFitHeight(76.0);
         imageView.setFitWidth(277.0);
@@ -243,12 +253,13 @@ public class MapPane extends Pane {
         getChildren().add(circle6);
         getChildren().add(circle7);
         getChildren().add(circle8);
+        getChildren().add(sensor);
 
 
 
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
+        sensor.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent event) {
-                if ( event.isAltDown() == false ) {
+                if ( event.isAltDown() == false) {
                     if (rectangle.getFill() != Color.YELLOW) {
                         rectangle.setFill(Color.YELLOW);
                         Main.controller.changeSelected(1);

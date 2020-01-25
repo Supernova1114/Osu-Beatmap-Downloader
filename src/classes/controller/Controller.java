@@ -3,16 +3,17 @@ package classes.controller;
 import classes.Main;
 import classes.MapPane;
 import classes.WebScraper;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 
@@ -30,6 +31,7 @@ public class Controller{
     ProgressBar loadingBar;
 
     private int numSelected;
+    private Alert alert;
 
     private ArrayList<String> selectedMaps = new ArrayList<String>();
 
@@ -85,14 +87,78 @@ public class Controller{
         }
     }
 
+
+
     @FXML
-    public void download() throws InterruptedException {
-        if ( !(Main.getSettingsController().getUsername().equals("")) && !(Main.getSettingsController().getPassword().equals("")) ) {
-            for (String map : selectedMaps) {
-                WebScraper.driver.get(map + "/download");
-                Thread.sleep(1000);
+    public void download(){
+
+        SwingWorker sw1 = new SwingWorker()
+        {
+
+            @Override
+            protected String doInBackground() throws Exception
+            {
+                // define what thread will do here
+                downloadButton.setDisable(true);
+                if ( !(Main.getSettingsController().getUsername().equals("")) && !(Main.getSettingsController().getPassword().equals("")) ) {
+                    for (String map : selectedMaps) {
+                        WebScraper.driver.get(map + "/download");
+                        Thread.sleep(500);
+                    }
+                }
+                else {
+                    //Tell user to log in
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            alert = new Alert(Alert.AlertType.NONE);
+                            alert.getButtonTypes().addAll(ButtonType.OK);
+                            alert.setHeaderText("You are not logged in!");
+                            alert.setContentText("You will not be able to download maps\nwithout logging in.");
+
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.setAlwaysOnTop(true);
+
+
+                        }
+                    });
+
+                }
+
+
+
+                return "";
             }
-        }
+
+            @Override
+            protected void done()
+            {
+                // this method is called when the background
+                // thread finishes execution
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        alert.showAndWait();
+                        toggleSettings();
+                    }
+                });
+
+                downloadButton.setDisable(false);
+
+            }
+        };
+
+        // executes the swingworker on worker thread
+        sw1.execute();
+
+    }//download()
+
+
+
+
+    @FXML
+    public void openHelp(){
+        Main.getHelpStage().show();
     }
 
     @FXML
@@ -104,9 +170,5 @@ public class Controller{
         loadingBar.setVisible(t);
     }
 
-    @FXML
-    public void toggleAbout(){
-
-    }
 
 }

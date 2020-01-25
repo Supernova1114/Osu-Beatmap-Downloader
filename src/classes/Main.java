@@ -3,10 +3,13 @@ package classes;
 import classes.controller.Controller;
 import classes.controller.SettingsController;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.swing.*;
 
@@ -18,7 +21,7 @@ public class Main extends Application implements Runnable {
     //static String downloadPath = "C:\\Users\\Fart\\Downloads\\OSU";
     static Stage mainStage;
     static Stage settingsStage;
-    static Stage loadingStage;
+    static Stage helpStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -34,10 +37,17 @@ public class Main extends Application implements Runnable {
 
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("fxml/SettingsWindow.fxml"));
         Parent root2 = loader2.load();
-        Scene scene1 = new Scene(root2);
+        Scene scene2 = new Scene(root2);
         Stage sett = new Stage();
-        sett.setScene(scene1);
+        sett.setScene(scene2);
         settingsStage = sett;
+
+        FXMLLoader loader3 = new FXMLLoader(getClass().getResource("fxml/HelpWindow.fxml"));
+        Parent root3 = loader3.load();
+        Scene scene3 = new Scene(root3);
+        Stage help = new Stage();
+        help.setScene(scene3);
+        helpStage = help;
 
 
         primaryStage.setTitle("Osu Beatmap Downloader");
@@ -49,9 +59,16 @@ public class Main extends Application implements Runnable {
         //settingsController.startThread();
 
 
-        primaryStage.setOnCloseRequest(event ->{
-            controller.exit();
-        });
+            Platform.setImplicitExit(false);
+
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();
+                }
+            });
+
+
 
         settingsStage.setOnCloseRequest(event -> {
             settingsController.toggleSettings();
@@ -97,6 +114,10 @@ public class Main extends Application implements Runnable {
 
     public static Stage getSettingsStage() {
         return settingsStage;
+    }
+
+    public static Stage getHelpStage() {
+        return helpStage;
     }
 
     public static Controller getController() {

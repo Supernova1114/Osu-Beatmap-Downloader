@@ -18,7 +18,7 @@ public class WebScraper extends Thread{
 
     public static ChromeDriver driver;
     public static JavascriptExecutor js;
-    public static int loadLimit = 50;//Max rows of maps.
+    public static int loadLimit = 100;//Max rows of maps.
     public static int numLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
@@ -44,10 +44,12 @@ public class WebScraper extends Thread{
         cap.setCapability(ChromeOptions.CAPABILITY, options);
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        //options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
 
-
+        Main.getMainStage().setOnCloseRequest(event -> {
+            Main.getController().exit();
+        });
 
 
         driver.manage().deleteAllCookies();
@@ -65,7 +67,7 @@ public class WebScraper extends Thread{
             return 1;
         } else {
             System.out.println("Internet Connected");
-            driver.get("https://osu.ppy.sh/beatmapsets");
+            driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");// FIXME: 1/23/2020 Be able to switch to diff filters and stuff by using the link thing
         }
 
 
@@ -195,7 +197,7 @@ public class WebScraper extends Thread{
 
         driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
