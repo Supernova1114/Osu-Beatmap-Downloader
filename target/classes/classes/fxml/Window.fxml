@@ -54,7 +54,7 @@
       </MenuBar>
       <Pane layoutX="233.0" layoutY="653.0" prefHeight="47.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="653.0">
          <children>
-            <Button fx:id="downloadButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="Download" />
+            <Button fx:id="downloadButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#download" text="Download" />
             <Label fx:id="selectedLabel" layoutX="92.0" layoutY="15.0" text="Selected:" />
             <Label fx:id="numLabel" layoutX="146.0" layoutY="15.0" text="0" />
             <Label fx:id="filterLabel" layoutX="175.0" text="DL filter (stars):" />

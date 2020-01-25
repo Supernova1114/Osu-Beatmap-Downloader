@@ -39,7 +39,7 @@ public class WebScraper extends Thread{
         cap.setCapability(ChromeOptions.CAPABILITY, options);
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        //options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
 
 

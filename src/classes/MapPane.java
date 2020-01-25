@@ -1,9 +1,11 @@
 package classes;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -13,8 +15,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.net.URISyntaxException;
+
 public class MapPane extends Pane {
 
+    protected String mapLink;
     protected final Rectangle rectangle;
     protected final ImageView imageView;
     protected final Rectangle rectangle0;
@@ -37,7 +42,7 @@ public class MapPane extends Pane {
     protected final Circle circle7;
     protected final Circle circle8;
 
-    public MapPane() {
+    public MapPane() throws Exception {
 
         rectangle = new Rectangle();
         imageView = new ImageView();
@@ -86,6 +91,8 @@ public class MapPane extends Pane {
         Stop[] stops = new Stop[]{new Stop(0, Color.BLACK),new Stop(1,Color.TRANSPARENT)};
         LinearGradient gradient = new LinearGradient(0.5,1,0.5,0,true, CycleMethod.NO_CYCLE, stops);
         rectangle0.setFill(gradient);
+
+
 
         title.setLayoutX(4.0);
         title.setLayoutY(24.0);
@@ -223,5 +230,24 @@ public class MapPane extends Pane {
         getChildren().add(circle7);
         getChildren().add(circle8);
 
+
+        setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent event) {
+                if (rectangle.getFill() != Color.YELLOW){
+                rectangle.setFill(Color.YELLOW);
+                Main.controller.changeSelected(1);
+                Main.controller.toggleSelectedMaps(mapLink);
+                }
+                else{
+                    rectangle.setFill(Color.WHITE);
+                    Main.controller.changeSelected(-1);
+                    Main.controller.toggleSelectedMaps(mapLink);
+                }
+                event.consume();
+            }
+        });
+
     }
+
+
 }

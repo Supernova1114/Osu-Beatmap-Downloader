@@ -39,6 +39,8 @@ public class Map {
             mapHeader = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='beatmapset-panel__header-text']")).getText();
 
             mapAuthor = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='beatmapset-panel__link js-usercard']")).getText();
+                    //"//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='js-usercard']")).getText();
+
 
             mapImageLink = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/img")).getAttribute("src");
 
@@ -62,6 +64,7 @@ public class Map {
         mapPane.label1.setText(mapAuthor);
         Image image = new Image(mapImageLink);
         mapPane.imageView.setImage(image);
+        mapPane.mapLink = mapLink;
 
         Platform.runLater(new Runnable(){
             @Override
@@ -132,6 +135,8 @@ public class Map {
     }
 
     public int getColumn() { return column; }
+
+
 
 
 

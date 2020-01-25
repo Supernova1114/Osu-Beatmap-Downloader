@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.controller.SettingsController">
    <children>
       <Button id="closeButton" layoutX="507.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Close" />
       <Pane layoutX="39.0" layoutY="21.0" prefHeight="34.0" prefWidth="136.0" style="-fx-background-color: lightgray;">
