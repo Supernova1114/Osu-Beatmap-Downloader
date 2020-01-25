@@ -1,0 +1,5 @@
+#Settings File For Osu Beatmap Downloader
+
+DownloadDirectory:
+Username:
+Password:

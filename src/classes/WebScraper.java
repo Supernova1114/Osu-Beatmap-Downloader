@@ -1,5 +1,6 @@
 package classes;
 
+import classes.controller.SettingsController;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -17,10 +18,12 @@ public class WebScraper extends Thread{
 
     public static ChromeDriver driver;
     public static JavascriptExecutor js;
-    public static int loadLimit = 10;//Max rows of maps.
+    public static int loadLimit = 50;//Max rows of maps.
     public static int numLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
+    private String userXpath = "//input[@class='login-box__form-input js-login-form-input js-nav2--autofocus']";
+    private String passXpath = "//input[@class='login-box__form-input js-login-form-input']";
 
 
 
@@ -32,7 +35,7 @@ public class WebScraper extends Thread{
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
-        chromePrefs.put("download.default_directory", Main.getDownloadPath());//DOWNLOAD DIRECTORY//
+        chromePrefs.put("download.default_directory", SettingsController.getDownloadDir());//DOWNLOAD DIRECTORY//
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--disable-notifications");
@@ -70,8 +73,10 @@ public class WebScraper extends Thread{
         js = (JavascriptExecutor) driver;
 
 
-        //login();
-        // FIXME: 12/5/2019 Add login thing
+        login();
+
+
+        Main.controller.setProgressBarVisibility(false);
 
         return 0;
     }//startChrome()
@@ -182,7 +187,19 @@ public class WebScraper extends Thread{
     }//run()
 
 
+    public void login(){
+        driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
 
+        driver.findElement(By.xpath(userXpath)).sendKeys(Main.settingsController.getUsername());
+        driver.findElement(By.xpath(passXpath)).sendKeys(Main.settingsController.getPassword());
+
+        driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

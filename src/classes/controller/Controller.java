@@ -7,8 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +26,8 @@ public class Controller{
     Label numLabel;
     @FXML
     Button downloadButton;
+    @FXML
+    ProgressBar loadingBar;
 
     private int numSelected;
 
@@ -32,6 +36,7 @@ public class Controller{
     @FXML
     void initialize(){
         downloadButton.setDisable(true);
+        loadingBar.setVisible(true);
     }
 
 
@@ -82,15 +87,26 @@ public class Controller{
 
     @FXML
     public void download() throws InterruptedException {
-        for (String map: selectedMaps){
-           WebScraper.driver.get(map + "/download");
-            Thread.sleep(1000);
+        if ( !(Main.getSettingsController().getUsername().equals("")) && !(Main.getSettingsController().getPassword().equals("")) ) {
+            for (String map : selectedMaps) {
+                WebScraper.driver.get(map + "/download");
+                Thread.sleep(1000);
+            }
         }
     }
 
     @FXML
     public void toggleSettings(){
         Main.getSettingsController().toggleSettings();
+    }
+
+    public void setProgressBarVisibility(boolean t){
+        loadingBar.setVisible(t);
+    }
+
+    @FXML
+    public void toggleAbout(){
+
     }
 
 }

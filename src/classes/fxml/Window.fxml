@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -37,7 +38,7 @@
         <menus>
           <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
             <items>
-              <MenuItem fx:id="closeItem" mnemonicParsing="false" text="Close" onAction="#exit"/>
+              <MenuItem fx:id="closeItem" mnemonicParsing="false" onAction="#exit" text="Close" />
             </items>
           </Menu>
           <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
@@ -47,7 +48,7 @@
           </Menu>
           <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="aboutItem" mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#toggleAbout" text="About" />
             </items>
           </Menu>
         </menus>
@@ -57,19 +58,20 @@
             <Button fx:id="downloadButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#download" text="Download" />
             <Label fx:id="selectedLabel" layoutX="92.0" layoutY="15.0" text="Selected:" />
             <Label fx:id="numLabel" layoutX="146.0" layoutY="15.0" text="0" />
-            <Label fx:id="filterLabel" layoutX="175.0" text="DL filter (stars):" />
-            <CheckBox fx:id="stars0" layoutX="220.0" layoutY="17.0" mnemonicParsing="false" text="0" />
-            <CheckBox fx:id="stars1" layoutX="257.0" layoutY="17.0" mnemonicParsing="false" text="1" />
-            <CheckBox fx:id="stars2" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" text="2" />
-            <CheckBox fx:id="stars3" layoutX="331.0" layoutY="17.0" mnemonicParsing="false" text="3" />
-            <CheckBox fx:id="stars4" layoutX="368.0" layoutY="17.0" mnemonicParsing="false" text="4" />
-            <CheckBox fx:id="stars5" layoutX="405.0" layoutY="17.0" mnemonicParsing="false" text="5" />
-            <CheckBox fx:id="stars6" layoutX="442.0" layoutY="17.0" mnemonicParsing="false" text="6" />
-            <CheckBox fx:id="stars7" layoutX="479.0" layoutY="17.0" mnemonicParsing="false" text="7" />
-            <CheckBox fx:id="stars8" layoutX="516.0" layoutY="17.0" mnemonicParsing="false" text="8" />
-            <CheckBox fx:id="stars9plus" layoutX="553.0" layoutY="17.0" mnemonicParsing="false" text="9+" />
-            <CheckBox fx:id="starsAll" layoutX="175.0" layoutY="17.0" mnemonicParsing="false" text="All" />
+            <Label fx:id="filterLabel" disable="true" layoutX="175.0" text="DL filter (stars): WIP" />
+            <CheckBox fx:id="stars0" disable="true" layoutX="220.0" layoutY="17.0" mnemonicParsing="false" text="0" />
+            <CheckBox fx:id="stars1" disable="true" layoutX="257.0" layoutY="17.0" mnemonicParsing="false" text="1" />
+            <CheckBox fx:id="stars2" disable="true" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" text="2" />
+            <CheckBox fx:id="stars3" disable="true" layoutX="331.0" layoutY="17.0" mnemonicParsing="false" text="3" />
+            <CheckBox fx:id="stars4" disable="true" layoutX="368.0" layoutY="17.0" mnemonicParsing="false" text="4" />
+            <CheckBox fx:id="stars5" disable="true" layoutX="405.0" layoutY="17.0" mnemonicParsing="false" text="5" />
+            <CheckBox fx:id="stars6" disable="true" layoutX="442.0" layoutY="17.0" mnemonicParsing="false" text="6" />
+            <CheckBox fx:id="stars7" disable="true" layoutX="479.0" layoutY="17.0" mnemonicParsing="false" text="7" />
+            <CheckBox fx:id="stars8" disable="true" layoutX="516.0" layoutY="17.0" mnemonicParsing="false" text="8" />
+            <CheckBox fx:id="stars9plus" disable="true" layoutX="553.0" layoutY="17.0" mnemonicParsing="false" text="9+" />
+            <CheckBox fx:id="starsAll" disable="true" layoutX="175.0" layoutY="17.0" mnemonicParsing="false" text="All" />
          </children>
       </Pane>
+      <ProgressBar fx:id="loadingBar" layoutX="194.0" layoutY="313.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
