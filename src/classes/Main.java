@@ -12,7 +12,6 @@ public class Main extends Application {
     static Controller controller;
     static SettingsController settingsController;
     static String downloadPath = "C:\\Users\\Fart\\Downloads\\OSU";
-    static FXMLLoader loader2;
     static Stage mainStage;
     static Stage settingsStage;
 
@@ -25,10 +24,12 @@ public class Main extends Application {
         Scene scene = new Scene(root);
 
 
-        loader2 = new FXMLLoader(getClass().getResource("fxml/SettingsWindow.fxml"));
-        /*Parent root2 = loader2.load();
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("fxml/SettingsWindow.fxml"));
+        Parent root2 = loader2.load();
         Scene scene1 = new Scene(root2);
-        settingsStage.setScene(scene1);*/
+        Stage sett = new Stage();
+        sett.setScene(scene1);
+        settingsStage = sett;
 
 
 
@@ -39,8 +40,12 @@ public class Main extends Application {
 
 
 
-        primaryStage.setOnCloseRequest(event -> {
+        primaryStage.setOnCloseRequest(event ->{
             controller.exit();
+        });
+
+        settingsStage.setOnCloseRequest(event -> {
+            settingsController.toggleSettings();
         });
 
         primaryStage.setTitle("Osu Beatmap Downloader");
@@ -75,6 +80,14 @@ public class Main extends Application {
 
     public static Stage getSettingsStage() {
         return settingsStage;
+    }
+
+    public static Controller getController() {
+        return controller;
+    }
+
+    public static SettingsController getSettingsController() {
+        return settingsController;
     }
 }
 

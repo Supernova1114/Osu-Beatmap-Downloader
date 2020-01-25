@@ -1,6 +1,7 @@
 package classes.controller;
 
 import classes.Main;
+import classes.MapPane;
 import classes.WebScraper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -53,7 +54,10 @@ public class Controller{
     }
 
     public void exit(){
-        WebScraper.driver.quit();
+        try{
+        WebScraper.driver.quit();}
+        catch (Exception e){e.printStackTrace();}
+
         Main.getMainStage().close();
         System.exit(0);
 
@@ -84,9 +88,9 @@ public class Controller{
         }
     }
 
-    /*@FXML
+    @FXML
     public void toggleSettings(){
         Main.getSettingsController().toggleSettings();
-    }*/
+    }
 
 }

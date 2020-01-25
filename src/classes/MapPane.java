@@ -2,9 +2,11 @@ package classes;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,6 +17,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 public class MapPane extends Pane {
@@ -22,6 +27,7 @@ public class MapPane extends Pane {
     protected String mapLink;
     protected final Rectangle rectangle;
     protected final ImageView imageView;
+    //private ImageView exLink;
     protected final Rectangle rectangle0;
     protected final Label title;
     protected final DropShadow dropShadow;
@@ -81,6 +87,13 @@ public class MapPane extends Pane {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         imageView.setImage(new Image(getClass().getResource("../card.jpg").toExternalForm()));
+
+        //exLink = new ImageView(new Image(getClass().getResource("../Link.png").toExternalForm()));
+        //exLink.setFitHeight(10);
+        //exLink.setLayoutX(240);
+        //exLink.setLayoutY(5);
+        //exLink.setPreserveRatio(true);
+
 
         rectangle0.setHeight(69.5);
         rectangle0.setOpacity(1);
@@ -213,6 +226,7 @@ public class MapPane extends Pane {
         getChildren().add(rectangle);
         getChildren().add(imageView);
         getChildren().add(rectangle0);
+        //getChildren().add(exLink);
         getChildren().add(title);
         getChildren().add(label);
         getChildren().add(label0);
@@ -231,17 +245,32 @@ public class MapPane extends Pane {
         getChildren().add(circle8);
 
 
+
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent event) {
-                if (rectangle.getFill() != Color.YELLOW){
-                rectangle.setFill(Color.YELLOW);
-                Main.controller.changeSelected(1);
-                Main.controller.toggleSelectedMaps(mapLink);
+                if ( event.isAltDown() == false ) {
+                    if (rectangle.getFill() != Color.YELLOW) {
+                        rectangle.setFill(Color.YELLOW);
+                        Main.controller.changeSelected(1);
+                        Main.controller.toggleSelectedMaps(mapLink);
+                    } else {
+                        rectangle.setFill(Color.WHITE);
+                        Main.controller.changeSelected(-1);
+                        Main.controller.toggleSelectedMaps(mapLink);
+                    }
                 }
-                else{
-                    rectangle.setFill(Color.WHITE);
-                    Main.controller.changeSelected(-1);
-                    Main.controller.toggleSelectedMaps(mapLink);
+                else {
+                    if (event.isAltDown() == true ){
+                        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                            try {
+                                Desktop.getDesktop().browse(new URI(mapLink));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
                 event.consume();
             }

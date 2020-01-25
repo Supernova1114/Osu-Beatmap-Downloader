@@ -15,7 +15,7 @@ public class WebScraper extends Thread{
 
     public static ChromeDriver driver;
     public static JavascriptExecutor js;
-    public static int loadLimit = 25;//Max rows of maps.
+    public static int loadLimit = 10;//Max rows of maps.
     public static int numLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
