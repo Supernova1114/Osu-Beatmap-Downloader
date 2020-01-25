@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="mapPane" prefHeight="130.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle fill="WHITE" height="130.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="277.0" />
+      <ImageView fitHeight="76.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../card.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle height="69.5" opacity="0.7" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="277.0">
+         <fill>
+            <LinearGradient endX="0.5" endY="0" startX="0.5" startY="1">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="#ffffff00" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
+      <Label fx:id="title" layoutX="4.0" layoutY="24.0" text="Title" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <Label layoutX="4.0" layoutY="46.0" text="Header" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <Label layoutX="5.0" layoutY="70.0" text="mapped by:">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="70.0" text="mapper">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="4.0" layoutY="84.0" text="Type:">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="38.0" layoutY="84.0" text="osu!">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Circle fill="TRANSPARENT" layoutX="16.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="40.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="64.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="88.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="112.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="136.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="160.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="184.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="208.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+      <Circle fill="TRANSPARENT" layoutX="232.0" layoutY="114.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="4.0" />
+   </children>
+</Pane>
