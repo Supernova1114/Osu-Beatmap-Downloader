@@ -1,6 +1,10 @@
 package classes;
 
 import classes.controller.SettingsController;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -12,6 +16,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class WebScraper extends Thread{
@@ -44,8 +49,9 @@ public class WebScraper extends Thread{
         cap.setCapability(ChromeOptions.CAPABILITY, options);
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments("--headless","--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
+
 
         Main.getMainStage().setOnCloseRequest(event -> {
             Main.getController().exit();
@@ -190,16 +196,36 @@ public class WebScraper extends Thread{
 
 
     public void login(){
-        driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
+        if ( !(Main.getSettingsController().getUsername() == null) && !(Main.getSettingsController().getPassword() == null) ) {
+            driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
 
-        driver.findElement(By.xpath(userXpath)).sendKeys(Main.settingsController.getUsername());
-        driver.findElement(By.xpath(passXpath)).sendKeys(Main.settingsController.getPassword());
+            driver.findElement(By.xpath(userXpath)).sendKeys(Main.settingsController.getUsername());
+            driver.findElement(By.xpath(passXpath)).sendKeys(Main.settingsController.getPassword());
 
-        driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.NONE);
+                    alert.getButtonTypes().addAll(ButtonType.OK);
+                    alert.setHeaderText("You are not logged in!");
+                    //alert.setContentText("Login?");
+
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.setAlwaysOnTop(true);
+
+                }
+            });
+
+
         }
     }
 

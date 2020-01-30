@@ -96,7 +96,7 @@ public class MapPane extends Pane {
         imageView.setFitWidth(277.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("../card.jpg").toExternalForm()));
+        //imageView.setImage(new Image(getClass().getResource("../card.jpg").toExternalForm()));
 
         //exLink = new ImageView(new Image(getClass().getResource("../Link.png").toExternalForm()));
         //exLink.setFitHeight(10);

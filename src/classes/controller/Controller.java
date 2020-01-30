@@ -139,7 +139,7 @@ public class Controller{
                     @Override
                     public void run() {
                         alert.showAndWait();
-                        toggleSettings();
+                        //toggleSettings();
                     }
                 });
 

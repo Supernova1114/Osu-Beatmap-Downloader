@@ -59,6 +59,8 @@ public class SettingsController{
     CheckBox showCBox;
     @FXML
     ToggleButton saveButton;
+    @FXML
+    Button openButton;
 
     @FXML
     public void browseFiles(){
@@ -93,10 +95,12 @@ public class SettingsController{
 
     @FXML
     public void openFolder(){
-        try {
-            Desktop.getDesktop().open(new File(downloadDir));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if ( !(downloadDir.equals("")) ) {
+            try {
+                Desktop.getDesktop().open(new File(downloadDir));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -127,10 +131,11 @@ public class SettingsController{
             Platform.runLater(new Runnable(){
                 @Override
                 public void run() {
+                    //Alert
                     Alert alert = new Alert(Alert.AlertType.NONE);
                     alert.getButtonTypes().addAll(ButtonType.YES,ButtonType.NO);
                     alert.setHeaderText("Settings File Does Not Exist!");
-                    alert.setContentText("Would you like to create one?");
+                    alert.setContentText("Would you like to create one?\n*Needs app restart to apply");
 
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                     stage.setAlwaysOnTop(true);
@@ -138,15 +143,26 @@ public class SettingsController{
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.YES) {
                         fileWriter(true);
+
+                        alert.getButtonTypes().remove(0);
+                        alert.getButtonTypes().remove(0);
+                        alert.getButtonTypes().add(ButtonType.OK);
+                        alert.setHeaderText("Change Settings.");
+                        alert.setContentText("Set a download directory and enter your\nOsu! username and password.");
+                        alert.showAndWait();
+                        toggleSettings();
+
+
+                    }else {
+                        usernameField.setDisable(true);
+                        passwordField.setDisable(true);
+                        saveButton.setDisable(true);
+                        showCBox.setDisable(true);
+                        changeButton.setDisable(true);
+                        openButton.setDisable(true);
                     }
 
-                    alert.getButtonTypes().remove(0);
-                    alert.getButtonTypes().remove(0);
-                    alert.getButtonTypes().add(ButtonType.OK);
-                    alert.setHeaderText("Change Settings.");
-                    alert.setContentText("Set a download directory and enter your\nOsu! username and password.");
-                    alert.showAndWait();
-                    toggleSettings();
+
 
                 }
             });
