@@ -34,6 +34,7 @@ public class Main extends Application implements Runnable {
 
         Scene scene = new Scene(root);
 
+        primaryStage.setResizable(false);
 
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("fxml/SettingsWindow.fxml"));
         Parent root2 = loader2.load();
@@ -80,6 +81,17 @@ public class Main extends Application implements Runnable {
         /*for ( int i=0; i<0; i++ ){
             controller.addButton();
         }*/
+
+        //Start WebScraper
+        SwingWorker worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                startWebScraper();
+                return null;
+            }
+        };
+        worker.execute();
+
     }
 
 
@@ -91,9 +103,8 @@ public class Main extends Application implements Runnable {
         Thread t1 = new Thread(new Main ());
         t1.start();
 
-        Thread.sleep(1000);
         //start scraping
-        startWebScraper();
+        //startWebScraper();
 
         //launch(argss);
     }

@@ -140,27 +140,27 @@ public class SettingsController{
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                     stage.setAlwaysOnTop(true);
 
+                    usernameField.setDisable(true);
+                    passwordField.setDisable(true);
+                    saveButton.setDisable(true);
+                    showCBox.setDisable(true);
+                    changeButton.setDisable(true);
+                    openButton.setDisable(true);
+
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.YES) {
                         fileWriter(true);
 
-                        alert.getButtonTypes().remove(0);
+                        /*alert.getButtonTypes().remove(0);
                         alert.getButtonTypes().remove(0);
                         alert.getButtonTypes().add(ButtonType.OK);
                         alert.setHeaderText("Change Settings.");
                         alert.setContentText("Set a download directory and enter your\nOsu! username and password.");
                         alert.showAndWait();
-                        toggleSettings();
+                        toggleSettings();*/
 
-
-                    }else {
-                        usernameField.setDisable(true);
-                        passwordField.setDisable(true);
-                        saveButton.setDisable(true);
-                        showCBox.setDisable(true);
-                        changeButton.setDisable(true);
-                        openButton.setDisable(true);
                     }
+
 
 
 

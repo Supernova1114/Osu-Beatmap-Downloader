@@ -1,5 +1,6 @@
 package classes;
 
+import classes.controller.Controller;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -26,12 +27,13 @@ import java.net.URISyntaxException;
 public class MapPane extends Pane {
 
     protected String mapLink;
+    protected int mapNumber;
     protected final Rectangle rectangle;
     protected final Rectangle sensor;
     protected final ImageView imageView;
     //private ImageView exLink;
     protected final Rectangle rectangle0;
-    protected final Label title;
+    public Label title;
     protected final DropShadow dropShadow;
     protected final Label label;
     protected final DropShadow dropShadow0;
@@ -51,6 +53,8 @@ public class MapPane extends Pane {
     protected final Circle circle8;
 
     public MapPane() throws Exception {
+
+
 
         rectangle = new Rectangle();
         sensor = new Rectangle();
@@ -259,7 +263,7 @@ public class MapPane extends Pane {
 
         sensor.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent event) {
-                if ( event.isAltDown() == false) {
+                if ( event.isAltDown() == false && event.isShiftDown() == false) {
                     if (rectangle.getFill() != Color.YELLOW) {
                         rectangle.setFill(Color.YELLOW);
                         Main.controller.changeSelected(1);
@@ -271,7 +275,7 @@ public class MapPane extends Pane {
                     }
                 }
                 else {
-                    if (event.isAltDown() == true ){
+                    if (event.isAltDown() == true && event.isShiftDown() == false){
                         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                             try {
                                 Desktop.getDesktop().browse(new URI(mapLink));
@@ -281,13 +285,31 @@ public class MapPane extends Pane {
                                 e.printStackTrace();
                             }
                         }
+                    }else {
+                        if (event.isShiftDown() == true && event.isAltDown() == false ){
+                            Main.controller.setShiftSelected(mapNumber);
+                        }
                     }
                 }
                 event.consume();
             }
         });
 
+
+
     }
 
+    public void select(){
+        if (rectangle.getFill() != Color.YELLOW) {
+            rectangle.setFill(Color.YELLOW);
+            Main.controller.changeSelected(1);
+            Main.controller.toggleSelectedMaps(mapLink);
+        }else {
+            if (rectangle.getFill() != Color.WHITE)
+            rectangle.setFill(Color.WHITE);
+            Main.controller.changeSelected(-1);
+            Main.controller.toggleSelectedMaps(mapLink);
+        }
+    }
 
 }

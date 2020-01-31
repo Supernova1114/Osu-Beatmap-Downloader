@@ -33,12 +33,19 @@ public class Controller{
     private int numSelected;
     private Alert alert;
 
+    private int selectFrom;
+    private int selectTo;
+    private boolean isFirstSelection;
+
     private ArrayList<String> selectedMaps = new ArrayList<String>();
 
     @FXML
     void initialize(){
         downloadButton.setDisable(true);
         loadingBar.setVisible(true);
+        selectFrom = 0;
+        selectTo = 0;
+        isFirstSelection = true;
     }
 
 
@@ -138,7 +145,9 @@ public class Controller{
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        alert.showAndWait();
+                       try {
+                           alert.showAndWait();
+                       }catch (Exception e){}
                         //toggleSettings();
                     }
                 });
@@ -153,7 +162,44 @@ public class Controller{
 
     }//download()
 
+    public void setShiftSelected(int mapNumber){
+        if ( isFirstSelection == true ){
+            selectFrom = mapNumber;
+            isFirstSelection = false;
+            System.out.println(selectFrom);
+        }else {
+            selectTo = mapNumber;
+            isFirstSelection = true;
+            System.out.println(selectTo);
+            selectMaps();
+        }
 
+    }
+
+    public void selectMaps(){
+        if ( selectFrom > selectTo ){
+            for ( int i=selectTo; i<selectFrom+1; i++ ) {
+                if (gridPane.getChildren().get(i+1) instanceof MapPane){
+                    ((MapPane) gridPane.getChildren().get(i+1)).select();
+                    System.out.println(i+1);
+                    System.out.println(((MapPane) gridPane.getChildren().get(i+1)).title.getText());
+
+                }
+            }
+        }
+
+        if ( selectFrom < selectTo ){
+            for ( int i=selectFrom; i<selectTo+1; i++ ){
+                if (gridPane.getChildren().get(i+1) instanceof MapPane){
+                    ((MapPane) gridPane.getChildren().get(i+1)).select();
+                    System.out.println(i+1);
+                    System.out.println(((MapPane) gridPane.getChildren().get(i+1)).title.getText());
+                }
+            }
+        }
+
+
+    }
 
 
     @FXML
@@ -170,5 +216,7 @@ public class Controller{
         loadingBar.setVisible(t);
     }
 
-
+    public GridPane getGridPane() {
+        return gridPane;
+    }
 }

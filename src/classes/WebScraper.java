@@ -27,6 +27,8 @@ public class WebScraper extends Thread{
     public static int numLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
+    private int mapNumber;
+
     private String userXpath = "//input[@class='login-box__form-input js-login-form-input js-nav2--autofocus']";
     private String passXpath = "//input[@class='login-box__form-input js-login-form-input']";
 
@@ -41,6 +43,7 @@ public class WebScraper extends Thread{
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
         chromePrefs.put("download.default_directory", SettingsController.getDownloadDir());//DOWNLOAD DIRECTORY//
+        System.out.println(SettingsController.getDownloadDir());
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--disable-notifications");
@@ -49,7 +52,7 @@ public class WebScraper extends Thread{
         cap.setCapability(ChromeOptions.CAPABILITY, options);
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments("--headless","--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
 
 
@@ -76,7 +79,7 @@ public class WebScraper extends Thread{
             driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");// FIXME: 1/23/2020 Be able to switch to diff filters and stuff by using the link thing
         }
 
-
+        mapNumber = 0;
 
         js = (JavascriptExecutor) driver;
 
@@ -118,6 +121,8 @@ public class WebScraper extends Thread{
         ArrayList<String> mapGameTypesC1;
         ArrayList<String> mapGameTypesC2;
 
+
+
         String tempC1 = "";
         String tempC2 = "";
 
@@ -143,8 +148,11 @@ public class WebScraper extends Thread{
                 tempC2 = mapLinkC2;
 
                 try {
-                    maps.add(new Map(1, mapLinkC1));
-                    maps.add(new Map(2, mapLinkC2));
+
+                    maps.add(new Map(1, mapLinkC1, mapNumber));
+                    mapNumber++;
+                    maps.add(new Map(2, mapLinkC2, mapNumber));
+                    mapNumber++;
                 }catch (Exception e){e.printStackTrace();}
 
                 numLoaded++;

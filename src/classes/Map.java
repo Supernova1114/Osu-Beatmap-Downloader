@@ -15,6 +15,7 @@ public class Map {
     private static String mapAuthor;
     private static String mapLink;
     private static String mapImageLink;
+    private static int mapNumber;
     private static ArrayList<Double> mapDifficulties;
     private static ArrayList<String> mapGameTypes;
     private int column;//1 or 2
@@ -23,10 +24,11 @@ public class Map {
     Label title;
 
 
-    public Map(int column, String mapLink)throws Exception{
+    public Map(int column, String mapLink, int mapNumber)throws Exception{
 
         this.mapLink = mapLink;
         this.column = column;
+        this.mapNumber = mapNumber;
 
             if ( WebScraper.numLoaded == 0 ){
                 searchRow = 1;
@@ -49,7 +51,8 @@ public class Map {
 
 
 
-        System.out.print(mapName);
+        //System.out.print(mapName);
+
         //System.out.println("mapHeader: " + mapHeader);
         //System.out.println("mapAuthor: " + mapAuthor);
         //System.out.println("mapImageLink: " + mapImageLink);
@@ -59,6 +62,9 @@ public class Map {
         //Create and load Map Node
 
         MapPane mapPane = new MapPane();
+        mapPane.mapNumber = this.mapNumber;
+        //System.out.println("Title: " + mapName);
+        //System.out.println("Row: " + mapPane.row);
         mapPane.title.setText(mapName);
         mapPane.label.setText(mapHeader);
         mapPane.label1.setText(mapAuthor);
