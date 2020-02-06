@@ -29,6 +29,8 @@ public class WebScraper extends Thread{
 
     private int mapNumber;
 
+    private static boolean isLoggedIn = false;
+
     private String userXpath = "//input[@class='login-box__form-input js-login-form-input js-nav2--autofocus']";
     private String passXpath = "//input[@class='login-box__form-input js-login-form-input']";
 
@@ -52,7 +54,7 @@ public class WebScraper extends Thread{
         cap.setCapability(ChromeOptions.CAPABILITY, options);
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        //options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
 
 
@@ -69,10 +71,20 @@ public class WebScraper extends Thread{
 
         driver.navigate().to("https://www.google.com");
 
-        String error = driver.findElement(By.xpath("//html")).getAttribute("class").toString();
+        String error = driver.findElement(By.xpath("//html")).getAttribute("class");
 
         if( error.equals("offline") ) {
+
             System.out.println("No Internet Connection");
+            Main.controller.setProgressBarVisibility(false);
+
+            //JOptionPane.showMessageDialog(null, "Error: Network Connection Not Found!");
+            JOptionPane optionPane = new JOptionPane();
+            optionPane.setMessage("Network Connection Not Found!");
+            JDialog dialog = optionPane.createDialog("Error");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+
             return 1;
         } else {
             System.out.println("Internet Connected");
@@ -212,14 +224,54 @@ public class WebScraper extends Thread{
 
             driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
             try {
-                Thread.sleep(4000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);//makes error timeout 0
+            try{
+            String loginError = driver.findElement(By.xpath("//div[@class='login-box__row login-box__row--error js-login-form--error']")).getText();
+
+                isLoggedIn = false;
+
+                Platform.runLater(new Runnable(){
+                    @Override
+                    public void run() {
+                        Alert alert = new Alert(Alert.AlertType.NONE);
+                        alert.getButtonTypes().addAll(ButtonType.OK);
+                        alert.setHeaderText("Incorrect Login Info!");
+                        //alert.setContentText("Login?");
+
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+
+                        alert.setX(Main.getMainStage().getX()+125);
+                        alert.setY(Main.getMainStage().getY()+146);
+
+                        alert.showAndWait();
+
+                    }
+                });
+            }catch (Exception e){
+                isLoggedIn = true;
+                //e.printStackTrace();
+            }
+
+
+
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
         else {
 
-            Platform.runLater(new Runnable(){
+            /*Platform.runLater(new Runnable(){
                 @Override
                 public void run() {
                     Alert alert = new Alert(Alert.AlertType.NONE);
@@ -231,16 +283,16 @@ public class WebScraper extends Thread{
                     stage.setAlwaysOnTop(true);
 
                 }
-            });
+            });*/
 
 
         }
+
+
     }
 
 
-
-
-
-
-
+    public static boolean getIsLoggedIn() {
+        return isLoggedIn;
+    }
 }//class WebScraper

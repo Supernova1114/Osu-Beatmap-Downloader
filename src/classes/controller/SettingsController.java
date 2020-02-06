@@ -36,6 +36,8 @@ public class SettingsController{
     public static String downloadDir;
     private static String username;
     private static String password;
+    private static Alert alert;
+
 
 
 
@@ -132,23 +134,20 @@ public class SettingsController{
                 @Override
                 public void run() {
                     //Alert
-                    Alert alert = new Alert(Alert.AlertType.NONE);
+                    alert = new Alert(Alert.AlertType.NONE);
                     alert.getButtonTypes().addAll(ButtonType.YES,ButtonType.NO);
                     alert.setHeaderText("Settings File Does Not Exist!");
-                    alert.setContentText("Would you like to create one?\n*Needs app restart to apply");
+                    alert.setContentText("Would you like to create one?");
 
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                     stage.setAlwaysOnTop(true);
 
-                    usernameField.setDisable(true);
-                    passwordField.setDisable(true);
-                    saveButton.setDisable(true);
-                    showCBox.setDisable(true);
-                    changeButton.setDisable(true);
-                    openButton.setDisable(true);
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.YES) {
+                        username = "";
+                        password = "";
+                        downloadDir = "";
                         fileWriter(true);
 
                         /*alert.getButtonTypes().remove(0);
@@ -159,6 +158,15 @@ public class SettingsController{
                         alert.showAndWait();
                         toggleSettings();*/
 
+
+                    }
+                    else {
+                        usernameField.setDisable(true);
+                        passwordField.setDisable(true);
+                        saveButton.setDisable(true);
+                        showCBox.setDisable(true);
+                        changeButton.setDisable(true);
+                        openButton.setDisable(true);
                     }
 
 
@@ -203,8 +211,6 @@ public class SettingsController{
             });
 
         }
-
-
 
     }//setup()
 
@@ -363,4 +369,7 @@ public class SettingsController{
         return password;
     }
 
+    public static Alert getAlert() {
+        return alert;
+    }
 }

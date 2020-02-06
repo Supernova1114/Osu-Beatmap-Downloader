@@ -99,66 +99,90 @@ public class Controller{
     @FXML
     public void download(){
 
-        SwingWorker sw1 = new SwingWorker()
-        {
+        if ( WebScraper.getIsLoggedIn() == true ) {
 
-            @Override
-            protected String doInBackground() throws Exception
-            {
-                // define what thread will do here
-                downloadButton.setDisable(true);
-                if ( !(Main.getSettingsController().getUsername().equals("")) && !(Main.getSettingsController().getPassword().equals("")) ) {
-                    for (String map : selectedMaps) {
-                        WebScraper.driver.get(map + "/download");
-                        Thread.sleep(500);
+            SwingWorker sw1 = new SwingWorker() {
+
+                @Override
+                protected String doInBackground() throws Exception {
+                    // define what thread will do here
+                    downloadButton.setDisable(true);
+                /*System.out.println(Main.getSettingsController().getUsername());
+                System.out.println(Main.getSettingsController().getPassword() + "PASSS");*/
+                    if (Main.getSettingsController().getUsername() != null && Main.getSettingsController().getPassword() != null
+                            && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("")) {
+                        for (String map : selectedMaps) {
+                            WebScraper.driver.get(map + "/download");
+                            Thread.sleep(500);
+                        }
+                    } else {
+                        //Tell user to log in
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                alert = new Alert(Alert.AlertType.NONE);
+                                alert.getButtonTypes().addAll(ButtonType.OK);
+                                alert.setHeaderText("You are not logged in!");
+                                alert.setContentText("You will not be able to download maps\nwithout logging in.");
+
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+
+
+                            }
+                        });
+
                     }
+
+
+                    return "";
                 }
-                else {
-                    //Tell user to log in
+
+                @Override
+                protected void done() {
+                    // this method is called when the background
+                    // thread finishes execution
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            alert = new Alert(Alert.AlertType.NONE);
-                            alert.getButtonTypes().addAll(ButtonType.OK);
-                            alert.setHeaderText("You are not logged in!");
-                            alert.setContentText("You will not be able to download maps\nwithout logging in.");
-
-                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                            stage.setAlwaysOnTop(true);
-
-
+                            try {
+                                alert.showAndWait();
+                            } catch (Exception e) {
+                            }
+                            //toggleSettings();
                         }
                     });
 
+                    downloadButton.setDisable(false);
+
                 }
+            };
 
+            // executes the swingworker on worker thread
+            sw1.execute();
 
+        }//if
+        else {
 
-                return "";
-            }
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.NONE);
+                    alert.getButtonTypes().addAll(ButtonType.OK);
+                    alert.setHeaderText("You are not logged in!");
 
-            @Override
-            protected void done()
-            {
-                // this method is called when the background
-                // thread finishes execution
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                       try {
-                           alert.showAndWait();
-                       }catch (Exception e){}
-                        //toggleSettings();
-                    }
-                });
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.setAlwaysOnTop(true);
 
-                downloadButton.setDisable(false);
+                    alert.setX(Main.getMainStage().getX()+125);
+                    alert.setY(Main.getMainStage().getY()+146);
 
-            }
-        };
+                    alert.showAndWait();
 
-        // executes the swingworker on worker thread
-        sw1.execute();
+                }
+            });
+
+        }
 
     }//download()
 

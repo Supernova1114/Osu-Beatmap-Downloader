@@ -8,13 +8,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 import javax.swing.*;
+import java.util.Optional;
 
 public class Main extends Application implements Runnable {
-    static int startupErrorCode;
     static String [] argss;
     static Controller controller;
     static SettingsController settingsController;
@@ -22,17 +25,16 @@ public class Main extends Application implements Runnable {
     static Stage mainStage;
     static Stage settingsStage;
     static Stage helpStage;
+    static Parent primaryRoot;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         mainStage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Window.fxml"));
-        Parent root = loader.load();
+        primaryRoot = loader.load();
 
-        if ( startupErrorCode == 1 )
-            root.setDisable(true);
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(primaryRoot);
 
         primaryStage.setResizable(false);
 
@@ -142,20 +144,17 @@ public class Main extends Application implements Runnable {
     public static void startWebScraper(){
         WebScraper scraper = new WebScraper();
 
-        startupErrorCode = scraper.startChrome();
-        if ( startupErrorCode == 0 )
-            scraper.start();
+            int errorCode = scraper.startChrome();
+        System.out.println("Error :" + errorCode);
+            if ( errorCode == 0 ) {
 
-
-        if ( startupErrorCode == 1 ){
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                scraper.start();
+            }else {
+                //primaryRoot.setDisable(true);
+                //JOptionPane.showMessageDialog(null,"Network Connection Not Found!");
             }
-            JOptionPane.showMessageDialog(null,"No Internet Connection!");
-            controller.exit();
-        }
+
+
     }
 
 }
