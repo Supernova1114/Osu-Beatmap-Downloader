@@ -29,6 +29,8 @@ public class Controller{
     Button downloadButton;
     @FXML
     ProgressBar loadingBar;
+    @FXML
+    Button loadMoreButton;
 
     private int numSelected;
     private Alert alert;
@@ -41,11 +43,13 @@ public class Controller{
 
     @FXML
     void initialize(){
+        loadMoreButton.setDisable(true);
         downloadButton.setDisable(true);
         loadingBar.setVisible(true);
         selectFrom = 0;
         selectTo = 0;
         isFirstSelection = true;
+
     }
 
 
@@ -227,6 +231,12 @@ public class Controller{
 
 
     @FXML
+    public void loadMore(){
+        Main.startScraping();
+    }
+
+
+    @FXML
     public void openHelp(){
         Main.getHelpStage().show();
     }
@@ -242,5 +252,9 @@ public class Controller{
 
     public GridPane getGridPane() {
         return gridPane;
+    }
+
+    public Button getLoadMoreButton() {
+        return loadMoreButton;
     }
 }

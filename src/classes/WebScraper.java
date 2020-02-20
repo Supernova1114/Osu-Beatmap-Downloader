@@ -1,10 +1,16 @@
 package classes;
 
 import classes.controller.SettingsController;
+import com.google.common.collect.Maps;
+import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -14,7 +20,9 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -23,13 +31,24 @@ public class WebScraper extends Thread{
 
     public static ChromeDriver driver;
     public static JavascriptExecutor js;
-    public static int loadLimit = 100;//Max rows of maps.
+    public static int loadLimit = 50;//Max rows of maps.
     public static int numLoaded;
+    public static int totalNumLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
     private int mapNumber;
+    
+    private boolean isFirstRun = true;
 
     private static boolean isLoggedIn = false;
+
+    private String chromeDriverVersion;
+    private String browserVersion;
+
+
+    private String tempC1 = "";
+    private String tempC2 = "";
+
 
     private String userXpath = "//input[@class='login-box__form-input js-login-form-input js-nav2--autofocus']";
     private String passXpath = "//input[@class='login-box__form-input js-login-form-input']";
@@ -52,11 +71,14 @@ public class WebScraper extends Thread{
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         cap.setCapability(ChromeOptions.CAPABILITY, options);
+
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        //options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
 
+//        System.out.println("Version: "+driver.getCapabilities().getVersion());
+//        System.out.println("Version?: " + driver.getCapabilities().getCapability("chrome.userDataDir"));
 
         Main.getMainStage().setOnCloseRequest(event -> {
             Main.getController().exit();
@@ -68,6 +90,18 @@ public class WebScraper extends Thread{
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
 
+        /*String a = driver.getCapabilities().getCapability("chrome").toString();
+        a = a.substring( a.indexOf("=") + 1, a.indexOf("(") - 1 );
+        chromeDriverVersion = a;
+
+        browserVersion = driver.getCapabilities().getVersion();
+
+        System.out.println( "chromeDriverVersion: " + chromeDriverVersion);// FIXME: 2/17/2020 delete
+        System.out.println("browserVersion: " + browserVersion);*/
+
+        /*if ( !chromeDriverVersion.equals(browserVersion) )
+            updateChromeDriver();
+*/
 
         driver.navigate().to("https://www.google.com");
 
@@ -107,9 +141,25 @@ public class WebScraper extends Thread{
 
     public void run(){
 
-        maps.clear();
+        //System.out.println("temp1: " + tempC1);
+        //System.out.println("temp2: " + tempC2);
 
-        js.executeScript("window.scrollTo(0, 0);");
+        if (isFirstRun) {
+            maps.clear();
+
+            js.executeScript("window.scrollTo(0, 0);");
+
+            tempC1 = "";
+            tempC2 = "";
+
+        }else {
+            numLoaded = 1;
+            //System.out.println("temp1: " + tempC1);
+            //System.out.println("temp2: " + tempC2);
+        }
+
+        //System.out.println("IS First Run?: " + isFirstRun);
+        //System.out.println("numloaded: " + numLoaded);
 
         //vars
         String mapNameC1;//as in column 1
@@ -135,18 +185,24 @@ public class WebScraper extends Thread{
 
 
 
-        String tempC1 = "";
-        String tempC2 = "";
+        int limit;
+
+        if ( isFirstRun == false ){
+            limit = loadLimit + 1;
+        }else {
+            limit = loadLimit;
+        }
 
 
-        for ( int i = 0; numLoaded<loadLimit; i++ ){
+        for ( int i = 0; numLoaded<limit; i++ ){
 
-            if ( numLoaded == 0 ){
-                mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-                mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                if (numLoaded == 0) {
+                    mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                    mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
 
-                System.out.println(mapLinkC1 + " " + mapLinkC2);
-            }
+                    //System.out.println(mapLinkC1 + " " + mapLinkC2);
+                }
+
 
             if ( numLoaded != 0 ){
                 mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
@@ -155,7 +211,10 @@ public class WebScraper extends Thread{
                 //System.out.println(mapLinkC1 + " " + mapLinkC2);
             }
 
+
+
             if ( !(tempC1.equals(mapLinkC1)) && !(tempC2.equals(mapLinkC2)) ) {
+
                 tempC1 = mapLinkC1;
                 tempC2 = mapLinkC2;
 
@@ -168,6 +227,7 @@ public class WebScraper extends Thread{
                 }catch (Exception e){e.printStackTrace();}
 
                 numLoaded++;
+                totalNumLoaded++;
 
                 /*for ( int j = 0; j<maps.size(); j++ ){
 
@@ -184,33 +244,12 @@ public class WebScraper extends Thread{
 
             }
 
-            js.executeScript("window.scrollBy(0,100)");//keep at 15!100
+            js.executeScript("window.scrollBy(0,100)");
 
 
-        }//forloop
-
-        /*String testThis = "";
-        String againstThis = "Umareta Imi Nado Nakatta.HYDRA (TV Size)Ievan Polkka x Fubuki (Hamburgaga Remix)Classic PursuitLess Than Three (Ricardo Autobahn Remix)Akumu no Hate ni Miru YumeMelody of Heaven (Original Mix)Koi, Hitokuchi.BRING ME TO LIFE VOCAL COVER 2016 (OFFICIAL)Yomi yori Kikoyu, Koukoku no Tou to Honoo no Shoujo.Lights of MuseHappy Welus (Original Mix)Snow halation (NICO Mix)aureoleWe Won't Be Alone (feat. Laura Brehm)Netsujou no Spectrum (TV Size)Sacred Bones RiotSouhaku RebellionSanctus AbsurdusHisekai Harmonize feat. Kagamine RinTwin RocketStrike The Blood (TV Size)Especial de Natal da LunaMedicine (Sound Remedy Remix)DORNWALD ~Der Junge im Kaefig~KakehikiENDLESS QUEERWaifu Baby (Christm/a/s 2015)Sweet Cat DreamingSnow halation (REDSHiFT Remix)Satisfiction (uncut edition)A Whole New WorldHoshizora no Imawinter*giftTiny Christmas PartySeiza ga Koi Shita Shunkan o.carol of the circlesVanished truthMissing YouCherry BombKnowledge ParanoiaGardens Under A Spring SkyKishin Douji ZENKI (TV Size)Slow Motion (feat. DongGeyoung)Howling (TV Size)M:routineCaboSKY JOURNEYBABY STEP* Erm, could it be a Spatiotemporal ShockWAVE Syndrome...?REcorrectionRISE (TV Size)Otomodachi Film (TV Size)ConnexionFloating upHoly NightLAST STARDUSTKimagure StardomLOVING TRIPMirai PuzzleDistant StructuresKono Hoshi de....Setsunai Sandglassletter songSOLOTachiagare! (TV Size)-ERROR 2018ver.Rolling GirlQian Si XiPOTOMIRU PINERAMelon SodaOn My OwnTaroti:\\DRIVEFriend ShitaiRun The TrackKlangPrecious Wing (Short Ver.)SLOW DANCING IN THE DARKEtherRumbling MemoryVoices in My HeadCan We Fix It? (TV Size)Renai SyndromeHibiscusThe Sealer ~A Milia to Milia no Min~Chromatic LightsHighscoreGood Day feat. DJ Snake & Elliphantfastest crash (Camellia's ''paroxysmal'' Energetic Hitech Remix)Magical HolidayKiller QueenOceanusthe littlest things [Kesu+ Audio Scribble]our songRomeo to CinderellaTenohira de odoruTempeSTTokyo's StarlightRoad of Resistance";
-        for ( int g=0; g<maps.size(); g++ ){
-            testThis += maps.get(g).getMapName();
         }
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println(testThis);
-        System.out.println(againstThis);
 
-        if ( testThis.equals(againstThis) ){
-            System.out.println();
-            System.out.println("Success!!!!!!!!!!!!!!!!");
-            System.out.println("Success!!!!!!!!!!!!!!!!");
-            System.out.println("Success!!!!!!!!!!!!!!!!");
-        }
-        else
-        {
-            System.out.println("Not same!");
-            App.close();
-        }*/
+    isFirstRun = false;
 
     }//run()
 
@@ -224,7 +263,7 @@ public class WebScraper extends Thread{
 
             driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);// FIXME: 2/12/2020 Dont want to rely on timing
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -264,7 +303,7 @@ public class WebScraper extends Thread{
 
             try {
                 Thread.sleep(3000);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException e) {// FIXME: 2/12/2020 Dont really want to rely on timing
                 e.printStackTrace();
             }
 
@@ -295,4 +334,27 @@ public class WebScraper extends Thread{
     public static boolean getIsLoggedIn() {
         return isLoggedIn;
     }
+
+    public void updateChromeDriver(){
+
+        /*try {
+            Document doc = Jsoup.connect("http://google.com")
+                    .data("query", "Java")
+                    .userAgent("Mozilla")
+                    .cookie("auth", "token")
+                    .timeout(3000)
+                    .post();
+
+            *//*Elements versions = document.select("tr");
+            System.out.println(versions.isEmpty());*//*
+            System.out.println("Doc: ");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+    }
+
 }//class WebScraper

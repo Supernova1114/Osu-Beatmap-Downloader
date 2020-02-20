@@ -26,6 +26,7 @@ public class Main extends Application implements Runnable {
     static Stage settingsStage;
     static Stage helpStage;
     static Parent primaryRoot;
+    private static WebScraper scraper = new WebScraper();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -88,7 +89,7 @@ public class Main extends Application implements Runnable {
         SwingWorker worker = new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
-                startWebScraper();
+                startWebScraper(scraper);
                 return null;
             }
         };
@@ -125,6 +126,7 @@ public class Main extends Application implements Runnable {
         return mainStage;
     }
 
+
     public static Stage getSettingsStage() {
         return settingsStage;
     }
@@ -141,20 +143,37 @@ public class Main extends Application implements Runnable {
         return settingsController;
     }
 
-    public static void startWebScraper(){
-        WebScraper scraper = new WebScraper();
+    public static void startWebScraper(WebScraper scraper){
+
 
             int errorCode = scraper.startChrome();
         System.out.println("Error :" + errorCode);
             if ( errorCode == 0 ) {
 
-                scraper.start();
+                startScraping();
             }else {
                 //primaryRoot.setDisable(true);
                 //JOptionPane.showMessageDialog(null,"Network Connection Not Found!");
             }
 
 
+    }
+
+    public static void startScraping(){
+        SwingWorker worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                controller.getLoadMoreButton().setDisable(true);
+                scraper.run();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                controller.getLoadMoreButton().setDisable(false);
+            }
+        };
+        worker.execute();
     }
 
 }

@@ -63,21 +63,22 @@
             <Button fx:id="downloadButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#download" text="Download" />
             <Label fx:id="selectedLabel" layoutX="92.0" layoutY="15.0" text="Selected:" />
             <Label fx:id="numLabel" layoutX="146.0" layoutY="15.0" text="0" />
-            <Label fx:id="filterLabel" disable="true" layoutX="316.0" layoutY="1.0" text="DL filter (stars): WIP" />
-            <CheckBox fx:id="stars0" disable="true" layoutX="220.0" layoutY="17.0" mnemonicParsing="false" text="0" />
-            <CheckBox fx:id="stars1" disable="true" layoutX="257.0" layoutY="17.0" mnemonicParsing="false" text="1" />
-            <CheckBox fx:id="stars2" disable="true" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" text="2" />
-            <CheckBox fx:id="stars3" disable="true" layoutX="331.0" layoutY="17.0" mnemonicParsing="false" text="3" />
-            <CheckBox fx:id="stars4" disable="true" layoutX="368.0" layoutY="17.0" mnemonicParsing="false" text="4" />
-            <CheckBox fx:id="stars5" disable="true" layoutX="405.0" layoutY="17.0" mnemonicParsing="false" text="5" />
-            <CheckBox fx:id="stars6" disable="true" layoutX="442.0" layoutY="17.0" mnemonicParsing="false" text="6" />
-            <CheckBox fx:id="stars7" disable="true" layoutX="479.0" layoutY="17.0" mnemonicParsing="false" text="7" />
-            <CheckBox fx:id="stars8" disable="true" layoutX="516.0" layoutY="17.0" mnemonicParsing="false" text="8" />
-            <CheckBox fx:id="stars9plus" disable="true" layoutX="553.0" layoutY="17.0" mnemonicParsing="false" text="9+" />
-            <CheckBox fx:id="starsAll" disable="true" layoutX="175.0" layoutY="17.0" mnemonicParsing="false" text="All" />
+            <Label fx:id="filterLabel" disable="true" layoutX="316.0" layoutY="1.0" text="DL filter (stars): WIP" visible="false" />
+            <CheckBox fx:id="stars0" disable="true" layoutX="220.0" layoutY="17.0" mnemonicParsing="false" text="0" visible="false" />
+            <CheckBox fx:id="stars1" disable="true" layoutX="257.0" layoutY="17.0" mnemonicParsing="false" text="1" visible="false" />
+            <CheckBox fx:id="stars2" disable="true" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" text="2" visible="false" />
+            <CheckBox fx:id="stars3" disable="true" layoutX="331.0" layoutY="17.0" mnemonicParsing="false" text="3" visible="false" />
+            <CheckBox fx:id="stars4" disable="true" layoutX="368.0" layoutY="17.0" mnemonicParsing="false" text="4" visible="false" />
+            <CheckBox fx:id="stars5" disable="true" layoutX="405.0" layoutY="17.0" mnemonicParsing="false" text="5" visible="false" />
+            <CheckBox fx:id="stars6" disable="true" layoutX="442.0" layoutY="17.0" mnemonicParsing="false" text="6" visible="false" />
+            <CheckBox fx:id="stars7" disable="true" layoutX="479.0" layoutY="17.0" mnemonicParsing="false" text="7" visible="false" />
+            <CheckBox fx:id="stars8" disable="true" layoutX="516.0" layoutY="17.0" mnemonicParsing="false" text="8" visible="false" />
+            <CheckBox fx:id="stars9plus" disable="true" layoutX="553.0" layoutY="17.0" mnemonicParsing="false" text="9+" visible="false" />
+            <CheckBox fx:id="starsAll" disable="true" layoutX="175.0" layoutY="17.0" mnemonicParsing="false" text="All" visible="false" />
          </children>
       </Pane>
       <ProgressBar fx:id="loadingBar" layoutX="194.0" layoutY="313.0" prefWidth="200.0" />
       <Label layoutX="6.0" layoutY="653.0" text="*If maps do not download, check login credentials" visible="false" />
+      <Button fx:id="loadMoreButton" layoutX="509.0" layoutY="664.0" mnemonicParsing="false" onAction="#loadMore" text="Load More" />
    </children>
 </AnchorPane>
