@@ -1,14 +1,28 @@
 package classes;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import org.openqa.selenium.By;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import org.openqa.selenium.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Map {
+
+    private MapPane mapPane = new MapPane();
+    private ArrayList<Circle> circles;
 
     private static String mapName;
     private static String mapHeader;
@@ -16,8 +30,10 @@ public class Map {
     private static String mapLink;
     private static String mapImageLink;
     private static int mapNumber;
-    private static ArrayList<Double> mapDifficulties;
-    private static ArrayList<String> mapGameTypes;
+    private ArrayList<Double> mapDifficulties = new ArrayList<>();
+    private ArrayList<String> mapGameTypes;
+
+
     private int column;//1 or 2
     private int searchRow;//1 or 2
     @FXML
@@ -49,6 +65,9 @@ public class Map {
             // FIXME: 1/4/2020 Get map difficulties, undefined difficulties, and gametypes
         // FIXME: 1/6/2020 get map sound
 
+            //GetMapDifficuties
+
+            mapDiffGetter();
 
 
         //System.out.print(mapName);
@@ -58,10 +77,10 @@ public class Map {
         //System.out.println("mapImageLink: " + mapImageLink);
         //System.out.println("mapLink: " + mapLink);
 
+        formatMapInfo();
 
         //Create and load Map Node
 
-        MapPane mapPane = new MapPane();
         mapPane.mapNumber = this.mapNumber;
         //System.out.println("Title: " + mapName);
         //System.out.println("Row: " + mapPane.row);
@@ -72,6 +91,22 @@ public class Map {
         mapPane.imageView.setImage(image);
         mapPane.mapLink = mapLink;
 
+        circles = new ArrayList<>();
+        circles.add(mapPane.circle1);
+        circles.add(mapPane.circle2);
+        circles.add(mapPane.circle3);
+        circles.add(mapPane.circle4);
+        circles.add(mapPane.circle5);
+        circles.add(mapPane.circle6);
+        circles.add(mapPane.circle7);
+        circles.add(mapPane.circle8);
+        circles.add(mapPane.circle9);
+        circles.add(mapPane.circle10);
+
+
+        setCircleColors();
+
+        //add to gridpane
         Platform.runLater(new Runnable(){
             @Override
             public void run() {
@@ -85,26 +120,6 @@ public class Map {
         });
 
 
-        /*Task<Void> task = new Task<Void>() {
-
-            @Override protected Void call() throws Exception {
-
-                    (Node)FXMLLoader.load(getClass().getResource("MapPane.fxml"))
-
-                *//*for (int i=0; i<1; i++) {
-                    Platform.runLater(new Runnable() {
-                        @Override public void run() {
-                            try {
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }*//*
-                return null;
-            }
-        };*/
 
 
 
@@ -132,18 +147,85 @@ public class Map {
         return mapImageLink;
     }
 
-    public static ArrayList<Double> getMapDifficulties() {
+    public ArrayList<Double> getMapDifficulties() {
         return mapDifficulties;
     }
 
-    public static ArrayList<String> getMapGameTypes() {
+    public ArrayList<String> getMapGameTypes() {
         return mapGameTypes;
     }
 
     public int getColumn() { return column; }
 
+    public void formatMapInfo(){
+        /*if (mapName.length() > 32){
+            mapName = mapName.substring(0,25) + ". . .";
+        }*/
+    }
 
+    public void mapDiffGetter(){
+        // FIXME: 2/27/2020
+        WebScraper.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__difficulties']/div"));
+        //System.out.println(temps.size());
+        for (int i=0; i<temps.size(); i++){
+            if ( temps.get(i).getAttribute("class").equals("beatmapset-panel__difficulty-icon") ){
+                mapDifficulties.add( Double.parseDouble( temps.get(i).findElement(By.tagName("div")).getAttribute("data-stars") ) );
+            }
+            else {
+                mapDifficulties.add( Double.parseDouble( temps.get(i).getAttribute("data-stars") ) );
+            }
+            //System.out.println(temps.get(i).getText());
+        }
+        System.out.println(mapName);
+        System.out.println(mapDifficulties);
+        System.out.println();
 
+        //https://osu.ppy.sh/help/wiki/Difficulties
+        WebScraper.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);// FIXME: 2/29/2020 should keep?????
+    }//mapDiffGetter
+
+    public void setCircleColors(){
+
+        for ( int i=0; i<mapDifficulties.size(); i++ ){
+            double diff = mapDifficulties.get(i);
+
+            if ( diff >= 0.0 && diff <= 1.99 ){
+                circles.get(i).setStroke(Color.valueOf("81B70D"));
+                continue;
+            }
+            if ( diff >= 2.0 && diff <= 2.69 ){
+                circles.get(i).setStroke(Color.valueOf("55D7FF"));
+                continue;
+            }
+            if ( diff >= 2.7 && diff <= 3.99 ){
+                circles.get(i).setStroke(Color.valueOf("FFDD22"));
+                continue;
+            }
+            if ( diff >= 4.0 && diff <= 5.29 ){
+                circles.get(i).setStroke(Color.valueOf("FF59AD"));
+                continue;
+            }
+            if ( diff >= 5.3 && diff <= 6.49 ){
+                circles.get(i).setStroke(Color.valueOf("8358FF"));
+                continue;
+            }
+            if ( diff >= 6.5 ){
+                circles.get(i).setStroke(Color.BLACK);
+                continue;
+            }
+
+        }//for
+
+        //System.out.println("diff size: " + mapDifficulties.size());
+
+        if ( mapDifficulties.size() < 10 ){
+            for (int i=mapDifficulties.size(); i < 10; i++){
+                circles.get(i).setStroke(Color.TRANSPARENT);
+            }
+        }
+
+    }//setCircleColors
 
 
 }//class Map

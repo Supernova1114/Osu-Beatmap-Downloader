@@ -39,12 +39,15 @@ public class Main extends Application implements Runnable {
 
         primaryStage.setResizable(false);
 
+
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("fxml/SettingsWindow.fxml"));
         Parent root2 = loader2.load();
         Scene scene2 = new Scene(root2);
         Stage sett = new Stage();
         sett.setScene(scene2);
         settingsStage = sett;
+
+        settingsStage.setResizable(false);
 
         FXMLLoader loader3 = new FXMLLoader(getClass().getResource("fxml/HelpWindow.fxml"));
         Parent root3 = loader3.load();
@@ -53,6 +56,7 @@ public class Main extends Application implements Runnable {
         help.setScene(scene3);
         helpStage = help;
 
+        helpStage.setResizable(false);
 
         primaryStage.setTitle("Osu Beatmap Downloader");
         primaryStage.setScene(scene);

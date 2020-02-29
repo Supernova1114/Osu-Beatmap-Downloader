@@ -6,6 +6,7 @@ import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -140,6 +141,13 @@ public class WebScraper extends Thread{
 
 
     public void run(){
+
+        /*String element = driver.findElement(By.xpath("//body")).getText();
+
+        JFrame frame = new JFrame();
+        frame.setVisible(true);
+        frame.add(pane);
+        frame.pack();*/
 
         //System.out.println("temp1: " + tempC1);
         //System.out.println("temp2: " + tempC2);
