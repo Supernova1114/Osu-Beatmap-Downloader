@@ -73,7 +73,8 @@ public class Controller{
 
     public void exit(){
         try{
-        WebScraper.driver.quit();}
+        WebScraper.driver.quit();
+        }
         catch (Exception e){e.printStackTrace();}
 
         Main.getMainStage().close();
@@ -228,6 +229,7 @@ public class Controller{
 
 
     }
+
 
 
     @FXML

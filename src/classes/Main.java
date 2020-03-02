@@ -15,9 +15,14 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Optional;
 
 public class Main extends Application implements Runnable {
+
     static String [] argss;
     static Controller controller;
     static SettingsController settingsController;
@@ -27,9 +32,35 @@ public class Main extends Application implements Runnable {
     static Stage helpStage;
     static Parent primaryRoot;
     private static WebScraper scraper = new WebScraper();
+    private static boolean isConnected;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        //test for connection
+        try {
+            URL url = new URL("http://www.google.com");
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            isConnected = true;
+            System.out.println("Internet Connected");
+        } catch (MalformedURLException e) {
+            isConnected = false;
+            System.out.println("No Internet");
+        } catch (IOException e) {
+            isConnected = false;
+            System.out.println("No Internet");
+        }
+
+        if (isConnected == false){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("No Internet Connection Found!");
+                alert.showAndWait();
+                System.exit(0);
+        }
+
+        //make windows
         mainStage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Window.fxml"));
         primaryRoot = loader.load();
@@ -149,17 +180,10 @@ public class Main extends Application implements Runnable {
 
     public static void startWebScraper(WebScraper scraper){
 
-
-            int errorCode = scraper.startChrome();
-        System.out.println("Error :" + errorCode);
-            if ( errorCode == 0 ) {
-
-                startScraping();
-            }else {
-                //primaryRoot.setDisable(true);
-                //JOptionPane.showMessageDialog(null,"Network Connection Not Found!");
-            }
-
+        if ( isConnected == true ){
+            scraper.startChrome();
+            startScraping();
+        }
 
     }
 

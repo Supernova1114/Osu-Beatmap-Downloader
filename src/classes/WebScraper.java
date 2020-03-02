@@ -97,14 +97,14 @@ public class WebScraper extends Thread{
 
         browserVersion = driver.getCapabilities().getVersion();
 
-        System.out.println( "chromeDriverVersion: " + chromeDriverVersion);// FIXME: 2/17/2020 delete
+        System.out.println( "chromeDriverVersion: " + chromeDriverVersion);// FIXME: 2/17/2020 Add ChromeDriver update ability
         System.out.println("browserVersion: " + browserVersion);*/
 
         /*if ( !chromeDriverVersion.equals(browserVersion) )
             updateChromeDriver();
 */
 
-        driver.navigate().to("https://www.google.com");
+        /*driver.navigate().to("https://www.google.com");
 
         String error = driver.findElement(By.xpath("//html")).getAttribute("class");
 
@@ -124,7 +124,9 @@ public class WebScraper extends Thread{
         } else {
             System.out.println("Internet Connected");
             driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");// FIXME: 1/23/2020 Be able to switch to diff filters and stuff by using the link thing
-        }
+        }*/
+
+        driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");
 
         mapNumber = 0;
 
