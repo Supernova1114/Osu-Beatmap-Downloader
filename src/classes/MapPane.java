@@ -37,10 +37,10 @@ public class MapPane extends Pane {
     protected final DropShadow dropShadow;
     protected final Label label;
     protected final DropShadow dropShadow0;
-    protected final Label label0;
-    protected final Label label1;
-    protected final Label label2;
-    protected final Label label3;
+    /*protected final Label label0;
+    protected final Label label1;*/
+    /*protected final Label label2;
+    protected final Label label3;*/
     protected final Circle circle1;
     protected final Circle circle2;
     protected final Circle circle3;
@@ -51,6 +51,9 @@ public class MapPane extends Pane {
     protected final Circle circle8;
     protected final Circle circle9;
     protected final Circle circle10;
+
+    private double mapHeight = 110.0;//130.0
+    private double circleLayoutY = 93;//114.0
 
     public MapPane() throws Exception {
 
@@ -64,10 +67,10 @@ public class MapPane extends Pane {
         dropShadow = new DropShadow();
         label = new Label();
         dropShadow0 = new DropShadow();
-        label0 = new Label();
-        label1 = new Label();
-        label2 = new Label();
-        label3 = new Label();
+        /*label0 = new Label();
+        label1 = new Label();*/
+        /*label2 = new Label();
+        label3 = new Label();*/
         circle1 = new Circle();
         circle2 = new Circle();
         circle3 = new Circle();
@@ -79,27 +82,27 @@ public class MapPane extends Pane {
         circle9 = new Circle();
         circle10 = new Circle();
 
-        setPrefHeight(130.0);
+        setPrefHeight(mapHeight);
         setPrefWidth(277.0);
 
         rectangle.setFill(javafx.scene.paint.Color.WHITE);
-        rectangle.setHeight(130.0);
+        rectangle.setHeight(mapHeight);
         rectangle.setStroke(javafx.scene.paint.Color.BLACK);
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.setStrokeWidth(0.0);
         rectangle.setWidth(277.0);
 
         sensor.setFill(Color.TRANSPARENT);
-        sensor.setHeight(130.0);
+        sensor.setHeight(mapHeight);
         sensor.setStroke(Color.TRANSPARENT);
         sensor.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         sensor.setStrokeWidth(0.0);
         sensor.setWidth(277.0);
 
-        imageView.setFitHeight(76.0);
+        imageView.setFitHeight(76.0);//76.0
         imageView.setFitWidth(277.0);
         imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
+        imageView.setPreserveRatio(false);
         //imageView.setImage(new Image(getClass().getResource("../card.jpg").toExternalForm()));
 
         //exLink = new ImageView(new Image(getClass().getResource("../Link.png").toExternalForm()));
@@ -109,7 +112,7 @@ public class MapPane extends Pane {
         //exLink.setPreserveRatio(true);
 
 
-        rectangle0.setHeight(69.5);
+        rectangle0.setHeight(76.0);//69.5
         rectangle0.setOpacity(1);
         rectangle0.setStroke(javafx.scene.paint.Color.BLACK);
         rectangle0.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -139,7 +142,7 @@ public class MapPane extends Pane {
 
         label.setEffect(dropShadow0);
 
-        label0.setLayoutX(5.0);
+        /*label0.setLayoutX(5.0);
         label0.setLayoutY(70.0);
         label0.setText("mapped by:");
         label0.setFont(new Font("System Bold Italic", 12.0));
@@ -147,9 +150,9 @@ public class MapPane extends Pane {
         label1.setLayoutX(74.0);
         label1.setLayoutY(70.0);
         label1.setText("mapper");
-        label1.setFont(new Font("System Bold Italic", 12.0));
+        label1.setFont(new Font("System Bold Italic", 12.0));*/
 
-        label2.setLayoutX(4.0);
+        /*label2.setLayoutX(4.0);
         label2.setLayoutY(84.0);
         label2.setText("Type:");
         label2.setFont(new Font("System Bold Italic", 12.0));
@@ -157,11 +160,11 @@ public class MapPane extends Pane {
         label3.setLayoutX(38.0);
         label3.setLayoutY(84.0);
         label3.setText("osu!");
-        label3.setFont(new Font("System Bold Italic", 12.0));
+        label3.setFont(new Font("System Bold Italic", 12.0));*/
 
         circle1.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle1.setLayoutX(16.0);
-        circle1.setLayoutY(114.0);
+        circle1.setLayoutY(circleLayoutY);
         circle1.setRadius(11.0);
         circle1.setStroke(javafx.scene.paint.Color.BLACK);
         circle1.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -169,7 +172,7 @@ public class MapPane extends Pane {
 
         circle2.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle2.setLayoutX(40.0);
-        circle2.setLayoutY(114.0);
+        circle2.setLayoutY(circleLayoutY);
         circle2.setRadius(11.0);
         circle2.setStroke(javafx.scene.paint.Color.BLACK);
         circle2.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -177,7 +180,7 @@ public class MapPane extends Pane {
 
         circle3.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle3.setLayoutX(64.0);
-        circle3.setLayoutY(114.0);
+        circle3.setLayoutY(circleLayoutY);
         circle3.setRadius(11.0);
         circle3.setStroke(javafx.scene.paint.Color.BLACK);
         circle3.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -185,7 +188,7 @@ public class MapPane extends Pane {
 
         circle4.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle4.setLayoutX(88.0);
-        circle4.setLayoutY(114.0);
+        circle4.setLayoutY(circleLayoutY);
         circle4.setRadius(11.0);
         circle4.setStroke(javafx.scene.paint.Color.BLACK);
         circle4.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -193,7 +196,7 @@ public class MapPane extends Pane {
 
         circle5.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle5.setLayoutX(112.0);
-        circle5.setLayoutY(114.0);
+        circle5.setLayoutY(circleLayoutY);
         circle5.setRadius(11.0);
         circle5.setStroke(javafx.scene.paint.Color.BLACK);
         circle5.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -201,7 +204,7 @@ public class MapPane extends Pane {
 
         circle6.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle6.setLayoutX(136.0);
-        circle6.setLayoutY(114.0);
+        circle6.setLayoutY(circleLayoutY);
         circle6.setRadius(11.0);
         circle6.setStroke(javafx.scene.paint.Color.BLACK);
         circle6.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -209,7 +212,7 @@ public class MapPane extends Pane {
 
         circle7.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle7.setLayoutX(160.0);
-        circle7.setLayoutY(114.0);
+        circle7.setLayoutY(circleLayoutY);
         circle7.setRadius(11.0);
         circle7.setStroke(javafx.scene.paint.Color.BLACK);
         circle7.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -217,7 +220,7 @@ public class MapPane extends Pane {
 
         circle8.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle8.setLayoutX(184.0);
-        circle8.setLayoutY(114.0);
+        circle8.setLayoutY(circleLayoutY);
         circle8.setRadius(11.0);
         circle8.setStroke(javafx.scene.paint.Color.BLACK);
         circle8.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -225,7 +228,7 @@ public class MapPane extends Pane {
 
         circle9.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle9.setLayoutX(208.0);
-        circle9.setLayoutY(114.0);
+        circle9.setLayoutY(circleLayoutY);
         circle9.setRadius(11.0);
         circle9.setStroke(javafx.scene.paint.Color.BLACK);
         circle9.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -233,7 +236,7 @@ public class MapPane extends Pane {
 
         circle10.setFill(javafx.scene.paint.Color.TRANSPARENT);
         circle10.setLayoutX(232.0);
-        circle10.setLayoutY(114.0);
+        circle10.setLayoutY(circleLayoutY);
         circle10.setRadius(11.0);
         circle10.setStroke(javafx.scene.paint.Color.BLACK);
         circle10.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -245,10 +248,10 @@ public class MapPane extends Pane {
         //getChildren().add(exLink);
         getChildren().add(title);
         getChildren().add(label);
-        getChildren().add(label0);
-        getChildren().add(label1);
-        getChildren().add(label2);
-        getChildren().add(label3);
+        /*getChildren().add(label0);
+        getChildren().add(label1);*/
+        /*getChildren().add(label2);
+        getChildren().add(label3);*/
         getChildren().add(circle1);
         getChildren().add(circle2);
         getChildren().add(circle3);

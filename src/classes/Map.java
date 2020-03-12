@@ -26,12 +26,12 @@ public class Map {
 
     private static String mapName;
     private static String mapHeader;
-    private static String mapAuthor;
+    //private static String mapAuthor;
     private static String mapLink;
     private static String mapImageLink;
     private static int mapNumber;
     private ArrayList<Double> mapDifficulties = new ArrayList<>();
-    private ArrayList<String> mapGameTypes;
+    //private ArrayList<String> mapGameTypes;
 
 
     private int column;//1 or 2
@@ -56,7 +56,7 @@ public class Map {
 
             mapHeader = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='beatmapset-panel__header-text']")).getText();
 
-            mapAuthor = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='beatmapset-panel__link js-usercard']")).getText();
+            //mapAuthor = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='beatmapset-panel__link js-usercard']")).getText();
                     //"//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='js-usercard']")).getText();
 
 
@@ -77,8 +77,6 @@ public class Map {
         //System.out.println("mapImageLink: " + mapImageLink);
         //System.out.println("mapLink: " + mapLink);
 
-        formatMapInfo();
-
         //Create and load Map Node
 
         mapPane.mapNumber = this.mapNumber;
@@ -86,7 +84,7 @@ public class Map {
         //System.out.println("Row: " + mapPane.row);
         mapPane.title.setText(mapName);
         mapPane.label.setText(mapHeader);
-        mapPane.label1.setText(mapAuthor);
+        //mapPane.label1.setText(mapAuthor);
         Image image = new Image(mapImageLink);
         mapPane.imageView.setImage(image);
         mapPane.mapLink = mapLink;
@@ -135,9 +133,9 @@ public class Map {
         return mapHeader;
     }
 
-    public static String getMapAuthor() {
+    /*public static String getMapAuthor() {
         return mapAuthor;
-    }
+    }*/
 
     public static String getMapLink() {
         return mapLink;
@@ -151,21 +149,15 @@ public class Map {
         return mapDifficulties;
     }
 
-    public ArrayList<String> getMapGameTypes() {
+    /*public ArrayList<String> getMapGameTypes() {
         return mapGameTypes;
-    }
+    }*/
 
     public int getColumn() { return column; }
 
-    public void formatMapInfo(){
-        /*if (mapName.length() > 32){
-            mapName = mapName.substring(0,25) + ". . .";
-        }*/
-    }
-
     public void mapDiffGetter(){
         // FIXME: 2/27/2020
-        WebScraper.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        //WebScraper.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__difficulties']/div"));
         //System.out.println(temps.size());
         for (int i=0; i<temps.size(); i++){
@@ -182,7 +174,7 @@ public class Map {
         System.out.println();
 
         //https://osu.ppy.sh/help/wiki/Difficulties
-        WebScraper.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);// FIXME: 2/29/2020 should keep?????
+        //WebScraper.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);// FIXME: 2/29/2020 should keep?????
     }//mapDiffGetter
 
     public void setCircleColors(){

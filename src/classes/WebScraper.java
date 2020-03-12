@@ -75,7 +75,7 @@ public class WebScraper extends Thread{
 
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments( "--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
         driver = new ChromeDriver(options);
 
 //        System.out.println("Version: "+driver.getCapabilities().getVersion());
@@ -88,7 +88,7 @@ public class WebScraper extends Thread{
 
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 
 
         /*String a = driver.getCapabilities().getCapability("chrome").toString();
@@ -278,7 +278,7 @@ public class WebScraper extends Thread{
                 e.printStackTrace();
             }
 
-            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);//makes error timeout 0
+            //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);//makes error timeout 0
             try{
             String loginError = driver.findElement(By.xpath("//div[@class='login-box__row login-box__row--error js-login-form--error']")).getText();
 
@@ -309,7 +309,7 @@ public class WebScraper extends Thread{
 
 
 
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
             try {
                 Thread.sleep(3000);

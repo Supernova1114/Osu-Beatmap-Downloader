@@ -65,6 +65,10 @@ public class Main extends Application implements Runnable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Window.fxml"));
         primaryRoot = loader.load();
 
+        /*primaryRoot.prefHeight(700);
+        primaryRoot.minHeight(700);
+        primaryRoot.maxHeight(700);*/
+
 
         Scene scene = new Scene(primaryRoot);
 
@@ -90,8 +94,11 @@ public class Main extends Application implements Runnable {
         helpStage.setResizable(false);
 
         primaryStage.setTitle("Osu Beatmap Downloader");
+
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
 
         controller = (Controller)loader.getController();
         settingsController = (SettingsController) loader2.getController();
@@ -129,6 +136,7 @@ public class Main extends Application implements Runnable {
             }
         };
         worker.execute();
+
 
     }
 
