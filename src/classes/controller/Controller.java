@@ -11,6 +11,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,8 +76,38 @@ public class Controller{
     public void exit(){
         try{
         WebScraper.driver.quit();
+        } catch (Exception e) {
+            try {
+                Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+            } catch (IOException r) {
+                e.printStackTrace();
+            }
+
+            String idTemp = ManagementFactory.getRuntimeMXBean().getName();
+            int id = Integer.parseInt(idTemp.substring(0, idTemp.indexOf("@")));
+            System.out.println(id);
+
+            try {
+                Runtime.getRuntime().exec("taskkill /f /fi \"PID eq " + id + "\" /t");
+            } catch (IOException r) {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e){e.printStackTrace();}
+
+
+        /*String idTemp = ManagementFactory.getRuntimeMXBean().getName();
+        int id = Integer.parseInt(idTemp.substring(0, idTemp.indexOf("@")));
+        System.out.println(id);*/
+
+       /* try {
+            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+        //Runtime.getRuntime().halt(0);
+        //Runtime.getRuntime().exit(0);
+
 
         Main.getMainStage().close();
         System.exit(0);

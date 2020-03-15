@@ -110,7 +110,8 @@ public class Main extends Application implements Runnable {
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
-                    event.consume();
+                    /*event.consume();*/
+                    controller.exit();
                 }
             });
 

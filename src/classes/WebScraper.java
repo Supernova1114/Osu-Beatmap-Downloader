@@ -75,15 +75,16 @@ public class WebScraper extends Thread{
 
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments( "--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments( "--headless","--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+
         driver = new ChromeDriver(options);
 
 //        System.out.println("Version: "+driver.getCapabilities().getVersion());
 //        System.out.println("Version?: " + driver.getCapabilities().getCapability("chrome.userDataDir"));
 
-        Main.getMainStage().setOnCloseRequest(event -> {
+        /*Main.getMainStage().setOnCloseRequest(event -> {
             Main.getController().exit();
-        });
+        });*/
 
 
         driver.manage().deleteAllCookies();
@@ -131,7 +132,6 @@ public class WebScraper extends Thread{
         mapNumber = 0;
 
         js = (JavascriptExecutor) driver;
-
 
         login();
 
@@ -272,16 +272,21 @@ public class WebScraper extends Thread{
             driver.findElement(By.xpath(passXpath)).sendKeys(Main.settingsController.getPassword());
 
             driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup']")).click();
+            System.out.println("daasasassadasdassa 1");
+
             try {
-                Thread.sleep(2000);// FIXME: 2/12/2020 Dont want to rely on timing
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
+            System.out.println("sadssadsaassd 2");
+
             //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);//makes error timeout 0
             try{
+                System.out.println("dadadasasdasdsa try error");
             String loginError = driver.findElement(By.xpath("//div[@class='login-box__row login-box__row--error js-login-form--error']")).getText();
-
+                System.out.println("adaadaasasad erorr");
                 isLoggedIn = false;
 
                 Platform.runLater(new Runnable(){
@@ -303,6 +308,18 @@ public class WebScraper extends Thread{
                     }
                 });
             }catch (Exception e){
+                System.out.println("not error");
+                boolean found = false;
+                while (found == false){
+                    try{
+                        driver.findElements(By.className("beatmapset-panel__icon js-beatmapset-download-link"));
+                        System.out.println("Login Found!");
+                        found = true;
+                    }catch (Exception r){
+                        System.out.println("Searching For Login Success...");
+                    }
+                }
+                System.out.println("done");
                 isLoggedIn = true;
                 //e.printStackTrace();
             }
@@ -311,11 +328,11 @@ public class WebScraper extends Thread{
 
             //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-            try {
+           /* try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {// FIXME: 2/12/2020 Dont really want to rely on timing
                 e.printStackTrace();
-            }
+            }*/
 
         }
         else {

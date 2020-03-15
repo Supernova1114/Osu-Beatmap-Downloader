@@ -60,8 +60,8 @@
         </menus>
       </MenuBar>
       <Button fx:id="downloadButton" layoutX="17.0" layoutY="674.0" mnemonicParsing="false" onAction="#download" text="Download" />
-      <Label fx:id="selectedLabel" layoutX="94.0" layoutY="678.0" text="Selected:" textFill="WHITE" />
-      <Label fx:id="numLabel" layoutX="146.0" layoutY="679.0" text="0" textFill="WHITE" />
+      <Label fx:id="selectedLabel" layoutX="94.0" layoutY="678.0" text="Selected:" />
+      <Label fx:id="numLabel" layoutX="146.0" layoutY="679.0" text="0" />
       <Label fx:id="filterLabel" disable="true" layoutX="300.0" layoutY="670.0" text="DL filter (stars): WIP" visible="false" />
       <CheckBox fx:id="stars0" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="0" visible="false" />
       <CheckBox fx:id="stars1" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="1" visible="false" />
