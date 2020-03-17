@@ -317,7 +317,13 @@ public class MapPane extends Pane {
         }
     }
 
-
+    public void deselect(){
+        if (rectangle.getFill() != Color.WHITE) {
+            rectangle.setFill(Color.WHITE);
+            Main.controller.changeSelected(-1);
+            Main.controller.toggleSelectedMaps(mapLink);
+        }
+    }
 
 
 }

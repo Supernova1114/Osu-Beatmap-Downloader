@@ -54,6 +54,17 @@ public class Controller{
 
     }
 
+    @FXML
+    public void deselectAll(){// FIXME: 3/16/2020
+        if ( selectedMaps.size() > 0 ) {
+            for (int i = 0; i < gridPane.getChildren().size(); i++) {
+                if (gridPane.getChildren().get(i) instanceof MapPane) {
+                    ((MapPane) gridPane.getChildren().get(i)).deselect();
+                }
+            }
+            System.out.println("Selected maps after deselect: " + selectedMaps);
+        }
+    }
 
     public void addChildren(int column, Node map)throws Exception{
         //for (int i =1; i<200; i++){
@@ -144,11 +155,16 @@ public class Controller{
                 protected String doInBackground() throws Exception {
                     // define what thread will do here
                     downloadButton.setDisable(true);
+
+                    ArrayList<String> downloadList = new ArrayList<String>();
+                    for (int i=0; i<selectedMaps.size(); i++){
+                        downloadList.add(selectedMaps.get(i));
+                    }
                 /*System.out.println(Main.getSettingsController().getUsername());
                 System.out.println(Main.getSettingsController().getPassword() + "PASSS");*/
                     if (Main.getSettingsController().getUsername() != null && Main.getSettingsController().getPassword() != null
                             && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("")) {
-                        for (String map : selectedMaps) {
+                        for (String map : downloadList) {
                             WebScraper.driver.get(map + "/download");
                             Thread.sleep(500);
                         }
