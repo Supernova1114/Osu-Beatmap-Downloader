@@ -1,4 +1,4 @@
-OSU! Beatmap Scraper
+OSU! Beatmap Downloader
 
 *PREREQUISITES: Google Chrome, Java 8+
 
