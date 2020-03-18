@@ -33,6 +33,12 @@ public class Controller{
     ProgressBar loadingBar;
     @FXML
     Button loadMoreButton;
+    @FXML
+    Label numLoaded;
+    @FXML
+    CheckMenuItem selectAllCheck;
+    @FXML
+    MenuItem selectLoadLabel;
 
     private int numSelected;
     private Alert alert;
@@ -55,7 +61,7 @@ public class Controller{
     }
 
     @FXML
-    public void deselectAll(){// FIXME: 3/16/2020
+    public void deselectAll(){
         if ( selectedMaps.size() > 0 ) {
             for (int i = 0; i < gridPane.getChildren().size(); i++) {
                 if (gridPane.getChildren().get(i) instanceof MapPane) {
@@ -66,6 +72,16 @@ public class Controller{
         }
     }
 
+    @FXML
+    public void selectLoad(){
+        for (int i = 0; i < gridPane.getChildren().size(); i++) {
+            if (gridPane.getChildren().get(i) instanceof MapPane) {
+                ((MapPane) gridPane.getChildren().get(i)).select();
+            }
+        }
+    }
+
+
     public void addChildren(int column, Node map)throws Exception{
         //for (int i =1; i<200; i++){
             gridPane.addColumn(column,map);
@@ -74,7 +90,13 @@ public class Controller{
 
     public void changeSelected(int add){
         numSelected += add;
-        numLabel.setText(numSelected + "");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                numLabel.setText(numSelected + "");
+            }
+        });
+
 
         if ( numSelected > 0 ){
             downloadButton.setDisable(false);
@@ -257,7 +279,7 @@ public class Controller{
         if ( selectFrom > selectTo ){
             for ( int i=selectTo; i<selectFrom+1; i++ ) {
                 if (gridPane.getChildren().get(i+1) instanceof MapPane){
-                    ((MapPane) gridPane.getChildren().get(i+1)).select();
+                    ((MapPane) gridPane.getChildren().get(i+1)).selectToggle();
                     System.out.println(i+1);
                     System.out.println(((MapPane) gridPane.getChildren().get(i+1)).title.getText());
 
@@ -268,7 +290,7 @@ public class Controller{
         if ( selectFrom < selectTo ){
             for ( int i=selectFrom; i<selectTo+1; i++ ){
                 if (gridPane.getChildren().get(i+1) instanceof MapPane){
-                    ((MapPane) gridPane.getChildren().get(i+1)).select();
+                    ((MapPane) gridPane.getChildren().get(i+1)).selectToggle();
                     System.out.println(i+1);
                     System.out.println(((MapPane) gridPane.getChildren().get(i+1)).title.getText());
                 }
@@ -279,6 +301,23 @@ public class Controller{
     }
 
 
+    public void setNumLoadedLabel(int num){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                numLoaded.setText(String.valueOf(num));
+            }
+        });
+    }
+
+    public void setSelectMenuNum(int num){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                selectLoadLabel.setText("All: " + String.valueOf(num*2));
+            }
+        });
+    }
 
     @FXML
     public void loadMore(){
@@ -306,5 +345,9 @@ public class Controller{
 
     public Button getLoadMoreButton() {
         return loadMoreButton;
+    }
+
+    public CheckMenuItem getSelectAllCheck() {
+        return selectAllCheck;
     }
 }

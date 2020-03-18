@@ -73,7 +73,7 @@ public class WebScraper extends Thread{
         cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         cap.setCapability(ChromeOptions.CAPABILITY, options);
 
-        System.setProperty("webdriver.chrome.driver", chromeDriverDir);
+        //System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
         options.addArguments( "--headless","--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
 
@@ -238,6 +238,8 @@ public class WebScraper extends Thread{
 
                 numLoaded++;
                 totalNumLoaded++;
+                Main.controller.setNumLoadedLabel(totalNumLoaded);
+                Main.controller.setSelectMenuNum(totalNumLoaded);
 
                 /*for ( int j = 0; j<maps.size(); j++ ){
 

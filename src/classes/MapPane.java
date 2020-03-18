@@ -304,7 +304,7 @@ public class MapPane extends Pane {
 
     }
 
-    public void select(){
+    public void selectToggle(){
         if (rectangle.getFill() != Color.YELLOW) {
             rectangle.setFill(Color.YELLOW);
             Main.controller.changeSelected(1);
@@ -321,6 +321,14 @@ public class MapPane extends Pane {
         if (rectangle.getFill() != Color.WHITE) {
             rectangle.setFill(Color.WHITE);
             Main.controller.changeSelected(-1);
+            Main.controller.toggleSelectedMaps(mapLink);
+        }
+    }
+
+    public void select(){
+        if (rectangle.getFill() != Color.YELLOW) {
+            rectangle.setFill(Color.YELLOW);
+            Main.controller.changeSelected(1);
             Main.controller.toggleSelectedMaps(mapLink);
         }
     }

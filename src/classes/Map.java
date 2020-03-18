@@ -119,8 +119,10 @@ public class Map {
 
 
 
-
-
+        //selectAll? Menu Item
+        if ( Main.controller.getSelectAllCheck().isSelected() ){
+            mapPane.select();
+        }
 
     }
 
