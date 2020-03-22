@@ -187,6 +187,10 @@ public class Main extends Application implements Runnable {
         return settingsController;
     }
 
+    public static WebScraper getScraper() {
+        return scraper;
+    }
+
     public static void startWebScraper(WebScraper scraper){
 
         if ( isConnected == true ){
@@ -207,6 +211,7 @@ public class Main extends Application implements Runnable {
 
             @Override
             protected void done() {
+                if ( !WebScraper.isSwitched() )
                 controller.getLoadMoreButton().setDisable(false);
             }
         };

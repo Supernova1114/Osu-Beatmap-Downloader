@@ -1,14 +1,9 @@
 package classes;
 
-import classes.controller.Controller;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -52,6 +47,7 @@ public class MapPane extends Pane {
     protected final Circle circle9;
     protected final Circle circle10;
 
+
     private double mapHeight = 110.0;//130.0
     private double circleLayoutY = 93;//114.0
 
@@ -81,6 +77,7 @@ public class MapPane extends Pane {
         circle8 = new Circle();
         circle9 = new Circle();
         circle10 = new Circle();
+
 
         setPrefHeight(mapHeight);
         setPrefWidth(277.0);
@@ -121,7 +118,6 @@ public class MapPane extends Pane {
         Stop[] stops = new Stop[]{new Stop(0, Color.BLACK),new Stop(1,Color.TRANSPARENT)};
         LinearGradient gradient = new LinearGradient(0.5,1,0.5,0,true, CycleMethod.NO_CYCLE, stops);
         rectangle0.setFill(gradient);
-
 
 
         title.setLayoutX(4.0);
@@ -242,6 +238,7 @@ public class MapPane extends Pane {
         circle10.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         circle10.setStrokeWidth(4.0);
 
+
         getChildren().add(rectangle);
         getChildren().add(imageView);
         getChildren().add(rectangle0);
@@ -262,6 +259,9 @@ public class MapPane extends Pane {
         getChildren().add(circle8);
         getChildren().add(circle9);
         getChildren().add(circle10);
+
+
+
         getChildren().add(sensor);
 
 

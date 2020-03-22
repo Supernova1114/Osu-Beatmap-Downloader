@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -39,6 +40,20 @@ public class Controller{
     CheckMenuItem selectAllCheck;
     @FXML
     MenuItem selectLoadLabel;
+    @FXML
+    RadioButton osuRadio;
+    @FXML
+    RadioButton taikoRadio;
+    @FXML
+    RadioButton catchRadio;
+    @FXML
+    RadioButton maniaRadio;
+
+
+    private boolean osuStartup = true;
+    private boolean taikoStartup = true;
+    private boolean catchStartup = true;
+    private boolean maniaStartup = true;
 
     private int numSelected;
     private Alert alert;
@@ -46,6 +61,8 @@ public class Controller{
     private int selectFrom;
     private int selectTo;
     private boolean isFirstSelection;
+
+    private ToggleGroup modeToggles = new ToggleGroup();
 
     private ArrayList<String> selectedMaps = new ArrayList<String>();
 
@@ -57,6 +74,21 @@ public class Controller{
         selectFrom = 0;
         selectTo = 0;
         isFirstSelection = true;
+
+        osuRadio.setFocusTraversable(false);
+        taikoRadio.setFocusTraversable(false);
+        catchRadio.setFocusTraversable(false);
+        maniaRadio.setFocusTraversable(false);
+
+        modeToggles.getToggles().addAll(osuRadio, taikoRadio, catchRadio, maniaRadio);
+        modeToggles.getToggles().get(0).setSelected(true);
+
+        osuRadio.setDisable(true);
+        taikoRadio.setDisable(true);
+        catchRadio.setDisable(true);
+        maniaRadio.setDisable(true);
+
+        osuStartup = false;
 
     }
 
@@ -301,6 +333,106 @@ public class Controller{
     }
 
 
+    @FXML
+    public void modeRadioSwitcher(){
+        osuRadio.setDisable(true);
+        taikoRadio.setDisable(true);
+        catchRadio.setDisable(true);
+        maniaRadio.setDisable(true);
+        
+        RadioButton button = (RadioButton)modeToggles.getSelectedToggle();
+        switch (button.getText()){// FIXME: 3/21/2020 Finish by adding the ability to make new tabs and switch between them in order to load maps for each diff mode using their necessary links.
+            case "osu!":
+                System.out.println(0);
+                switcher(0);
+                break;
+            case "taiko":
+                System.out.println(1);
+                switcher(1);
+                break;
+            case "catch":
+                System.out.println(2);
+                switcher(2);
+                break;
+            case "mania":
+                System.out.println(3);
+                switcher(3);
+                break;
+        }
+    }
+
+    public void switcher(int mode){
+
+        SwingWorker worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+
+                WebScraper.setSwitched(true);
+
+                WebScraper.switchTabs(mode);
+
+
+                WebScraper.setScraperStop(true);
+                while (WebScraper.getScraperDone() == false){
+                    //wait until scraper Thread Finished
+                }
+                System.out.println(WebScraper.getScraperDone());
+
+                if ( mode == 1 && taikoStartup) {
+                    WebScraper.driver.get("https://osu.ppy.sh/beatmapsets?m=" + mode + "&s=ranked");
+                    taikoStartup = false;
+                }
+                if ( mode == 2 && catchStartup) {
+                    WebScraper.driver.get("https://osu.ppy.sh/beatmapsets?m=" + mode + "&s=ranked");
+                    catchStartup = false;
+                }
+                if ( mode == 3 && maniaStartup) {
+                    WebScraper.driver.get("https://osu.ppy.sh/beatmapsets?m=" + mode + "&s=ranked");
+                    maniaStartup = false;
+                }
+
+
+                WebScraper.numLoaded = 0;
+                WebScraper.totalNumLoaded = 0;
+                WebScraper.setIsFirstRun(true);
+                WebScraper.resetMapNumber();
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        gridPane.getChildren().clear();
+                        numLoaded.setText("0");
+                        selectLoadLabel.setText("All: 0");
+                    }
+                });
+
+
+
+
+
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                WebScraper.setScraperStop(false);
+
+                osuRadio.setDisable(false);
+                taikoRadio.setDisable(false);
+                catchRadio.setDisable(false);
+                maniaRadio.setDisable(false);
+                System.out.println("Success!!!!!");
+
+                WebScraper.setSwitched(false);
+
+                Main.startScraping();
+            }
+        };
+        worker.execute();
+    }
+
+
+
     public void setNumLoadedLabel(int num){
         Platform.runLater(new Runnable() {
             @Override
@@ -350,4 +482,22 @@ public class Controller{
     public CheckMenuItem getSelectAllCheck() {
         return selectAllCheck;
     }
+
+    public RadioButton getOsuRadio() {
+        return osuRadio;
+    }
+
+    public RadioButton getTaikoRadio() {
+        return taikoRadio;
+    }
+
+    public RadioButton getCatchRadio() {
+        return catchRadio;
+    }
+
+    public RadioButton getManiaRadio() {
+        return maniaRadio;
+    }
+
+
 }

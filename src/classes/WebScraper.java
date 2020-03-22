@@ -32,16 +32,21 @@ public class WebScraper extends Thread{
 
     public static ChromeDriver driver;
     public static JavascriptExecutor js;
+    public static ArrayList<String> tabs;
     public static int loadLimit = 50;//Max rows of maps.
     public static int numLoaded;
     public static int totalNumLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
-    private int mapNumber;
+    private static int mapNumber;
     
-    private boolean isFirstRun = true;
+    private static boolean isFirstRun = true;
 
     private static boolean isLoggedIn = false;
+
+    private static volatile boolean switched = false;
+    private static volatile boolean scraperStop = false;
+    private static volatile boolean scraperDone = false;
 
     private String chromeDriverVersion;
     private String browserVersion;
@@ -75,7 +80,7 @@ public class WebScraper extends Thread{
 
         //System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
-        options.addArguments( "--headless","--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
 
         driver = new ChromeDriver(options);
 
@@ -127,7 +132,19 @@ public class WebScraper extends Thread{
             driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");// FIXME: 1/23/2020 Be able to switch to diff filters and stuff by using the link thing
         }*/
 
-        driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");
+        //Opens tabs for Osu, Taiko, Catch, and Mania
+
+        ((JavascriptExecutor)driver).executeScript("window.open()");
+        ((JavascriptExecutor)driver).executeScript("window.open()");
+        ((JavascriptExecutor)driver).executeScript("window.open()");
+
+        tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(0));
+
+        driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");//osu ranked
+
+
+
 
         mapNumber = 0;
 
@@ -138,21 +155,20 @@ public class WebScraper extends Thread{
 
         Main.controller.setProgressBarVisibility(false);
 
+        Main.controller.getOsuRadio().setDisable(false);
+        Main.controller.getTaikoRadio().setDisable(false);
+        Main.controller.getCatchRadio().setDisable(false);
+        Main.controller.getManiaRadio().setDisable(false);
+
         return 0;
     }//startChrome()
 
 
     public void run(){
+        System.out.println("Run Started");
 
-        /*String element = driver.findElement(By.xpath("//body")).getText();
+        scraperDone = false;
 
-        JFrame frame = new JFrame();
-        frame.setVisible(true);
-        frame.add(pane);
-        frame.pack();*/
-
-        //System.out.println("temp1: " + tempC1);
-        //System.out.println("temp2: " + tempC2);
 
         if (isFirstRun) {
             maps.clear();
@@ -164,35 +180,12 @@ public class WebScraper extends Thread{
 
         }else {
             numLoaded = 1;
-            //System.out.println("temp1: " + tempC1);
-            //System.out.println("temp2: " + tempC2);
         }
 
-        //System.out.println("IS First Run?: " + isFirstRun);
-        //System.out.println("numloaded: " + numLoaded);
-
         //vars
-        String mapNameC1;//as in column 1
-        String mapNameC2;//as in column 2
-
-        String mapHeaderC1;
-        String mapHeaderC2;
-
-        String mapAuthorC1;
-        String mapAuthorC2;
 
         String mapLinkC1 = "";
         String mapLinkC2 = "";
-
-        String mapImageLinkC1;
-        String mapImageLinkC2;
-
-        ArrayList<Double> mapDifficultiesC1;
-        ArrayList<Double> mapDifficultiesC2;
-
-        ArrayList<String> mapGameTypesC1;
-        ArrayList<String> mapGameTypesC2;
-
 
 
         int limit;
@@ -204,24 +197,24 @@ public class WebScraper extends Thread{
         }
 
 
-        for ( int i = 0; numLoaded<limit; i++ ){
+        while( numLoaded<limit && scraperStop == false ){
 
                 if (numLoaded == 0) {
-                    mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-                    mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-
+                    try {
+                        mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                        mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                    }catch (Exception e){e.printStackTrace();}
                     //System.out.println(mapLinkC1 + " " + mapLinkC2);
                 }
 
 
             if ( numLoaded != 0 ){
-                mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-                mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-
+                try {
+                    mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                    mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                }catch (Exception e){e.printStackTrace();}
                 //System.out.println(mapLinkC1 + " " + mapLinkC2);
             }
-
-
 
             if ( !(tempC1.equals(mapLinkC1)) && !(tempC2.equals(mapLinkC2)) ) {
 
@@ -241,19 +234,6 @@ public class WebScraper extends Thread{
                 Main.controller.setNumLoadedLabel(totalNumLoaded);
                 Main.controller.setSelectMenuNum(totalNumLoaded);
 
-                /*for ( int j = 0; j<maps.size(); j++ ){
-
-                    for ( int r = j+1; r<maps.size(); r++ ){
-
-                        if ( maps.get(j).equals(maps.get(r)) ){
-                            System.out.println("ERROR");
-                            App.close();
-                        }
-
-                    }
-
-                }*/
-
             }
 
             js.executeScript("window.scrollBy(0,100)");
@@ -263,6 +243,8 @@ public class WebScraper extends Thread{
 
     isFirstRun = false;
 
+        scraperDone = true;
+        System.out.println("Finished Running!");
     }//run()
 
 
@@ -288,10 +270,12 @@ public class WebScraper extends Thread{
             try{
                 System.out.println("dadadasasdasdsa try error");
             String loginError = driver.findElement(By.xpath("//div[@class='login-box__row login-box__row--error js-login-form--error']")).getText();
+
+            if (!loginError.equals("") && !loginError.equals(null)) {
                 System.out.println("adaadaasasad erorr");
                 isLoggedIn = false;
 
-                Platform.runLater(new Runnable(){
+                Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         Alert alert = new Alert(Alert.AlertType.NONE);
@@ -302,13 +286,14 @@ public class WebScraper extends Thread{
                         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                         stage.setAlwaysOnTop(true);
 
-                        alert.setX(Main.getMainStage().getX()+125);
-                        alert.setY(Main.getMainStage().getY()+146);
+                        alert.setX(Main.getMainStage().getX() + 125);
+                        alert.setY(Main.getMainStage().getY() + 146);
 
                         alert.showAndWait();
 
                     }
                 });
+            }
             }catch (Exception e){
                 System.out.println("not error");
                 boolean found = false;
@@ -326,34 +311,6 @@ public class WebScraper extends Thread{
                 //e.printStackTrace();
             }
 
-
-
-            //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-           /* try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {// FIXME: 2/12/2020 Dont really want to rely on timing
-                e.printStackTrace();
-            }*/
-
-        }
-        else {
-
-            /*Platform.runLater(new Runnable(){
-                @Override
-                public void run() {
-                    Alert alert = new Alert(Alert.AlertType.NONE);
-                    alert.getButtonTypes().addAll(ButtonType.OK);
-                    alert.setHeaderText("You are not logged in!");
-                    //alert.setContentText("Login?");
-
-                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.setAlwaysOnTop(true);
-
-                }
-            });*/
-
-
         }
 
 
@@ -362,6 +319,34 @@ public class WebScraper extends Thread{
 
     public static boolean getIsLoggedIn() {
         return isLoggedIn;
+    }
+
+    public static void switchTabs(int num){
+        driver.switchTo().window(tabs.get(num));
+    }
+
+    public static void setIsFirstRun(boolean a) {
+        isFirstRun = a;
+    }
+
+    public static void setScraperStop(boolean a){
+        scraperStop = a;
+    }
+
+    public static boolean getScraperDone(){
+        return scraperDone;
+    }
+
+    public static void resetMapNumber(){
+        mapNumber = 0;
+    }
+
+    public static boolean isSwitched(){
+        return switched;
+    }
+
+    public static void setSwitched(boolean s){
+        switched = s;
     }
 
     public void updateChromeDriver(){
