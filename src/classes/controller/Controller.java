@@ -64,7 +64,7 @@ public class Controller{
 
     private ToggleGroup modeToggles = new ToggleGroup();
 
-    private ArrayList<String> selectedMaps = new ArrayList<String>();
+    private ArrayList<String> selectedMaps = new ArrayList<String>();//Maps that are selected
 
     @FXML
     void initialize(){
@@ -100,6 +100,14 @@ public class Controller{
                     ((MapPane) gridPane.getChildren().get(i)).deselect();
                 }
             }
+            selectedMaps.clear();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    numLabel.setText("0");
+                }
+            });
+            numSelected = 0;
             System.out.println("Selected maps after deselect: " + selectedMaps);
         }
     }

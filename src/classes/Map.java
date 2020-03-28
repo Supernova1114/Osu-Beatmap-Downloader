@@ -88,6 +88,7 @@ public class Map {
         Image image = new Image(mapImageLink);
         mapPane.imageView.setImage(image);
         mapPane.mapLink = mapLink;
+        mapPane.checkIfNeedSelection();
 
         circles = new ArrayList<>();
         circles.add(mapPane.circle1);

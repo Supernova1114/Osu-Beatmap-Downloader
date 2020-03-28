@@ -301,7 +301,6 @@ public class MapPane extends Pane {
         });
 
 
-
     }
 
     public void selectToggle(){
@@ -330,6 +329,12 @@ public class MapPane extends Pane {
             rectangle.setFill(Color.YELLOW);
             Main.controller.changeSelected(1);
             Main.controller.toggleSelectedMaps(mapLink);
+        }
+    }
+
+    public void checkIfNeedSelection(){//checks if it needs to be selected when switching tabs
+        if ( Main.controller.getSelectedMaps().contains(mapLink) ){
+            rectangle.setFill(Color.YELLOW);
         }
     }
 
