@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Osu Beatmap Scraper">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Osu_Beatmap_Scraper_jar/Osu Beatmap Scraper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
