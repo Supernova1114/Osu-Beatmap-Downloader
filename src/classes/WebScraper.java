@@ -9,6 +9,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import org.jsoup.Connection;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -67,10 +73,13 @@ public class WebScraper extends Thread{
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
         chromePrefs.put("download.default_directory", SettingsController.getDownloadDir());//DOWNLOAD DIRECTORY//
+        chromePrefs.put("profile.content_settings.exceptions.automatic_downloads.*.setting", 1 );
         System.out.println(SettingsController.getDownloadDir());
         ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);//SET CHROME TO HEADLESS MODE
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--disable-notifications");
+
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         cap.setCapability(ChromeOptions.CAPABILITY, options);
@@ -78,10 +87,11 @@ public class WebScraper extends Thread{
         //System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
         //Headless makes chrome invisible
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless
+        options.addArguments("--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless "--headless",
 
         driver = new ChromeDriver(options);
 
+        //updateChromeDriver();
 //        System.out.println("Version: "+driver.getCapabilities().getVersion());
 //        System.out.println("Version?: " + driver.getCapabilities().getCapability("chrome.userDataDir"));
 
@@ -135,8 +145,13 @@ public class WebScraper extends Thread{
         ((JavascriptExecutor)driver).executeScript("window.open()");
         ((JavascriptExecutor)driver).executeScript("window.open()");
         ((JavascriptExecutor)driver).executeScript("window.open()");
+        ((JavascriptExecutor)driver).executeScript("window.open()");
 
         tabs = new ArrayList<String>(driver.getWindowHandles());
+
+        driver.switchTo().window(tabs.get(4));
+        driver.get("https://beatconnect.io/");//osu download page
+
         driver.switchTo().window(tabs.get(0));
 
         driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");//osu ranked
@@ -347,26 +362,39 @@ public class WebScraper extends Thread{
         switched = s;
     }
 
-    public void updateChromeDriver(){
+    /*public void updateChromeDriver(){
 
-        /*try {
-            Document doc = Jsoup.connect("http://google.com")
-                    .data("query", "Java")
-                    .userAgent("Mozilla")
-                    .cookie("auth", "token")
-                    .timeout(3000)
-                    .post();
+        browserVersion = driver.getCapabilities().getVersion();
+        System.out.println("browserVersion = " + browserVersion);
 
-            *//*Elements versions = document.select("tr");
-            System.out.println(versions.isEmpty());*//*
-            System.out.println("Doc: ");
+        //System.out.println(driver.getCapabilities().getCapabilityNames());
+        java.util.Map hash = (java.util.Map)driver.getCapabilities().asMap().get("chrome");
+        String tempCV = (String)hash.get("chromedriverVersion");
+        chromeDriverVersion = tempCV.substring(0, tempCV.indexOf(" "));
+        System.out.println("driverVersion = " + chromeDriverVersion);
+        System.out.println();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        // load page using HTML Unit and fire scripts
+        *//*WebClient webClient = new WebClient();
+        HtmlPage myPage = webClient.getPage(new File("page.html").toURI().toURL());
+
+        // convert page to generated HTML and convert to document
+        doc = Jsoup.parse(myPage.asXml());
+
+        // iterate row and col
+        for (Element row : doc.select("table#data > tbody > tr"))
+
+            for (Element col : row.select("td"))
+
+                // print results
+                System.out.println(col.ownText());
+
+        // clean up resources
+        webClient.close();*//*
 
 
 
-    }
+
+    }*/
 
 }//class WebScraper

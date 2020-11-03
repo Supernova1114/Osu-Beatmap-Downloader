@@ -10,11 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.openqa.selenium.By;
 
 import javax.swing.*;
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -48,6 +53,8 @@ public class Controller{
     RadioButton catchRadio;
     @FXML
     RadioButton maniaRadio;
+    @FXML
+    Label progressLabel;
 
 
     private boolean osuStartup = true;
@@ -218,19 +225,260 @@ public class Controller{
                     // define what thread will do here
                     downloadButton.setDisable(true);
 
-                    ArrayList<String> downloadList = new ArrayList<String>();
+                    ArrayList<String> downloadListFull = new ArrayList<String>();
                     for (int i=0; i<selectedMaps.size(); i++){
-                        downloadList.add(selectedMaps.get(i));
+                        downloadListFull.add(selectedMaps.get(i));
                     }
                 /*System.out.println(Main.getSettingsController().getUsername());
                 System.out.println(Main.getSettingsController().getPassword() + "PASSS");*/
                     if (Main.getSettingsController().getUsername() != null && Main.getSettingsController().getPassword() != null
                             && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("")) {
-                        for (String map : downloadList) {
-                            //System.out.println("https://bloodcat.com/osu/s/" + map.substring(map.indexOf("beatmapsets/") + 12));
-                            WebScraper.driver.get("https://bloodcat.com/osu/s/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                            Thread.sleep(500);
+
+                        //switcher(4);//4 is download mode
+
+                        //String maplink = WebScraper.driver.findElement(By.xpath("//a[@class='download']")).getAttribute("href");
+                        /*int progressNum = downloadListFull.size();
+                        int finalProgressNum = progressNum;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressLabel.setText(finalProgressNum + "");
+                            }
+                        });*/
+
+                        ArrayList<String> downloadListPart1 = new ArrayList<>();
+                        ArrayList<String> downloadListPart2 = new ArrayList<>();
+                        ArrayList<String> downloadListPart3 = new ArrayList<>();
+                        ArrayList<String> downloadListPart4 = new ArrayList<>();
+                        ArrayList<String> downloadListPart5 = new ArrayList<>();
+                        ArrayList<String> downloadListPart6 = new ArrayList<>();
+
+
+                        for (int i=0; i<downloadListFull.size();){
+                            if (i < downloadListFull.size()){
+                                downloadListPart1.add(downloadListFull.get(i));
+                                i++;
+                            }
+                            if (i < downloadListFull.size()){
+                                downloadListPart2.add(downloadListFull.get(i));
+                                i++;
+                            }
+                            if (i < downloadListFull.size()){
+                                downloadListPart3.add(downloadListFull.get(i));
+                                i++;
+                            }
+                            if (i < downloadListFull.size()){
+                                downloadListPart4.add(downloadListFull.get(i));
+                                i++;
+                            }
+                            if (i < downloadListFull.size()){
+                                downloadListPart5.add(downloadListFull.get(i));
+                                i++;
+                            }
+                            if (i < downloadListFull.size()){
+                                downloadListPart6.add(downloadListFull.get(i));
+                                i++;
+                            }
                         }
+
+                        System.out.println("Download List Split");
+                        System.out.println("1: " + downloadListPart1);
+                        System.out.println("2: " + downloadListPart2);
+                        System.out.println("3: " + downloadListPart3);
+                        System.out.println("4: " + downloadListPart4);
+                        System.out.println("5: " + downloadListPart5);
+                        System.out.println("6: " + downloadListPart6);
+                        System.out.println("Full: " + downloadListFull);
+                        System.out.println("FullSize: " + downloadListFull.size());
+                        System.out.println();
+
+
+                        //Asynchronous Downloads Workers
+                        SwingWorker downloadWorker1 = new SwingWorker() {
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                for (String map : downloadListPart1) {
+                                    //DOWNLOAD MAPS
+
+                                    //WebScraper.driver.get(maplink);
+                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                    System.out.println(FILE_NAME);
+                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                        byte dataBuffer[] = new byte[1024];
+                                        int bytesRead;
+                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                        }
+                                    } catch (IOException e) {
+                                        // handle exception
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return null;
+                            }
+                        };
+
+                        SwingWorker downloadWorker2 = new SwingWorker() {
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                for (String map : downloadListPart2) {
+                                    //DOWNLOAD MAPS
+
+                                    //WebScraper.driver.get(maplink);
+                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                    System.out.println(FILE_NAME);
+                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                        byte dataBuffer[] = new byte[1024];
+                                        int bytesRead;
+                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                        }
+                                    } catch (IOException e) {
+                                        // handle exception
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return null;
+                            }
+                        };
+
+                        SwingWorker downloadWorker3 = new SwingWorker() {
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                for (String map : downloadListPart3) {
+                                    //DOWNLOAD MAPS
+
+                                    //WebScraper.driver.get(maplink);
+                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                    System.out.println(FILE_NAME);
+                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                        byte dataBuffer[] = new byte[1024];
+                                        int bytesRead;
+                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                        }
+                                    } catch (IOException e) {
+                                        // handle exception
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return null;
+                            }
+                        };
+
+                        SwingWorker downloadWorker4 = new SwingWorker() {
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                for (String map : downloadListPart4) {
+                                    //DOWNLOAD MAPS
+
+                                    //WebScraper.driver.get(maplink);
+                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                    System.out.println(FILE_NAME);
+                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                        byte dataBuffer[] = new byte[1024];
+                                        int bytesRead;
+                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                        }
+                                    } catch (IOException e) {
+                                        // handle exception
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return null;
+                            }
+                        };
+
+                        SwingWorker downloadWorker5 = new SwingWorker() {
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                for (String map : downloadListPart5) {
+                                    //DOWNLOAD MAPS
+
+                                    //WebScraper.driver.get(maplink);
+                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                    System.out.println(FILE_NAME);
+                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                        byte dataBuffer[] = new byte[1024];
+                                        int bytesRead;
+                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                        }
+                                    } catch (IOException e) {
+                                        // handle exception
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return null;
+                            }
+                        };
+
+                        SwingWorker downloadWorker6 = new SwingWorker() {
+                            @Override
+                            protected Object doInBackground() throws Exception {
+                                for (String map : downloadListPart6) {
+                                    //DOWNLOAD MAPS
+
+                                    //WebScraper.driver.get(maplink);
+                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                    System.out.println(FILE_NAME);
+                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                        byte dataBuffer[] = new byte[1024];
+                                        int bytesRead;
+                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                        }
+                                    } catch (IOException e) {
+                                        // handle exception
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return null;
+                            }
+                        };
+
+
+
+                        //Execute the download process
+                        if (downloadListPart1.size() > 0)
+                            downloadWorker1.execute();
+                        if (downloadListPart2.size() > 0)
+                            downloadWorker2.execute();
+                        if (downloadListPart3.size() > 0)
+                            downloadWorker3.execute();
+                        if (downloadListPart4.size() > 0)
+                            downloadWorker4.execute();
+                        if (downloadListPart5.size() > 0)
+                            downloadWorker5.execute();
+                        if (downloadListPart6.size() > 0)
+                            downloadWorker6.execute();
+
+
                     } else {
                         //Tell user to log in
                         Platform.runLater(new Runnable() {
@@ -399,6 +647,7 @@ public class Controller{
                     WebScraper.driver.get("https://osu.ppy.sh/beatmapsets?m=" + mode + "&s=ranked");
                     maniaStartup = false;
                 }
+
 
 
                 WebScraper.numLoaded = 0;
