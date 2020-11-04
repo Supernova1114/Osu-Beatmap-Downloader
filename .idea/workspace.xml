@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Osu-Beatmap-Downloader" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="5b65bf1f-b47d-4583-b24b-3ebe800bf40a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,10 +26,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/jsoup-1.13.1.jar" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production/Osu-Beatmap-Downloader/META-INF" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.14257812" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RunAnythingCache">
@@ -71,34 +76,34 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="414" y="194" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1603765649173" />
-    <state x="689" y="323" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1603765626437">
+    <state x="689" y="323" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604469743522">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="689" y="323" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1603765626437" />
-    <state x="740" y="294" key="FileChooserDialogImpl" timestamp="1604341657421">
+    <state x="689" y="323" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469743522" />
+    <state x="740" y="294" key="FileChooserDialogImpl" timestamp="1604469451619">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="740" y="294" key="FileChooserDialogImpl/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604341657421" />
-    <state width="1877" height="240" key="GridCell.Tab.0.bottom" timestamp="1604468806605">
+    <state x="740" y="294" key="FileChooserDialogImpl/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469451619" />
+    <state width="1877" height="240" key="GridCell.Tab.0.bottom" timestamp="1604469114662">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="240" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604468806605" />
-    <state width="1877" height="240" key="GridCell.Tab.0.center" timestamp="1604468806605">
+    <state width="1877" height="240" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469114662" />
+    <state width="1877" height="240" key="GridCell.Tab.0.center" timestamp="1604469114662">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="240" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604468806605" />
-    <state width="1877" height="240" key="GridCell.Tab.0.left" timestamp="1604468806604">
+    <state width="1877" height="240" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469114662" />
+    <state width="1877" height="240" key="GridCell.Tab.0.left" timestamp="1604469114662">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="240" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604468806604" />
-    <state width="1877" height="240" key="GridCell.Tab.0.right" timestamp="1604468806605">
+    <state width="1877" height="240" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469114662" />
+    <state width="1877" height="240" key="GridCell.Tab.0.right" timestamp="1604469114662">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="240" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604468806605" />
-    <state x="461" y="182" key="SettingsEditor" timestamp="1604341671377">
+    <state width="1877" height="240" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469114662" />
+    <state x="435" y="206" key="SettingsEditor" timestamp="1604469783222">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="461" y="182" key="SettingsEditor/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604341671377" />
+    <state x="435" y="206" key="SettingsEditor/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604469783222" />
     <state x="656" y="363" key="com.intellij.ide.util.TipDialog" timestamp="1604092048605">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
