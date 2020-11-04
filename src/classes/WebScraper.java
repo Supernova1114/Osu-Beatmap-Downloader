@@ -145,12 +145,12 @@ public class WebScraper extends Thread{
         ((JavascriptExecutor)driver).executeScript("window.open()");
         ((JavascriptExecutor)driver).executeScript("window.open()");
         ((JavascriptExecutor)driver).executeScript("window.open()");
-        ((JavascriptExecutor)driver).executeScript("window.open()");
+        //((JavascriptExecutor)driver).executeScript("window.open()");
 
         tabs = new ArrayList<String>(driver.getWindowHandles());
 
-        driver.switchTo().window(tabs.get(4));
-        driver.get("https://beatconnect.io/");//osu download page
+        //driver.switchTo().window(tabs.get(4));
+        //driver.get("https://beatconnect.io/");//osu download page
 
         driver.switchTo().window(tabs.get(0));
 

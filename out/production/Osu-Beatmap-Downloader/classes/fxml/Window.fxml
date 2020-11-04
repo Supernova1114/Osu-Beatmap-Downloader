@@ -87,8 +87,6 @@
       <RadioButton fx:id="taikoRadio" layoutX="265.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="taiko" />
       <RadioButton fx:id="catchRadio" layoutX="319.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="catch" />
       <RadioButton fx:id="maniaRadio" layoutX="379.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="mania" />
-      <Label fx:id="selectedLabel1" layoutX="159.0" layoutY="678.0" text="Progress:" />
-      <Label fx:id="progressLabel" layoutX="212.0" layoutY="679.0" text="0" />
    </children>
    <opaqueInsets>
       <Insets />

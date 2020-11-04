@@ -52,8 +52,6 @@ public class Controller{
     RadioButton catchRadio;
     @FXML
     RadioButton maniaRadio;
-    @FXML
-    Label progressLabel;
 
 
     private boolean osuStartup = true;
@@ -233,32 +231,15 @@ public class Controller{
                     if (Main.getSettingsController().getUsername() != null && Main.getSettingsController().getPassword() != null
                             && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("")) {
 
-                        //switcher(4);//4 is download mode
 
-                        //String maplink = WebScraper.driver.findElement(By.xpath("//a[@class='download']")).getAttribute("href");
-                        /*int progressNum = downloadListFull.size();
-                        int finalProgressNum = progressNum;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressLabel.setText(finalProgressNum + "");
-                            }
-                        });*/
 
                         ArrayList<ArrayList<String>> downloadListList = new ArrayList<>();
 
-                        int maxThreads = 100;
+                        int maxThreads = 10;
                         for (int i=0; i < maxThreads; i++){
                             downloadListList.add(new ArrayList<>());
                         }
 
-                        /*ArrayList<String> downloadListPart1 = new ArrayList<>();
-                        ArrayList<String> downloadListPart2 = new ArrayList<>();
-                        ArrayList<String> downloadListPart3 = new ArrayList<>();
-                        ArrayList<String> downloadListPart4 = new ArrayList<>();
-                        ArrayList<String> downloadListPart5 = new ArrayList<>();
-                        ArrayList<String> downloadListPart6 = new ArrayList<>();*/
-                        //System.out.println(downloadListList.size());
 
                         int j = 0;
                         for (int i=0; i<downloadListFull.size(); i++){
@@ -270,30 +251,6 @@ public class Controller{
                             j++;
 
 
-                            /*if (i < downloadListFull.size()){
-                                downloadListPart1.add(downloadListFull.get(i));
-                                i++;
-                            }
-                            if (i < downloadListFull.size()){
-                                downloadListPart2.add(downloadListFull.get(i));
-                                i++;
-                            }
-                            if (i < downloadListFull.size()){
-                                downloadListPart3.add(downloadListFull.get(i));
-                                i++;
-                            }
-                            if (i < downloadListFull.size()){
-                                downloadListPart4.add(downloadListFull.get(i));
-                                i++;
-                            }
-                            if (i < downloadListFull.size()){
-                                downloadListPart5.add(downloadListFull.get(i));
-                                i++;
-                            }
-                            if (i < downloadListFull.size()){
-                                downloadListPart6.add(downloadListFull.get(i));
-                                i++;
-                            }*/
                         }
                         System.out.println(downloadListFull);
                         System.out.println();
@@ -347,30 +304,13 @@ public class Controller{
                         }
 
                         /*int n = 20; // Maximum number of threads*/
-                        ExecutorService threadPool = Executors.newFixedThreadPool(maxThreads + 100);//Makes a max threads thread pool
+                        ExecutorService threadPool = Executors.newFixedThreadPool(maxThreads + 10);//Makes a max threads thread pool
 
                         System.out.println("Worker List Size: " + workerList.size());
                         for (int i=0; i < workerList.size(); i++){
                             threadPool.submit(workerList.get(i));
                             workerList.get(i).execute();
                         }
-
-
-
-                        //Execute the download process
-                        /*if (downloadListPart1.size() > 0)
-                            downloadWorker1.execute();
-                        if (downloadListPart2.size() > 0)
-                            downloadWorker2.execute();
-                        if (downloadListPart3.size() > 0)
-                            downloadWorker3.execute();
-                        if (downloadListPart4.size() > 0)
-                            downloadWorker4.execute();
-                        if (downloadListPart5.size() > 0)
-                            downloadWorker5.execute();
-                        if (downloadListPart6.size() > 0)
-                            downloadWorker6.execute();*/
-
 
 
                     } else {
