@@ -18,10 +18,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 
@@ -246,16 +245,32 @@ public class Controller{
                             }
                         });*/
 
-                        ArrayList<String> downloadListPart1 = new ArrayList<>();
+                        ArrayList<ArrayList<String>> downloadListList = new ArrayList<>();
+
+                        int maxThreads = 100;
+                        for (int i=0; i < maxThreads; i++){
+                            downloadListList.add(new ArrayList<>());
+                        }
+
+                        /*ArrayList<String> downloadListPart1 = new ArrayList<>();
                         ArrayList<String> downloadListPart2 = new ArrayList<>();
                         ArrayList<String> downloadListPart3 = new ArrayList<>();
                         ArrayList<String> downloadListPart4 = new ArrayList<>();
                         ArrayList<String> downloadListPart5 = new ArrayList<>();
-                        ArrayList<String> downloadListPart6 = new ArrayList<>();
+                        ArrayList<String> downloadListPart6 = new ArrayList<>();*/
+                        //System.out.println(downloadListList.size());
+
+                        int j = 0;
+                        for (int i=0; i<downloadListFull.size(); i++){
+
+                            if (j >= downloadListList.size()) {
+                                j = 0;
+                            }
+                            downloadListList.get(j).add(downloadListFull.get(i));
+                            j++;
 
 
-                        for (int i=0; i<downloadListFull.size();){
-                            if (i < downloadListFull.size()){
+                            /*if (i < downloadListFull.size()){
                                 downloadListPart1.add(downloadListFull.get(i));
                                 i++;
                             }
@@ -278,194 +293,72 @@ public class Controller{
                             if (i < downloadListFull.size()){
                                 downloadListPart6.add(downloadListFull.get(i));
                                 i++;
-                            }
+                            }*/
                         }
-
-                        System.out.println("Download List Split");
-                        System.out.println("1: " + downloadListPart1);
-                        System.out.println("2: " + downloadListPart2);
-                        System.out.println("3: " + downloadListPart3);
-                        System.out.println("4: " + downloadListPart4);
-                        System.out.println("5: " + downloadListPart5);
-                        System.out.println("6: " + downloadListPart6);
-                        System.out.println("Full: " + downloadListFull);
-                        System.out.println("FullSize: " + downloadListFull.size());
+                        System.out.println(downloadListFull);
+                        System.out.println();
+                        System.out.println(downloadListList);
                         System.out.println();
 
 
                         //Asynchronous Downloads Workers
-                        SwingWorker downloadWorker1 = new SwingWorker() {
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                for (String map : downloadListPart1) {
-                                    //DOWNLOAD MAPS
+                        ArrayList<SwingWorker> workerList = new ArrayList<>();
 
-                                    //WebScraper.driver.get(maplink);
-                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
-                                    System.out.println(FILE_NAME);
-                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+                        for (int i=0; i<downloadListList.size(); i++){
 
-                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
-                                        byte dataBuffer[] = new byte[1024];
-                                        int bytesRead;
-                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
+                            ArrayList<String> downloadListPart = downloadListList.get(i);
+
+                            if (downloadListPart.size() > 0){
+                                workerList.add( new SwingWorker() {
+                                    @Override
+                                    protected Object doInBackground() throws Exception {
+
+                                    /*ArrayList<String> downloadListPartTemp = new ArrayList<>();
+                                    Collections.copy(downloadListPart, downloadListPartTemp);*/
+
+
+                                        for (String map : downloadListPart) {
+                                            //DOWNLOAD MAPS
+
+                                            //WebScraper.driver.get(maplink);
+                                            //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
+                                            String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
+                                            System.out.println(FILE_NAME);
+                                            String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+
+                                            try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+                                                 FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
+                                                byte dataBuffer[] = new byte[1024];
+                                                int bytesRead;
+                                                while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                                                    fileOutputStream.write(dataBuffer, 0, bytesRead);
+                                                }
+                                            } catch (IOException e) {
+                                                // handle exception
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    } catch (IOException e) {
-                                        // handle exception
-                                        e.printStackTrace();
+                                        return null;
                                     }
-                                }
-                                return null;
+                                } );
                             }
-                        };
 
-                        SwingWorker downloadWorker2 = new SwingWorker() {
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                for (String map : downloadListPart2) {
-                                    //DOWNLOAD MAPS
 
-                                    //WebScraper.driver.get(maplink);
-                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
-                                    System.out.println(FILE_NAME);
-                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
+                        }
 
-                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
-                                        byte dataBuffer[] = new byte[1024];
-                                        int bytesRead;
-                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
-                                        }
-                                    } catch (IOException e) {
-                                        // handle exception
-                                        e.printStackTrace();
-                                    }
-                                }
-                                return null;
-                            }
-                        };
+                        /*int n = 20; // Maximum number of threads*/
+                        ExecutorService threadPool = Executors.newFixedThreadPool(maxThreads + 100);//Makes a max threads thread pool
 
-                        SwingWorker downloadWorker3 = new SwingWorker() {
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                for (String map : downloadListPart3) {
-                                    //DOWNLOAD MAPS
-
-                                    //WebScraper.driver.get(maplink);
-                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
-                                    System.out.println(FILE_NAME);
-                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
-
-                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
-                                        byte dataBuffer[] = new byte[1024];
-                                        int bytesRead;
-                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
-                                        }
-                                    } catch (IOException e) {
-                                        // handle exception
-                                        e.printStackTrace();
-                                    }
-                                }
-                                return null;
-                            }
-                        };
-
-                        SwingWorker downloadWorker4 = new SwingWorker() {
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                for (String map : downloadListPart4) {
-                                    //DOWNLOAD MAPS
-
-                                    //WebScraper.driver.get(maplink);
-                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
-                                    System.out.println(FILE_NAME);
-                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
-
-                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
-                                        byte dataBuffer[] = new byte[1024];
-                                        int bytesRead;
-                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
-                                        }
-                                    } catch (IOException e) {
-                                        // handle exception
-                                        e.printStackTrace();
-                                    }
-                                }
-                                return null;
-                            }
-                        };
-
-                        SwingWorker downloadWorker5 = new SwingWorker() {
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                for (String map : downloadListPart5) {
-                                    //DOWNLOAD MAPS
-
-                                    //WebScraper.driver.get(maplink);
-                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
-                                    System.out.println(FILE_NAME);
-                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
-
-                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
-                                        byte dataBuffer[] = new byte[1024];
-                                        int bytesRead;
-                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
-                                        }
-                                    } catch (IOException e) {
-                                        // handle exception
-                                        e.printStackTrace();
-                                    }
-                                }
-                                return null;
-                            }
-                        };
-
-                        SwingWorker downloadWorker6 = new SwingWorker() {
-                            @Override
-                            protected Object doInBackground() throws Exception {
-                                for (String map : downloadListPart6) {
-                                    //DOWNLOAD MAPS
-
-                                    //WebScraper.driver.get(maplink);
-                                    //WebScraper.driver.get("https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12));//DOWNLOAD LINK (orig "map + "/download"")
-                                    String FILE_NAME = SettingsController.getDownloadDir() + map.substring(map.indexOf("beatmapsets/") + 12) + ".osz";
-                                    System.out.println(FILE_NAME);
-                                    String FILE_URL = "https://beatconnect.io/b/" + map.substring(map.indexOf("beatmapsets/") + 12);
-
-                                    try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-                                         FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
-                                        byte dataBuffer[] = new byte[1024];
-                                        int bytesRead;
-                                        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                                            fileOutputStream.write(dataBuffer, 0, bytesRead);
-                                        }
-                                    } catch (IOException e) {
-                                        // handle exception
-                                        e.printStackTrace();
-                                    }
-                                }
-                                return null;
-                            }
-                        };
+                        System.out.println("Worker List Size: " + workerList.size());
+                        for (int i=0; i < workerList.size(); i++){
+                            threadPool.submit(workerList.get(i));
+                            workerList.get(i).execute();
+                        }
 
 
 
                         //Execute the download process
-                        if (downloadListPart1.size() > 0)
+                        /*if (downloadListPart1.size() > 0)
                             downloadWorker1.execute();
                         if (downloadListPart2.size() > 0)
                             downloadWorker2.execute();
@@ -476,7 +369,8 @@ public class Controller{
                         if (downloadListPart5.size() > 0)
                             downloadWorker5.execute();
                         if (downloadListPart6.size() > 0)
-                            downloadWorker6.execute();
+                            downloadWorker6.execute();*/
+
 
 
                     } else {
