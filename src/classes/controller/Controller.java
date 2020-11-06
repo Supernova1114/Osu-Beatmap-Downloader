@@ -52,6 +52,8 @@ public class Controller{
     RadioButton catchRadio;
     @FXML
     RadioButton maniaRadio;
+    @FXML
+    ProgressIndicator downloadProgressInd;
 
 
     private boolean osuStartup = true;
@@ -60,7 +62,12 @@ public class Controller{
     private boolean maniaStartup = true;
 
     private int numSelected;
+    private double downloadProgress;//the current percent
+    private double downloadProgressInterval;//The percent for each download
+
     private Alert alert;
+
+    private  boolean isDownloadButtonResting = false;
 
     private int selectFrom;
     private int selectTo;
@@ -69,6 +76,7 @@ public class Controller{
     private ToggleGroup modeToggles = new ToggleGroup();
 
     private ArrayList<String> selectedMaps = new ArrayList<String>();//Maps that are selected
+
 
     @FXML
     void initialize(){
@@ -142,12 +150,15 @@ public class Controller{
         });
 
 
-        if ( numSelected > 0 ){
-            downloadButton.setDisable(false);
+        if (!isDownloadButtonResting){
+            if ( numSelected > 0 ){
+                downloadButton.setDisable(false);
+            }
+            else{
+                downloadButton.setDisable(true);
+            }
         }
-        else{
-            downloadButton.setDisable(true);
-        }
+
     }
 
     public void exit(){
@@ -213,6 +224,7 @@ public class Controller{
     @FXML
     public void download(){
 
+
         if ( WebScraper.getIsLoggedIn() == true ) {
 
             SwingWorker sw1 = new SwingWorker() {
@@ -220,6 +232,7 @@ public class Controller{
                 @Override
                 protected String doInBackground() throws Exception {
                     // define what thread will do here
+                    isDownloadButtonResting = true;
                     downloadButton.setDisable(true);
 
                     ArrayList<String> downloadListFull = new ArrayList<String>();
@@ -229,7 +242,8 @@ public class Controller{
                 /*System.out.println(Main.getSettingsController().getUsername());
                 System.out.println(Main.getSettingsController().getPassword() + "PASSS");*/
                     if (Main.getSettingsController().getUsername() != null && Main.getSettingsController().getPassword() != null
-                            && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("")) {
+                            && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("") &&
+                    downloadListFull.size() > 0) {
 
 
 
@@ -258,7 +272,13 @@ public class Controller{
                         System.out.println();
 
 
-                        //Asynchronous Downloads Workers
+                        setDownloadProgressInd(0);
+                        downloadProgress = 0;
+                        downloadProgressInterval = 1.0 / downloadListFull.size();
+                        System.out.println("Progress Interval: " + downloadProgressInterval);
+
+
+                        //Asynchronous Download Workers
                         ArrayList<SwingWorker> workerList = new ArrayList<>();
 
                         for (int i=0; i<downloadListList.size(); i++){
@@ -294,6 +314,12 @@ public class Controller{
                                                 // handle exception
                                                 e.printStackTrace();
                                             }
+
+                                            //Update Progress
+                                            downloadProgress += downloadProgressInterval;
+                                            setDownloadProgressInd(downloadProgress);
+                                            System.out.println(downloadProgress);
+
                                         }
                                         return null;
                                     }
@@ -351,7 +377,23 @@ public class Controller{
                         }
                     });
 
-                    downloadButton.setDisable(false);
+
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if ( numSelected > 0 ){
+                        downloadButton.setDisable(false);
+                    }
+                    else{
+                        downloadButton.setDisable(true);
+                    }
+
+                    isDownloadButtonResting = false;
+
+
 
                 }
             };
@@ -383,6 +425,20 @@ public class Controller{
         }
 
     }//download()
+
+    //Sets progress indicator
+    private void setDownloadProgressInd(double n){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                downloadProgressInd.setProgress(n);
+            }
+        });
+    }
+
+
+
+
 
     public void setShiftSelected(int mapNumber){
         if ( isFirstSelection == true ){

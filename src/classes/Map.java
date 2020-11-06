@@ -162,7 +162,7 @@ public class Map {
     public int getColumn() { return column; }
 
     public void mapDiffGetter(){
-        // FIXME: 2/27/2020
+
         //WebScraper.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__difficulties']/div"));
         //System.out.println(temps.size());

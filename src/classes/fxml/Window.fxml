@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -37,7 +38,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="640.0">
+      <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="600.0">
         <menus>
           <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
             <items>
@@ -63,11 +64,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="downloadButton" layoutX="17.0" layoutY="674.0" mnemonicParsing="false" onAction="#download" text="Download" />
-      <Label fx:id="selectedLabel" layoutX="94.0" layoutY="678.0" text="Selected:" />
-      <Label fx:id="numLabel" layoutX="146.0" layoutY="679.0" text="0" />
-      <Label fx:id="numLoaded" layoutX="536.0" layoutY="692.0" text="0" AnchorPane.leftAnchor="536.0" />
-      <Label layoutX="498.0" layoutY="692.0" text="Rows:" />
+      <Button fx:id="downloadButton" layoutX="17.0" layoutY="664.0" mnemonicParsing="false" onAction="#download" text="Download" />
+      <Label fx:id="selectedLabel" layoutX="94.0" layoutY="668.0" text="Selected:" />
+      <Label fx:id="numLabel" layoutX="146.0" layoutY="669.0" text="0" />
+      <Label fx:id="numLoaded" layoutX="532.0" layoutY="682.0" text="0" AnchorPane.leftAnchor="532.0" />
+      <Label layoutX="494.0" layoutY="682.0" text="Rows:" />
       <Label fx:id="filterLabel" disable="true" layoutX="300.0" layoutY="670.0" text="DL filter (stars): WIP" visible="false" />
       <CheckBox fx:id="stars0" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="0" visible="false" />
       <CheckBox fx:id="stars1" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="1" visible="false" />
@@ -82,11 +83,12 @@
       <CheckBox fx:id="starsAll" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="All" visible="false" />
       <ProgressBar fx:id="loadingBar" layoutX="194.0" layoutY="313.0" prefWidth="200.0" />
       <Label layoutX="6.0" layoutY="653.0" text="*If maps do not download, check login credentials" visible="false" />
-      <Button fx:id="loadMoreButton" layoutX="493.0" layoutY="667.0" mnemonicParsing="false" onAction="#loadMore" text="Load More" />
+      <Button fx:id="loadMoreButton" layoutX="489.0" layoutY="657.0" mnemonicParsing="false" onAction="#loadMore" text="Load More" />
       <RadioButton fx:id="osuRadio" layoutX="213.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="osu!" />
       <RadioButton fx:id="taikoRadio" layoutX="265.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="taiko" />
       <RadioButton fx:id="catchRadio" layoutX="319.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="catch" />
       <RadioButton fx:id="maniaRadio" layoutX="379.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="mania" />
+      <ProgressIndicator fx:id="downloadProgressInd" layoutX="567.0" layoutY="658.0" progress="0.0" />
    </children>
    <opaqueInsets>
       <Insets />
