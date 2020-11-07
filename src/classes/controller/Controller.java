@@ -62,8 +62,11 @@ public class Controller{
     private boolean maniaStartup = true;
 
     private int numSelected;
-    private double downloadProgress;//the current percent
-    private double downloadProgressInterval;//The percent for each download
+
+    private double downloadProgressPercent;//The percent of progress
+    private double downloadProgress;//the numerator
+    private double downloadProgressMax;//the size of downloadListFull
+
 
     private Alert alert;
 
@@ -124,6 +127,7 @@ public class Controller{
         }
     }
 
+
     @FXML
     public void selectLoad(){
         for (int i = 0; i < gridPane.getChildren().size(); i++) {
@@ -133,13 +137,12 @@ public class Controller{
         }
     }
 
-
+    //Adds children to grid pane
     public void addChildren(int column, Node map)throws Exception{
-        //for (int i =1; i<200; i++){
             gridPane.addColumn(column,map);
-        //}
     }
 
+    //add and subtract to numSelected (maps)
     public void changeSelected(int add){
         numSelected += add;
         Platform.runLater(new Runnable() {
@@ -161,6 +164,7 @@ public class Controller{
 
     }
 
+    //Close chrome and chromedriver even if chrome is closed first.
     public void exit(){
         try{
         WebScraper.driver.quit();
@@ -183,33 +187,17 @@ public class Controller{
         }
 
 
-        /*String idTemp = ManagementFactory.getRuntimeMXBean().getName();
-        int id = Integer.parseInt(idTemp.substring(0, idTemp.indexOf("@")));
-        System.out.println(id);*/
-
-       /* try {
-            Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        //Runtime.getRuntime().halt(0);
-        //Runtime.getRuntime().exit(0);
-
-
         Main.getMainStage().close();
         System.exit(0);
 
     }
 
-    public int getNumSelected() {
-        return numSelected;
-    }
 
-    public ArrayList<String> getSelectedMaps() {
-        return selectedMaps;
-    }
+    public int getNumSelected() { return numSelected; }
 
+    public ArrayList<String> getSelectedMaps() { return selectedMaps; }
+
+    //add or remove map link from selectedMaps array.
     public void toggleSelectedMaps(String map){
         if ( selectedMaps.contains(map) ){
             selectedMaps.remove(map);
@@ -221,9 +209,8 @@ public class Controller{
 
 
 
-    @FXML
+    @FXML //Start Asynchronous download of maps
     public void download(){
-
 
         if ( WebScraper.getIsLoggedIn() == true ) {
 
@@ -239,12 +226,10 @@ public class Controller{
                     for (int i=0; i<selectedMaps.size(); i++){
                         downloadListFull.add(selectedMaps.get(i));
                     }
-                /*System.out.println(Main.getSettingsController().getUsername());
-                System.out.println(Main.getSettingsController().getPassword() + "PASSS");*/
+
                     if (Main.getSettingsController().getUsername() != null && Main.getSettingsController().getPassword() != null
                             && !Main.getSettingsController().getUsername().equals("") && !Main.getSettingsController().getPassword().equals("") &&
                     downloadListFull.size() > 0) {
-
 
 
                         ArrayList<ArrayList<String>> downloadListList = new ArrayList<>();
@@ -263,19 +248,16 @@ public class Controller{
                             }
                             downloadListList.get(j).add(downloadListFull.get(i));
                             j++;
-
-
                         }
+
                         System.out.println(downloadListFull);
                         System.out.println();
                         System.out.println(downloadListList);
                         System.out.println();
 
 
-                        setDownloadProgressInd(0);
-                        downloadProgress = 0;
-                        downloadProgressInterval = 1.0 / downloadListFull.size();
-                        System.out.println("Progress Interval: " + downloadProgressInterval);
+                        downloadProgressMax = downloadListFull.size();
+                        setDownloadProgress(0);
 
 
                         //Asynchronous Download Workers
@@ -316,8 +298,7 @@ public class Controller{
                                             }
 
                                             //Update Progress
-                                            downloadProgress += downloadProgressInterval;
-                                            setDownloadProgressInd(downloadProgress);
+                                            addProgress(1.0);
                                             System.out.println(downloadProgress);
 
                                         }
@@ -427,7 +408,8 @@ public class Controller{
     }//download()
 
     //Sets progress indicator
-    private void setDownloadProgressInd(double n){
+    private void setDownloadProgress(double n){
+        downloadProgress = n;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -436,10 +418,26 @@ public class Controller{
         });
     }
 
+    //add progress to the progress indicator
+    private void addProgress(double add){
+        downloadProgress += add;
+
+        downloadProgressPercent = downloadProgress / downloadProgressMax;
+        System.out.println("Progggg: " + downloadProgressPercent);
+
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                    downloadProgressInd.setProgress(downloadProgressPercent);
+            }
+        });
+    }
 
 
 
 
+    //shift selection assign from and to.
     public void setShiftSelected(int mapNumber){
         if ( isFirstSelection == true ){
             selectFrom = mapNumber;
@@ -454,6 +452,7 @@ public class Controller{
 
     }
 
+    //select maps from and to.
     public void selectMaps(){
         if ( selectFrom > selectTo ){
             for ( int i=selectTo; i<selectFrom+1; i++ ) {
@@ -480,7 +479,7 @@ public class Controller{
     }
 
 
-    @FXML
+    @FXML //Tells switcher what mode to switch to
     public void modeRadioSwitcher(){
         osuRadio.setDisable(true);
         taikoRadio.setDisable(true);
@@ -508,6 +507,7 @@ public class Controller{
         }
     }
 
+    //Switches tabs and loads the specific osu game mode page
     public void switcher(int mode){
 
         SwingWorker worker = new SwingWorker() {
@@ -619,33 +619,19 @@ public class Controller{
         loadingBar.setVisible(t);
     }
 
-    public GridPane getGridPane() {
-        return gridPane;
-    }
+    public GridPane getGridPane() { return gridPane; }
 
-    public Button getLoadMoreButton() {
-        return loadMoreButton;
-    }
+    public Button getLoadMoreButton() { return loadMoreButton; }
 
-    public CheckMenuItem getSelectAllCheck() {
-        return selectAllCheck;
-    }
+    public CheckMenuItem getSelectAllCheck() { return selectAllCheck; }
 
-    public RadioButton getOsuRadio() {
-        return osuRadio;
-    }
+    public RadioButton getOsuRadio() { return osuRadio; }
 
-    public RadioButton getTaikoRadio() {
-        return taikoRadio;
-    }
+    public RadioButton getTaikoRadio() { return taikoRadio; }
 
-    public RadioButton getCatchRadio() {
-        return catchRadio;
-    }
+    public RadioButton getCatchRadio() { return catchRadio; }
 
-    public RadioButton getManiaRadio() {
-        return maniaRadio;
-    }
+    public RadioButton getManiaRadio() { return maniaRadio; }
 
 
 }

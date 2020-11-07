@@ -60,15 +60,11 @@ public class Main extends Application implements Runnable {
                 System.exit(0);
         }
 
+
         //make windows
         mainStage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Window.fxml"));
         primaryRoot = loader.load();
-
-        /*primaryRoot.prefHeight(700);
-        primaryRoot.minHeight(700);
-        primaryRoot.maxHeight(700);*/
-
 
         Scene scene = new Scene(primaryRoot);
 
@@ -122,11 +118,6 @@ public class Main extends Application implements Runnable {
         });
 
 
-        //System.out.println(controller.gridPane.getChildren().size());
-
-        /*for ( int i=0; i<0; i++ ){
-            controller.addButton();
-        }*/
 
         //Start WebScraper
         SwingWorker worker = new SwingWorker() {
@@ -143,7 +134,6 @@ public class Main extends Application implements Runnable {
 
 
     public static void main(String[] args) throws InterruptedException {
-
 
         argss = args;
         //start window
@@ -170,7 +160,6 @@ public class Main extends Application implements Runnable {
         return mainStage;
     }
 
-
     public static Stage getSettingsStage() {
         return settingsStage;
     }
@@ -191,6 +180,8 @@ public class Main extends Application implements Runnable {
         return scraper;
     }
 
+
+    //Start Chrome and then start the webscraping process
     public static void startWebScraper(WebScraper scraper){
 
         if ( isConnected == true ){

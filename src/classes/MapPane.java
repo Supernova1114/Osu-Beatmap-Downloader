@@ -265,7 +265,7 @@ public class MapPane extends Pane {
         getChildren().add(sensor);
 
 
-
+        //Mouse click selection handler
         sensor.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent event) {
                 if ( event.isAltDown() == false && event.isShiftDown() == false) {
@@ -303,6 +303,7 @@ public class MapPane extends Pane {
 
     }
 
+    //toggle selection
     public void selectToggle(){
         if (rectangle.getFill() != Color.YELLOW) {
             rectangle.setFill(Color.YELLOW);
@@ -324,6 +325,7 @@ public class MapPane extends Pane {
         }
     }
 
+    //Select current map
     public void select(){
         if (rectangle.getFill() != Color.YELLOW) {
             rectangle.setFill(Color.YELLOW);
@@ -332,7 +334,8 @@ public class MapPane extends Pane {
         }
     }
 
-    public void checkIfNeedSelection(){//checks if it needs to be selected when switching tabs
+    //checks if it needs to be selected when switching tabs
+    public void checkIfNeedSelection(){
         if ( Main.controller.getSelectedMaps().contains(mapLink) ){
             rectangle.setFill(Color.YELLOW);
         }

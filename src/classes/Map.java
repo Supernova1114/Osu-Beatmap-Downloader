@@ -63,20 +63,11 @@ public class Map {
             mapImageLink = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/img[@class='beatmapset-panel__image']")).getAttribute("src");
 
 
-            // FIXME: 1/4/2020 Get map difficulties, undefined difficulties, and gametypes
         // FIXME: 1/6/2020 get map sound
 
-            //GetMapDifficuties
-
+            //Get map difficulties
             mapDiffGetter();
 
-
-        //System.out.print(mapName);
-
-        //System.out.println("mapHeader: " + mapHeader);
-        //System.out.println("mapAuthor: " + mapAuthor);
-        //System.out.println("mapImageLink: " + mapImageLink);
-        //System.out.println("mapLink: " + mapLink);
 
         //Create and load Map Node
 
@@ -108,7 +99,7 @@ public class Map {
 
         setCircleColors();
 
-        //add to gridpane
+        //add to grid pane
         Platform.runLater(new Runnable(){
             @Override
             public void run() {
@@ -164,25 +155,29 @@ public class Map {
     public void mapDiffGetter(){
 
         //WebScraper.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__difficulties']/div"));
-        //System.out.println(temps.size());
-        for (int i=0; i<temps.size(); i++){
-            if ( temps.get(i).getAttribute("class").equals("beatmapset-panel__difficulty-icon") ){
-                mapDifficulties.add( Double.parseDouble( temps.get(i).findElement(By.tagName("div")).getAttribute("data-stars") ) );
-            }
-            else {
-                mapDifficulties.add( Double.parseDouble( temps.get(i).getAttribute("data-stars") ) );
-            }
-            //System.out.println(temps.get(i).getText());
-        }
-        System.out.println(mapName);
-        System.out.println(mapDifficulties);
-        System.out.println();
+        try {
+            List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__difficulties']/div"));
 
+            //System.out.println(temps.size());
+            for (int i = 0; i < temps.size(); i++) {
+                if (temps.get(i).getAttribute("class").equals("beatmapset-panel__difficulty-icon")) {
+                    mapDifficulties.add(Double.parseDouble(temps.get(i).findElement(By.tagName("div")).getAttribute("data-stars")));
+                } else {
+                    mapDifficulties.add(Double.parseDouble(temps.get(i).getAttribute("data-stars")));
+                }
+                //System.out.println(temps.get(i).getText());
+            }
+            System.out.println(mapName);
+            System.out.println(mapDifficulties);
+            System.out.println();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //https://osu.ppy.sh/help/wiki/Difficulties
         //WebScraper.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);// FIXME: 2/29/2020 should keep?????
     }//mapDiffGetter
 
+    //Sets the colors of the difficulty circles
     public void setCircleColors(){
 
         for ( int i=0; i<mapDifficulties.size(); i++ ){

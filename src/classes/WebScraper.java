@@ -64,7 +64,7 @@ public class WebScraper extends Thread{
 
 
 
-
+    //Start Chrome, open tabs and connect to osu website
     public int startChrome(){
 
         String chromeDriverDir = System.getProperty("user.dir") + "\\chromedriver.exe";
@@ -91,54 +91,11 @@ public class WebScraper extends Thread{
 
         driver = new ChromeDriver(options);
 
-        //updateChromeDriver();
-//        System.out.println("Version: "+driver.getCapabilities().getVersion());
-//        System.out.println("Version?: " + driver.getCapabilities().getCapability("chrome.userDataDir"));
-
-        /*Main.getMainStage().setOnCloseRequest(event -> {
-            Main.getController().exit();
-        });*/
-
 
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 
-
-        /*String a = driver.getCapabilities().getCapability("chrome").toString();
-        a = a.substring( a.indexOf("=") + 1, a.indexOf("(") - 1 );
-        chromeDriverVersion = a;
-
-        browserVersion = driver.getCapabilities().getVersion();
-
-        System.out.println( "chromeDriverVersion: " + chromeDriverVersion);// FIXME: 2/17/2020 Add ChromeDriver update ability
-        System.out.println("browserVersion: " + browserVersion);*/
-
-        /*if ( !chromeDriverVersion.equals(browserVersion) )
-            updateChromeDriver();
-*/
-
-        /*driver.navigate().to("https://www.google.com");
-
-        String error = driver.findElement(By.xpath("//html")).getAttribute("class");
-
-        if( error.equals("offline") ) {
-
-            System.out.println("No Internet Connection");
-            Main.controller.setProgressBarVisibility(false);
-
-            //JOptionPane.showMessageDialog(null, "Error: Network Connection Not Found!");
-            JOptionPane optionPane = new JOptionPane();
-            optionPane.setMessage("Network Connection Not Found!");
-            JDialog dialog = optionPane.createDialog("Error");
-            dialog.setAlwaysOnTop(true);
-            dialog.setVisible(true);
-
-            return 1;
-        } else {
-            System.out.println("Internet Connected");
-            driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");// FIXME: 1/23/2020 Be able to switch to diff filters and stuff by using the link thing
-        }*/
 
         //Opens tabs for Osu, Taiko, Catch, and Mania
 
@@ -155,8 +112,6 @@ public class WebScraper extends Thread{
         driver.switchTo().window(tabs.get(0));
 
         driver.get("https://osu.ppy.sh/beatmapsets?m=0&s=ranked");//osu ranked
-
-
 
 
         mapNumber = 0;
@@ -177,6 +132,7 @@ public class WebScraper extends Thread{
     }//startChrome()
 
 
+    //Run web scraper
     public void run(){
         System.out.println("Run Started");
 
@@ -261,6 +217,7 @@ public class WebScraper extends Thread{
     }//run()
 
 
+    //Login to osu website in order to have access to mode links
     public void login(){
         if ( !(Main.getSettingsController().getUsername() == null) && !(Main.getSettingsController().getPassword() == null) ) {
             driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
