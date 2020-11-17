@@ -9,9 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -21,7 +19,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Optional;
 
 public class Main extends Application implements Runnable {
 
@@ -66,7 +63,7 @@ public class Main extends Application implements Runnable {
 
         //make windows
         mainStage = primaryStage;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Window.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Window.fxml"));
         primaryRoot = loader.load();
 
         Scene scene = new Scene(primaryRoot);
@@ -74,7 +71,7 @@ public class Main extends Application implements Runnable {
         primaryStage.setResizable(false);
 
 
-        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("fxml/SettingsWindow.fxml"));
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/fxml/SettingsWindow.fxml"));
         Parent root2 = loader2.load();
         Scene scene2 = new Scene(root2);
         Stage sett = new Stage();
@@ -84,7 +81,7 @@ public class Main extends Application implements Runnable {
         settingsStage.setResizable(false);
         settingsStage.setTitle("Settings");
 
-        FXMLLoader loader3 = new FXMLLoader(getClass().getResource("fxml/HelpWindow.fxml"));
+        FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/fxml/HelpWindow.fxml"));
         Parent root3 = loader3.load();
         Scene scene3 = new Scene(root3);
         Stage help = new Stage();

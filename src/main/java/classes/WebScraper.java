@@ -24,6 +24,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -67,7 +68,7 @@ public class WebScraper extends Thread{
     //Start Chrome, open tabs and connect to osu website
     public int startChrome(){
 
-        String chromeDriverDir = System.getProperty("user.dir") + "\\chromedriver.exe";
+        String chromeDriverDir = System.getProperty("user.dir") + "\\" + "chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -79,6 +80,8 @@ public class WebScraper extends Thread{
         options.setHeadless(true);//SET CHROME TO HEADLESS MODE
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--disable-notifications");
+
+
 
         /*DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
