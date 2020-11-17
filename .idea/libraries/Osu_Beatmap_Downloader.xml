@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Osu-Beatmap-Downloader">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Osu_Beatmap_Downloader/Osu-Beatmap-Downloader.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Osu_Beatmap_Downloader/Osu-Beatmap-Downloader.jar!/" />
+    </SOURCES>
+  </library>
+</component>
