@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" stylesheets="@../Style/OverrideLabel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.controller.Controller">
    <children>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hmax="0.0" layoutY="29.0" prefHeight="520.0" prefWidth="600.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
          <content>
@@ -64,11 +64,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="downloadButton" layoutX="17.0" layoutY="664.0" mnemonicParsing="false" onAction="#download" text="Download" />
-      <Label fx:id="selectedLabel" layoutX="94.0" layoutY="668.0" text="Selected:" />
-      <Label fx:id="numLabel" layoutX="146.0" layoutY="669.0" text="0" />
-      <Label fx:id="numLoaded" layoutX="532.0" layoutY="682.0" text="0" AnchorPane.leftAnchor="532.0" />
-      <Label layoutX="494.0" layoutY="682.0" text="Rows:" />
+      <Button fx:id="downloadButton" layoutX="10.0" layoutY="664.0" mnemonicParsing="false" onAction="#download" text="Download" />
+      <Label fx:id="selectedLabel" layoutX="92.0" layoutY="668.0" styleClass="blacklabel" text="Selected:" />
+      <Label fx:id="numLabel" layoutX="145.0" layoutY="669.0" styleClass="blacklabel" text="0" />
+      <Label fx:id="numLoaded" layoutX="532.0" layoutY="682.0" styleClass="blacklabel" text="0" AnchorPane.leftAnchor="532.0" />
+      <Label layoutX="494.0" layoutY="682.0" styleClass="blacklabel" text="Rows:" />
       <Label fx:id="filterLabel" disable="true" layoutX="300.0" layoutY="670.0" text="DL filter (stars): WIP" visible="false" />
       <CheckBox fx:id="stars0" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="0" visible="false" />
       <CheckBox fx:id="stars1" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="1" visible="false" />
