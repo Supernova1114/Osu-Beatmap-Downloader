@@ -161,8 +161,8 @@ public class SettingsController{
                         alert.getButtonTypes().add(ButtonType.OK);
                         alert.setHeaderText("Change Settings.");
                         alert.setContentText("Set a download directory and enter your\nOsu! username and password.");
-                        alert.showAndWait();
-                        toggleSettings();*/
+                        alert.showAndWait();*/
+                        toggleSettings();
 
                     }
                     else {

@@ -4,9 +4,9 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea editable="false" focusTraversable="false" layoutX="14.0" layoutY="14.0" prefHeight="474.0" prefWidth="473.0" style="-fx-cursor: pointer;" text="About/Help:&#10;&#10;-Still in early development&#10;-May have bugs&#10;&#10;**Make sure you put in username and password correctly the first time&#10;because of an Osu website captcha!&#10;(I will be removing the need to login soon: I need to rewrite a good amount first!)&#10;&#10;-Alt+Click on a map to open its webpage&#10;&#10;-Click on a map to select it.&#10;-Click Download to download selected maps.&#10;&#10;-Shift-Click one map and then shift click another to select&#10;all maps in between inclusive. Can be used to deselect maps as well.&#10;&#10;Source Code: https://github.com/Supernova1114/Osu-Beatmap-Downloader&#10;&#10;&#10;">
+      <TextArea editable="false" focusTraversable="false" layoutX="14.0" layoutY="14.0" prefHeight="474.0" prefWidth="473.0" style="-fx-cursor: pointer;" text="About/Help:&#10;&#10;**Make sure you put in username and password correctly the first time&#10;because of an Osu website captcha!&#10;(I will be removing the need to login soon: I need to rewrite a good amount first!)&#10;&#10;-Alt+Click on a map to open its webpage&#10;&#10;-Click on a map to select it.&#10;-Click Download to download selected maps.&#10;&#10;-Shift-Click one map and then shift click another to select&#10;all maps in between inclusive. Can be used to deselect maps as well.&#10;&#10;Source Code: https://github.com/Supernova1114/Osu-Beatmap-Downloader&#10;&#10;&#10;">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
