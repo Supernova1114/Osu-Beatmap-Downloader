@@ -2,6 +2,7 @@ package classes.controller;
 
 import classes.Main;
 import classes.WebScraper;
+import com.sun.javafx.collections.VetoableListDecorator;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,8 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
@@ -27,6 +30,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class SettingsController{
@@ -125,6 +129,8 @@ public class SettingsController{
 
 
     private void setup(){
+
+
         System.out.println("Settings Directory: " + settDir);
 
         //check if there is a settings file.
@@ -140,7 +146,7 @@ public class SettingsController{
                     alert.setContentText("Would you like to create one?");
 
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.setAlwaysOnTop(true);
+                    stage.setAlwaysOnTop(false);
 
 
                     Optional<ButtonType> result = alert.showAndWait();
@@ -158,7 +164,6 @@ public class SettingsController{
                         alert.showAndWait();
                         toggleSettings();*/
 
-
                     }
                     else {
                         usernameField.setDisable(true);
@@ -169,8 +174,11 @@ public class SettingsController{
                         openButton.setDisable(true);
                     }
 
+                    /*alert.getButtonTypes().remove(0);
+                    alert.getButtonTypes().remove(0);*/
 
-
+                    //Shows driver alert
+                    //showChromeDriverAlert();
 
                 }
             });
@@ -206,11 +214,13 @@ public class SettingsController{
                     System.out.println(username);
                     System.out.println(password);*/
 
-
+                   //showChromeDriverAlert();
                 }
             });
 
         }
+
+
 
     }//setup()
 
@@ -352,6 +362,26 @@ public class SettingsController{
         }//fileReader()
 
 
+    /*public static void showChromeDriverAlert(){
+        alert.getButtonTypes().addAll(new ButtonType("Browser"), new ButtonType("Driver"), ButtonType.CLOSE);
+        alert.setHeaderText("Important!");
+        alert.setContentText("Make sure that Chrome browser and Chromedriver are\nthe same version.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == alert.getButtonTypes().get(0)) {
+            //if browser
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://chrome://version/"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }*/
 
     public static String getDownloadDir() {
         return downloadDir;

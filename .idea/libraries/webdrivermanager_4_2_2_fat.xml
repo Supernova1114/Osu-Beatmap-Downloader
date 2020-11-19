@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="webdrivermanager-4.2.2-fat">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../webdrivermanager-4.2.2-fat.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

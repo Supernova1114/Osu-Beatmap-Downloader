@@ -3,6 +3,7 @@ package classes;
 import classes.controller.SettingsController;
 //import com.google.common.collect.Maps;
 import com.sun.xml.internal.ws.addressing.WsaActionUtil;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -68,8 +69,12 @@ public class WebScraper extends Thread{
     //Start Chrome, open tabs and connect to osu website
     public int startChrome(){
 
-        String chromeDriverDir = System.getProperty("user.dir") + "\\" + "chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", chromeDriverDir);
+        //Chromedriver info notification is in Settings Controller
+
+
+        //Not needed anymore due to the addition of WebDriverManager
+        /*String chromeDriverDir = System.getProperty("user.dir") + "\\" + "chromedriver.exe";
+        System.setProperty("webdriver.chrome.driver", chromeDriverDir);*/
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -95,8 +100,12 @@ public class WebScraper extends Thread{
         //Headless makes chrome invisible
         options.addArguments("--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");//make it headless "--headless",
 
+        WebDriverManager.chromedriver().setup();//Fuck yes
 
         driver = new ChromeDriver(options);
+
+
+
 
 
         driver.manage().deleteAllCookies();
@@ -325,40 +334,5 @@ public class WebScraper extends Thread{
     public static void setSwitched(boolean s){
         switched = s;
     }
-
-    /*public void updateChromeDriver(){
-
-        browserVersion = driver.getCapabilities().getVersion();
-        System.out.println("browserVersion = " + browserVersion);
-
-        //System.out.println(driver.getCapabilities().getCapabilityNames());
-        java.util.Map hash = (java.util.Map)driver.getCapabilities().asMap().get("chrome");
-        String tempCV = (String)hash.get("chromedriverVersion");
-        chromeDriverVersion = tempCV.substring(0, tempCV.indexOf(" "));
-        System.out.println("driverVersion = " + chromeDriverVersion);
-        System.out.println();
-
-        // load page using HTML Unit and fire scripts
-        *//*WebClient webClient = new WebClient();
-        HtmlPage myPage = webClient.getPage(new File("page.html").toURI().toURL());
-
-        // convert page to generated HTML and convert to document
-        doc = Jsoup.parse(myPage.asXml());
-
-        // iterate row and col
-        for (Element row : doc.select("table#data > tbody > tr"))
-
-            for (Element col : row.select("td"))
-
-                // print results
-                System.out.println(col.ownText());
-
-        // clean up resources
-        webClient.close();*//*
-
-
-
-
-    }*/
 
 }//class WebScraper
