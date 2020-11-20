@@ -9,16 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Optional;
 
 public class Main extends Application implements Runnable {
 
@@ -33,6 +37,9 @@ public class Main extends Application implements Runnable {
     private static WebScraper scraper = new WebScraper();
     private static boolean isConnected;
     public static JMetro jMetro;
+
+    //////Current Version of Applications
+    public static final double currentVersion = 1.4;
 
 
     @Override
@@ -58,6 +65,9 @@ public class Main extends Application implements Runnable {
                 alert.setHeaderText("No Internet Connection Found!");
                 alert.showAndWait();
                 System.exit(0);
+        }
+        else {
+            tryUpdate();
         }
 
 
@@ -193,6 +203,46 @@ public class Main extends Application implements Runnable {
     public static WebScraper getScraper() {
         return scraper;
     }
+
+
+    //Check if there is an update and tell user
+    public void tryUpdate() throws IOException {
+        String htmlLink = "https://pastebin.com/raw/M8jFMZ6j";
+
+        Document doc = Jsoup.connect(htmlLink).get();
+        int latestVersion = Integer.parseInt(doc.text());
+        System.out.println("Latest Version: " + latestVersion);
+        System.out.println("Current Version: " + currentVersion);
+        
+        if (latestVersion > currentVersion){
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.NONE);
+                    
+                    ButtonType updateButton = new ButtonType("Update");
+                    
+                    alert.getButtonTypes().addAll(updateButton, ButtonType.CLOSE);
+                    alert.setHeaderText("A new Version is available!");
+                    alert.setContentText("It is highly recommended to update otherwise\nthings may not work correctly.");
+
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.setAlwaysOnTop(true);
+
+                    alert.setX(Main.getMainStage().getX()+125);
+                    alert.setY(Main.getMainStage().getY()+146);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == updateButton) {
+                        // FIXME: 11/20/2020 add ability to open gitbut release page
+                    }
+
+                }
+            });
+        }
+
+    }
+
 
 
     //Start Chrome and then start the webscraping process
