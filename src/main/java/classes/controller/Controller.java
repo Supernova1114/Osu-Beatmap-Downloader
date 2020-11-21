@@ -54,6 +54,8 @@ public class Controller{
     RadioButton maniaRadio;
     @FXML
     ProgressIndicator downloadProgressInd;
+    @FXML
+    Label versionLabel;
 
 
     private boolean osuStartup = true;
@@ -104,6 +106,8 @@ public class Controller{
         maniaRadio.setDisable(true);
 
         osuStartup = false;
+
+        versionLabel.setText("v" + Main.currentVersion);
 
     }
 

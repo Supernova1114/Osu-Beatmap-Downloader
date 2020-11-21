@@ -69,6 +69,7 @@
       <Label fx:id="numLabel" layoutX="145.0" layoutY="669.0" styleClass="blacklabel" text="0" />
       <Label fx:id="numLoaded" layoutX="532.0" layoutY="682.0" styleClass="blacklabel" text="0" AnchorPane.leftAnchor="532.0" />
       <Label layoutX="494.0" layoutY="682.0" styleClass="blacklabel" text="Rows:" />
+      <Label fx:id="versionLabel" layoutX="559.0" layoutY="4.0" styleClass="blacklabel" text="v0.0" />
       <Label fx:id="filterLabel" disable="true" layoutX="300.0" layoutY="670.0" text="DL filter (stars): WIP" visible="false" />
       <CheckBox fx:id="stars0" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="0" visible="false" />
       <CheckBox fx:id="stars1" disable="true" layoutX="300.0" layoutY="670.0" mnemonicParsing="false" text="1" visible="false" />

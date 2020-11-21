@@ -18,10 +18,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.Optional;
 
 public class Main extends Application implements Runnable {
@@ -37,9 +36,14 @@ public class Main extends Application implements Runnable {
     private static WebScraper scraper = new WebScraper();
     private static boolean isConnected;
     public static JMetro jMetro;
+    public static Alert alert;
 
-    //////Current Version of Applications
-    public static final double currentVersion = 1.4;
+
+    ////////////////////////
+    //////Current Version of Application
+    public static final double currentVersion = 1.5;
+    ///////MAKE SURE TO CHANGE THIS WITH EVERY NEW UPDATE
+    ///////////////////////
 
 
     @Override
@@ -67,7 +71,11 @@ public class Main extends Application implements Runnable {
                 System.exit(0);
         }
         else {
-            tryUpdate();
+            try {
+                tryUpdate();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
 
@@ -210,7 +218,7 @@ public class Main extends Application implements Runnable {
         String htmlLink = "https://pastebin.com/raw/M8jFMZ6j";
 
         Document doc = Jsoup.connect(htmlLink).get();
-        int latestVersion = Integer.parseInt(doc.text());
+        double latestVersion = Double.parseDouble(doc.text());
         System.out.println("Latest Version: " + latestVersion);
         System.out.println("Current Version: " + currentVersion);
         
@@ -218,23 +226,30 @@ public class Main extends Application implements Runnable {
             Platform.runLater(new Runnable(){
                 @Override
                 public void run() {
-                    Alert alert = new Alert(Alert.AlertType.NONE);
-                    
-                    ButtonType updateButton = new ButtonType("Update");
-                    
-                    alert.getButtonTypes().addAll(updateButton, ButtonType.CLOSE);
+                    alert = new Alert(Alert.AlertType.NONE);
+
+                    alert.getButtonTypes().addAll(new ButtonType("Update"), ButtonType.CLOSE);
+                    alert.setTitle("Update Available!");
                     alert.setHeaderText("A new Version is available!");
-                    alert.setContentText("It is highly recommended to update otherwise\nthings may not work correctly.");
+                    alert.setContentText("It is highly recommended to update otherwise\nthings may not work correctly.\nCurrent: v" + currentVersion + "\nLatest: v" + latestVersion);
 
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.setAlwaysOnTop(true);
+                    stage.setAlwaysOnTop(false);
 
                     alert.setX(Main.getMainStage().getX()+125);
                     alert.setY(Main.getMainStage().getY()+146);
 
                     Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == updateButton) {
-                        // FIXME: 11/20/2020 add ability to open gitbut release page
+                    if (result.get() == alert.getButtonTypes().get(0)) {
+                        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                            try {
+                                Desktop.getDesktop().browse(new URI("https://github.com/Supernova1114/Osu-Beatmap-Downloader/releases"));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                 }

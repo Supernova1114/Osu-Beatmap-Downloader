@@ -164,6 +164,9 @@ public class SettingsController{
                         alert.showAndWait();*/
                         toggleSettings();
 
+                        Stage updateAlertStage = (Stage)Main.alert.getDialogPane().getScene().getWindow();
+                        updateAlertStage.requestFocus();
+
                     }
                     else {
                         usernameField.setDisable(true);
@@ -382,6 +385,7 @@ public class SettingsController{
         }
 
     }*/
+
 
     public static String getDownloadDir() {
         return downloadDir;
