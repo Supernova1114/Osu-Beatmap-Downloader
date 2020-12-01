@@ -56,6 +56,9 @@ public class WebScraper extends Thread{
     private String chromeDriverVersion;
     private String browserVersion;
 
+    //Change to make chrome headless or not headless
+    private static boolean isHeadless = true;
+
 
     private String tempC1 = "";
     private String tempC2 = "";
@@ -82,7 +85,7 @@ public class WebScraper extends Thread{
         chromePrefs.put("profile.content_settings.exceptions.automatic_downloads.*.setting", 1 );
         System.out.println(SettingsController.getDownloadDir());
         ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);//SET CHROME TO HEADLESS MODE
+        options.setHeadless(isHeadless);//SET CHROME TO HEADLESS MODE
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--disable-notifications");
 
@@ -245,7 +248,7 @@ public class WebScraper extends Thread{
             System.out.println("daasasassadasdassa 1");
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -267,7 +270,7 @@ public class WebScraper extends Thread{
                         Alert alert = new Alert(Alert.AlertType.NONE);
                         alert.getButtonTypes().addAll(ButtonType.OK);
                         alert.setHeaderText("Incorrect Login Info!");
-                        //alert.setContentText("Login?");
+                        alert.setContentText("Go to (Edit > Settings) for important info, otherwise\nthings may not work.");
 
                         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                         stage.setAlwaysOnTop(true);
@@ -333,6 +336,10 @@ public class WebScraper extends Thread{
 
     public static void setSwitched(boolean s){
         switched = s;
+    }
+
+    public static void setHeadless(boolean t){
+        isHeadless = t;
     }
 
 }//class WebScraper

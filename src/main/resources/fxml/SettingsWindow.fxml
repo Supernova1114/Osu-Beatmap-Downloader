@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.controller.SettingsController">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.controller.SettingsController">
    <children>
       <Button id="closeButton" layoutX="507.0" layoutY="361.0" mnemonicParsing="false" onAction="#toggleSettings" prefHeight="25.0" prefWidth="72.0" text="Close" />
       <Pane layoutX="39.0" layoutY="21.0" prefHeight="34.0" prefWidth="136.0" style="-fx-background-color: lightgray;">
@@ -37,11 +37,13 @@
          <children>
             <TextField id="usernameField" fx:id="usernameField" layoutX="6.0" layoutY="6.0" promptText="Username" />
             <PasswordField id="passwordField" fx:id="passwordField" layoutX="6.0" layoutY="37.0" promptText="Password" />
-            <CheckBox id="showBox" fx:id="showCBox" layoutX="161.0" layoutY="41.0" mnemonicParsing="false" onAction="#showPassword" text="Show" />
+            <CheckBox id="showBox" fx:id="showCBox" layoutX="161.0" layoutY="41.0" mnemonicParsing="false" onAction="#showPassword" text="Show" visible="false" />
             <ToggleButton id="saveTButton" fx:id="saveButton" layoutX="90.0" layoutY="84.0" mnemonicParsing="false" onAction="#saveDetails" prefHeight="25.0" prefWidth="63.0" text="Save" />
             <Label fx:id="passwordLabel" layoutX="11.0" layoutY="66.0" />
          </children>
       </Pane>
-      <Label layoutX="325.0" layoutY="328.0" text="*Quit and Restart Application to Apply Changes" />
+      <Label layoutX="325.0" layoutY="328.0" text="*Quit and Restart Application to Apply Changes" underline="true" />
+      <Label layoutX="305.0" layoutY="120.0" text="Important!!&#10;&#10;If you input your Osu! login incorrectly you must&#10;uncheck &quot;Headless Mode&quot; and solve the Captcha&#10;when you reopen the app." />
+      <CheckBox fx:id="headlessCBox" layoutX="305.0" layoutY="216.0" mnemonicParsing="false" onAction="#SetHeadlessMode" selected="true" text="Headless Mode" />
    </children>
 </AnchorPane>

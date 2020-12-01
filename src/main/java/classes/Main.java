@@ -36,7 +36,7 @@ public class Main extends Application implements Runnable {
     private static WebScraper scraper = new WebScraper();
     private static boolean isConnected;
     public static JMetro jMetro;
-    public static Alert alert;
+    public static Alert alert = new Alert(Alert.AlertType.NONE);
 
 
     ////////////////////////
@@ -226,7 +226,6 @@ public class Main extends Application implements Runnable {
             Platform.runLater(new Runnable(){
                 @Override
                 public void run() {
-                    alert = new Alert(Alert.AlertType.NONE);
 
                     alert.getButtonTypes().addAll(new ButtonType("Update"), ButtonType.CLOSE);
                     alert.setTitle("Update Available!");

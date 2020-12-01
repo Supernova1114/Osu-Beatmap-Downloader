@@ -40,6 +40,7 @@ public class SettingsController{
     public static String downloadDir;
     private static String username;
     private static String password;
+    private static boolean isHeadless = true;
     private static Alert alert;
 
 
@@ -67,6 +68,8 @@ public class SettingsController{
     ToggleButton saveButton;
     @FXML
     Button openButton;
+    @FXML
+    CheckBox headlessCBox;
 
     @FXML
     public void browseFiles(){
@@ -125,6 +128,12 @@ public class SettingsController{
             Main.getMainStage().show();
 
         }
+    }
+
+    @FXML
+    public void SetHeadlessMode(){
+        isHeadless = headlessCBox.isSelected();
+        fileWriter(false);
     }
 
 
@@ -200,10 +209,14 @@ public class SettingsController{
                     downloadDir = settings.get(0);
                     username = settings.get(1);
                     password = settings.get(2);
+                    isHeadless = Boolean.parseBoolean(settings.get(3));//temp
+
+                    WebScraper.setHeadless(isHeadless);
 
                     setDLdirText(downloadDir);
                     usernameField.setText(username);
                     passwordField.setText(password);
+                    headlessCBox.setSelected(isHeadless);
 
                     if ( !(username.equals("")) || !(password.equals("")) ){
                         saveButton.setText("Edit");
@@ -276,6 +289,8 @@ public class SettingsController{
                     writer.write("Username:");
                     writer.newLine();
                     writer.write("Password:");
+                    writer.newLine();
+                    writer.write("Headless:true");
                     writer.close();
 
                 } catch (IOException e) {
@@ -299,6 +314,9 @@ public class SettingsController{
                 writer.newLine();
                 writer.write("Password:");
                 writer.write(password);
+                writer.newLine();
+                writer.write("Headless:");
+                writer.write(isHeadless + "");
                 writer.close();
 
             } catch (IOException e) {
