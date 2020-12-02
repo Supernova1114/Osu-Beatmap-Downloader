@@ -239,6 +239,8 @@ public class WebScraper extends Thread{
     //Login to osu website in order to have access to mode links
     public void login(){
         if ( !(Main.getSettingsController().getUsername() == null) && !(Main.getSettingsController().getPassword() == null) ) {
+            //js.executeScript("return document.getElementsByClassName('review-info-star')[0].remove();");
+
             driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
 
             driver.findElement(By.xpath(userXpath)).sendKeys(Main.settingsController.getUsername());
@@ -247,18 +249,20 @@ public class WebScraper extends Thread{
             driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup js-captcha--submit-button']")).click();
             System.out.println("daasasassadasdassa 1");
 
-            try {
-                Thread.sleep(2000);
+            /*try {
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
+
 
             System.out.println("sadssadsaassd 2");
 
             //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);//makes error timeout 0
             try{
                 System.out.println("dadadasasdasdsa try error");
-            String loginError = driver.findElement(By.xpath("//div[@class='login-box__row login-box__row--error js-login-form--error']")).getText();
+                String loginError = driver.findElement(By.xpath("//div[@class='login-box__row login-box__row--error js-login-form--error']")).getText();
+                //System.out.println(loginError);
 
             if (!loginError.equals("") && !loginError.equals(null)) {
                 System.out.println("adaadaasasad erorr");
@@ -282,8 +286,7 @@ public class WebScraper extends Thread{
 
                     }
                 });
-            }
-            }catch (Exception e){
+            }else {
                 System.out.println("not error");
                 boolean found = false;
                 while (found == false){
@@ -294,10 +297,20 @@ public class WebScraper extends Thread{
                     }catch (Exception r){
                         System.out.println("Searching For Login Success...");
                     }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException f) {
+                        f.printStackTrace();
+                    }
                 }
                 System.out.println("done");
                 isLoggedIn = true;
-                //e.printStackTrace();
+            }
+
+                System.out.println("gasdadasduashdasudasdaasdashdhaskdhkashdjkashdkasdas");
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
         }

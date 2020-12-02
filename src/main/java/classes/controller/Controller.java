@@ -395,6 +395,7 @@ public class Controller{
                     Alert alert = new Alert(Alert.AlertType.NONE);
                     alert.getButtonTypes().addAll(ButtonType.OK);
                     alert.setHeaderText("You are not logged in!");
+                    alert.setContentText("You will not be able to download maps\nwithout logging in.\nGo to (Edit > Settings) for important info.");
 
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                     stage.setAlwaysOnTop(true);
