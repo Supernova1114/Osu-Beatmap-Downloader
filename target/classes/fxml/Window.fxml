@@ -90,6 +90,7 @@
       <RadioButton fx:id="catchRadio" layoutX="319.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="catch" />
       <RadioButton fx:id="maniaRadio" layoutX="379.0" layoutY="4.0" mnemonicParsing="false" onAction="#modeRadioSwitcher" text="mania" />
       <ProgressIndicator fx:id="downloadProgressInd" layoutX="567.0" layoutY="658.0" progress="0.0" />
+      <Label layoutX="217.0" layoutY="668.0" styleClass="blacklabel" text="Having Problems? Go to &quot;Help&quot; tab." />
    </children>
    <opaqueInsets>
       <Insets />

@@ -78,6 +78,9 @@ public class WebScraper extends Thread{
         //Not needed anymore due to the addition of WebDriverManager
         /*String chromeDriverDir = System.getProperty("user.dir") + "\\" + "chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);*/
+        String chromeProfilePath = SettingsController.getProfileDir();
+        System.out.println(chromeProfilePath);
+
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -85,15 +88,18 @@ public class WebScraper extends Thread{
         chromePrefs.put("profile.content_settings.exceptions.automatic_downloads.*.setting", 1 );
         System.out.println(SettingsController.getDownloadDir());
         ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("user-data-dir=" + chromeProfilePath);
+
         options.setHeadless(isHeadless);//SET CHROME TO HEADLESS MODE
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--disable-notifications");
 
 
 
-        /*DesiredCapabilities cap = DesiredCapabilities.chrome();
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        cap.setCapability(ChromeOptions.CAPABILITY, options);*/
+        cap.setCapability(ChromeOptions.CAPABILITY, options);
 
         options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         options.setCapability(ChromeOptions.CAPABILITY, options);
@@ -108,10 +114,7 @@ public class WebScraper extends Thread{
         driver = new ChromeDriver(options);
 
 
-
-
-
-        driver.manage().deleteAllCookies();
+        //driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 
@@ -137,7 +140,11 @@ public class WebScraper extends Thread{
 
         js = (JavascriptExecutor) driver;
 
+        if (SettingsController.getUseProfile())
+            isLoggedIn = true;
+        else
         login();
+         // FIXME: 12/8/2020 ??
 
 
         Main.controller.setProgressBarVisibility(false);
@@ -236,18 +243,33 @@ public class WebScraper extends Thread{
     }//run()
 
 
-    //Login to osu website in order to have access to mode links
-    public void login(){
+    //Login to osu website in order to have access to mode links//Returns null to exit method
+    public String login(){
+        //check if already logged in
+        try {
+            driver.findElement(By.xpath("//a[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header']"));
+            System.out.println("Already Logged in :)");
+            isLoggedIn = true;
+            return null;
+        }catch (Exception e){
+            //e.printStackTrace();
+            System.out.println("Try to login!");
+        }
+
+        //login
         if ( !(Main.getSettingsController().getUsername() == null) && !(Main.getSettingsController().getPassword() == null) ) {
-            //js.executeScript("return document.getElementsByClassName('review-info-star')[0].remove();");
 
-            driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
+            try {
+                driver.findElement(By.xpath("//button[@class='avatar avatar--nav2 js-current-user-avatar js-click-menu js-user-login--menu js-user-header avatar--guest']")).click();
 
-            driver.findElement(By.xpath(userXpath)).sendKeys(Main.settingsController.getUsername());
-            driver.findElement(By.xpath(passXpath)).sendKeys(Main.settingsController.getPassword());
+                driver.findElement(By.xpath(userXpath)).sendKeys(Main.settingsController.getUsername());
+                driver.findElement(By.xpath(passXpath)).sendKeys(Main.settingsController.getPassword());
 
-            driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup js-captcha--submit-button']")).click();
-            System.out.println("daasasassadasdassa 1");
+                driver.findElement(By.xpath("//button[@class='btn-osu-big btn-osu-big--nav-popup js-captcha--submit-button']")).click();
+                System.out.println("daasasassadasdassa 1");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             /*try {
                 Thread.sleep(1000);
@@ -274,7 +296,7 @@ public class WebScraper extends Thread{
                         Alert alert = new Alert(Alert.AlertType.NONE);
                         alert.getButtonTypes().addAll(ButtonType.OK);
                         alert.setHeaderText("Incorrect Login Info!");
-                        alert.setContentText("Go to (Edit > Settings) for important info, otherwise\nthings may not work.");
+                        alert.setContentText("Go to (Help > About) for important info, otherwise\nthings may not work.");
 
                         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                         stage.setAlwaysOnTop(true);
@@ -315,7 +337,7 @@ public class WebScraper extends Thread{
 
         }
 
-
+        return null;
     }
 
 

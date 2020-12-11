@@ -12,9 +12,9 @@
 <AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.controller.SettingsController">
    <children>
       <Button id="closeButton" layoutX="507.0" layoutY="361.0" mnemonicParsing="false" onAction="#toggleSettings" prefHeight="25.0" prefWidth="72.0" text="Close" />
-      <Pane layoutX="39.0" layoutY="21.0" prefHeight="34.0" prefWidth="136.0" style="-fx-background-color: lightgray;">
+      <Pane layoutX="39.0" layoutY="30.0" prefHeight="25.0" prefWidth="136.0" style="-fx-background-color: lightgray;">
          <children>
-            <Label layoutX="14.0" layoutY="9.0" text="Download Directory:" />
+            <Label layoutX="14.0" layoutY="4.0" text="Download Directory:" />
          </children>
       </Pane>
       <Pane layoutX="39.0" layoutY="55.0" prefHeight="34.0" prefWidth="347.0" style="-fx-border-color: lightgray;">
@@ -24,16 +24,16 @@
       </Pane>
       <Pane layoutX="386.0" layoutY="55.0" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: transparent;">
          <children>
-            <Button id="openButton" fx:id="openButton" layoutX="82.0" mnemonicParsing="false" onAction="#openFolder" prefHeight="34.0" prefWidth="82.0" text="Open" />
-            <Button id="changeButton" fx:id="changeButton" mnemonicParsing="false" onAction="#browseFiles" prefHeight="34.0" prefWidth="82.0" text="Change" />
+            <Button id="openButton" fx:id="openButton" layoutX="82.0" mnemonicParsing="false" onAction="#openDLFolder" prefHeight="34.0" prefWidth="82.0" text="Open" />
+            <Button id="changeButton" fx:id="changeButton" mnemonicParsing="false" onAction="#browseDLDir" prefHeight="34.0" prefWidth="82.0" text="Change" />
          </children>
       </Pane>
-      <Pane layoutX="39.0" layoutY="107.0" prefHeight="34.0" prefWidth="95.0" style="-fx-background-color: lightgray;">
+      <Pane layoutX="39.0" layoutY="205.0" prefHeight="34.0" prefWidth="95.0" style="-fx-background-color: lightgray;">
          <children>
             <Label layoutX="12.0" layoutY="9.0" text="Login to Osu!" />
          </children>
       </Pane>
-      <Pane layoutX="39.0" layoutY="141.0" prefHeight="116.0" prefWidth="225.0" style="-fx-border-color: lightgray;">
+      <Pane layoutX="39.0" layoutY="238.0" prefHeight="116.0" prefWidth="225.0" style="-fx-border-color: lightgray;">
          <children>
             <TextField id="usernameField" fx:id="usernameField" layoutX="6.0" layoutY="6.0" promptText="Username" />
             <PasswordField id="passwordField" fx:id="passwordField" layoutX="6.0" layoutY="37.0" promptText="Password" />
@@ -43,7 +43,27 @@
          </children>
       </Pane>
       <Label layoutX="325.0" layoutY="328.0" text="*Quit and Restart Application to Apply Changes" underline="true" />
-      <Label layoutX="305.0" layoutY="120.0" text="Important!!&#10;&#10;If you input your Osu! login incorrectly you must&#10;uncheck &quot;Headless Mode&quot; and solve the Captcha&#10;when you reopen the app." />
-      <CheckBox fx:id="headlessCBox" layoutX="305.0" layoutY="216.0" mnemonicParsing="false" onAction="#SetHeadlessMode" selected="true" text="Headless Mode" />
+      <Label layoutX="308.0" layoutY="187.0" text="Debug:" />
+      <CheckBox fx:id="headlessCBox" layoutX="308.0" layoutY="209.0" mnemonicParsing="false" onAction="#SetHeadlessMode" selected="true" text="Use Headless" />
+      <CheckBox fx:id="profileCBox" layoutX="41.0" layoutY="175.0" mnemonicParsing="false" onAction="#SetProfileMode" selected="true" text="Use Profile (Recommended)" />
+      <Label layoutX="308.0" layoutY="213.0" prefHeight="25.0" prefWidth="279.0" />
+      <Pane layoutX="39.0" layoutY="112.0" prefHeight="34.0" prefWidth="347.0" style="-fx-border-color: lightgray;">
+         <children>
+            <Label id="directoryLabel" fx:id="profileDirectoryLabel" layoutX="10.0" layoutY="9.0" text="" />
+         </children>
+      </Pane>
+      <Pane layoutX="386.0" layoutY="112.0" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: transparent;">
+         <children>
+            <Button id="openButton" fx:id="openButton1" layoutX="82.0" mnemonicParsing="false" onAction="#openProfFolder" prefHeight="34.0" prefWidth="82.0" text="Open" />
+            <Button id="changeButton" fx:id="changeButton1" mnemonicParsing="false" onAction="#browseProfDir" prefHeight="34.0" prefWidth="82.0" text="Change" />
+         </children>
+      </Pane>
+      <Pane layoutX="39.0" layoutY="88.0" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: lightgray;">
+         <children>
+            <Label layoutX="9.0" layoutY="4.0" text="Chrome Profile Directory" />
+         </children>
+      </Pane>
+      <Label layoutX="141.0" layoutY="370.0" text="Use the help menu to get important info about this page!" />
+      <Label layoutX="41.0" layoutY="149.0" text="Ex: C:\Users\User\AppData\Local\Google\Chrome\User Data\" />
    </children>
 </AnchorPane>

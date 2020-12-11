@@ -38,9 +38,11 @@ public class SettingsController{
     private static String settDir = System.getProperty("user.dir") + File.separator +"settings.txt";
     private static ArrayList<String> settings;
     public static String downloadDir;
+    public static String profileDir = "";
     private static String username;
     private static String password;
     private static boolean isHeadless = true;
+    private static boolean useProfile = true;
     private static Alert alert;
 
 
@@ -71,10 +73,36 @@ public class SettingsController{
     @FXML
     CheckBox headlessCBox;
 
+    //for profile
     @FXML
-    public void browseFiles(){
+    Label profileDirectoryLabel;
+    @FXML
+    Button changeButton1;
+    @FXML
+    Button openButton1;
+    @FXML
+    CheckBox profileCBox;
+
+    @FXML
+    public void browseDLDir(){
+        downloadDir = browseFiles();
+        setDLdirText(downloadDir);
+        fileWriter(false);
+    }
+
+    @FXML
+    public void browseProfDir(){
+        profileDir = browseFiles();
+        setProfileDirText(profileDir);
+        fileWriter(false);
+    }
+
+    //For browsing files
+    public String browseFiles(){
 
         changeButton.setDisable(true);
+        changeButton1.setDisable(true);
+
         DirectoryChooser chooser = new DirectoryChooser();
         File selectedDirectory = chooser.showDialog(Main.getMainStage());
 
@@ -89,24 +117,33 @@ public class SettingsController{
             System.out.println();
             System.out.println("Folder Chosen: " + dirString);
 
-            downloadDir = dirString;
+            changeButton.setDisable(false);
+            changeButton1.setDisable(false);
 
-            fileWriter(false);
-
-            setDLdirText(downloadDir);
-
+            return dirString;
         }//if
 
         changeButton.setDisable(false);
+        changeButton1.setDisable(false);
 
+        return "";
     }
 
 
     @FXML
-    public void openFolder(){
-        if ( !(downloadDir.equals("")) ) {
+    public void openDLFolder(){
+        openFolder(downloadDir);
+    }
+
+    @FXML
+    public void openProfFolder(){
+        openFolder(profileDir);
+    }
+
+    public void openFolder(String t){
+        if ( !(t.equals("")) ) {
             try {
-                Desktop.getDesktop().open(new File(downloadDir));
+                Desktop.getDesktop().open(new File(t));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -133,6 +170,25 @@ public class SettingsController{
     @FXML
     public void SetHeadlessMode(){
         isHeadless = headlessCBox.isSelected();
+        fileWriter(false);
+    }
+
+    @FXML
+    public void SetProfileMode(){
+        useProfile = profileCBox.isSelected();
+
+        if (useProfile){
+            usernameField.setDisable(true);
+            passwordField.setDisable(true);
+            saveButton.setDisable(true);
+        }else {
+            saveButton.setDisable(false);
+            if (!saveButton.isSelected()){
+                usernameField.setDisable(false);
+                passwordField.setDisable(false);
+            }
+        }
+
         fileWriter(false);
     }
 
@@ -165,11 +221,13 @@ public class SettingsController{
                         downloadDir = "";
                         fileWriter(true);
 
+
+
                         /*alert.getButtonTypes().remove(0);
                         alert.getButtonTypes().remove(0);
-                        alert.getButtonTypes().add(ButtonType.OK);
-                        alert.setHeaderText("Change Settings.");
-                        alert.setContentText("Set a download directory and enter your\nOsu! username and password.");
+                        alert.getButtonTypes().addAll(ButtonType.YES,ButtonType.NO);
+                        alert.setHeaderText("Use Profile? (Recommended)");
+                        alert.setContentText("Using a chrome profile will allow access to\nOsu! website as long as you are logged into Osu!\n in your Chrome Browser. Otherwise you must login with Osu! in this app.");
                         alert.showAndWait();*/
                         toggleSettings();
 
@@ -178,13 +236,20 @@ public class SettingsController{
 
                     }
                     else {
-                        usernameField.setDisable(true);
-                        passwordField.setDisable(true);
-                        saveButton.setDisable(true);
                         showCBox.setDisable(true);
                         changeButton.setDisable(true);
                         openButton.setDisable(true);
+                        headlessCBox.setDisable(true);
+                        profileCBox.setDisable(true);
+                        openButton1.setDisable(true);
+                        changeButton1.setDisable(true);
+
                     }
+
+                    usernameField.setDisable(true);
+                    passwordField.setDisable(true);
+                    saveButton.setDisable(true);
+
 
                     /*alert.getButtonTypes().remove(0);
                     alert.getButtonTypes().remove(0);*/
@@ -209,21 +274,34 @@ public class SettingsController{
                     downloadDir = settings.get(0);
                     username = settings.get(1);
                     password = settings.get(2);
-                    isHeadless = Boolean.parseBoolean(settings.get(3));//temp
+                    isHeadless = Boolean.parseBoolean(settings.get(3));
+                    useProfile = Boolean.parseBoolean(settings.get(4));
+                    profileDir = settings.get(5);
 
                     WebScraper.setHeadless(isHeadless);
 
                     setDLdirText(downloadDir);
+                    setProfileDirText(profileDir);
                     usernameField.setText(username);
                     passwordField.setText(password);
                     headlessCBox.setSelected(isHeadless);
+                    profileCBox.setSelected(useProfile);
+
+                        /*usernameField.setDisable(useProfile);
+                        passwordField.setDisable(useProfile);*/
+                        saveButton.setDisable(useProfile);
+
+
 
                     if ( !(username.equals("")) || !(password.equals("")) ){
                         saveButton.setText("Edit");
                         saveButton.setSelected(true);
+                        showCBox.setDisable(true);
+                    }
+
+                    if (saveButton.isSelected() || useProfile) {
                         usernameField.setDisable(true);
                         passwordField.setDisable(true);
-                        showCBox.setDisable(true);
                     }
 
                     /*System.out.println(downloadDir);
@@ -291,6 +369,10 @@ public class SettingsController{
                     writer.write("Password:");
                     writer.newLine();
                     writer.write("Headless:true");
+                    writer.newLine();
+                    writer.write("UseProfile:true");
+                    writer.newLine();
+                    writer.write("ProfileDirectory:");
                     writer.close();
 
                 } catch (IOException e) {
@@ -317,6 +399,12 @@ public class SettingsController{
                 writer.newLine();
                 writer.write("Headless:");
                 writer.write(isHeadless + "");
+                writer.newLine();
+                writer.write("UseProfile:");
+                writer.write(useProfile + "");
+                writer.newLine();
+                writer.write("ProfileDirectory:");
+                writer.write(profileDir);
                 writer.close();
 
             } catch (IOException e) {
@@ -405,12 +493,20 @@ public class SettingsController{
     }*/
 
 
+    public static boolean getUseProfile(){
+        return useProfile;
+    }
+
     public static String getDownloadDir() {
         return downloadDir;
     }
+    public static String getProfileDir(){ return profileDir; }
 
     public void setDLdirText(String t){
         directoryLabel.setText(t);
+    }
+    public void setProfileDirText(String t){
+        profileDirectoryLabel.setText(t);
     }
 
     public String getUsername() {
