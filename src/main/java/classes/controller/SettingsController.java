@@ -82,6 +82,13 @@ public class SettingsController{
     Button openButton1;
     @FXML
     CheckBox profileCBox;
+    @FXML
+    Hyperlink helpLink;
+
+    @FXML
+    public void openHelp(){
+        Main.getController().openHelp();
+    }
 
     @FXML
     public void browseDLDir(){
