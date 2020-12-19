@@ -620,6 +620,11 @@ public class Controller{
         Main.getSettingsController().toggleSettings();
     }
 
+    @FXML
+    public void openDLFolder(){
+        Main.getSettingsController().openDLFolder();
+    }
+
     public void setProgressBarVisibility(boolean t){
         loadingBar.setVisible(t);
     }

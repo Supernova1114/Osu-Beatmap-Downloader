@@ -78,8 +78,8 @@ public class WebScraper extends Thread{
         //Not needed anymore due to the addition of WebDriverManager
         /*String chromeDriverDir = System.getProperty("user.dir") + "\\" + "chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", chromeDriverDir);*/
-        String chromeProfilePath = SettingsController.getProfileDir();
-        System.out.println(chromeProfilePath);
+        /*String chromeProfilePath = SettingsController.getProfileDir();
+        System.out.println(chromeProfilePath);*/
 
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -89,7 +89,8 @@ public class WebScraper extends Thread{
         System.out.println(SettingsController.getDownloadDir());
         ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("user-data-dir=" + chromeProfilePath);
+        /*options.addArguments("user-data-dir=" + chromeProfilePath);
+        options.addArguments("profile-directory=Profile 10");*/
 
         options.setHeadless(isHeadless);//SET CHROME TO HEADLESS MODE
         options.setExperimentalOption("prefs", chromePrefs);
@@ -140,11 +141,12 @@ public class WebScraper extends Thread{
 
         js = (JavascriptExecutor) driver;
 
-        if (SettingsController.getUseProfile())
+        /*if (SettingsController.getUseProfile())
             isLoggedIn = true;
         else
         login();
-         // FIXME: 12/8/2020 ??
+         // FIXME: 12/8/2020 ??*/
+        login();
 
 
         Main.controller.setProgressBarVisibility(false);

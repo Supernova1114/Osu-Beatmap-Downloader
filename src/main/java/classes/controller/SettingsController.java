@@ -99,16 +99,16 @@ public class SettingsController{
 
     @FXML
     public void browseProfDir(){
-        profileDir = browseFiles();
-        setProfileDirText(profileDir);
-        fileWriter(false);
+        //profileDir = browseFiles();
+        //setProfileDirText(profileDir);
+        //fileWriter(false);
     }
 
     //For browsing files
     public String browseFiles(){
 
         changeButton.setDisable(true);
-        changeButton1.setDisable(true);
+        //changeButton1.setDisable(true);
 
         DirectoryChooser chooser = new DirectoryChooser();
         File selectedDirectory = chooser.showDialog(Main.getMainStage());
@@ -125,13 +125,13 @@ public class SettingsController{
             System.out.println("Folder Chosen: " + dirString);
 
             changeButton.setDisable(false);
-            changeButton1.setDisable(false);
+            //changeButton1.setDisable(false);
 
             return dirString;
         }//if
 
         changeButton.setDisable(false);
-        changeButton1.setDisable(false);
+        //changeButton1.setDisable(false);
 
         return "";
     }
@@ -144,7 +144,7 @@ public class SettingsController{
 
     @FXML
     public void openProfFolder(){
-        openFolder(profileDir);
+        //openFolder(profileDir);
     }
 
     public void openFolder(String t){
@@ -182,7 +182,7 @@ public class SettingsController{
 
     @FXML
     public void SetProfileMode(){
-        useProfile = profileCBox.isSelected();
+        /*useProfile = profileCBox.isSelected();
 
         if (useProfile){
             usernameField.setDisable(true);
@@ -196,7 +196,7 @@ public class SettingsController{
             }
         }
 
-        fileWriter(false);
+        fileWriter(false);*/
     }
 
 
@@ -247,15 +247,15 @@ public class SettingsController{
                         changeButton.setDisable(true);
                         openButton.setDisable(true);
                         headlessCBox.setDisable(true);
-                        profileCBox.setDisable(true);
-                        openButton1.setDisable(true);
-                        changeButton1.setDisable(true);
+                        usernameField.setDisable(true);
+                        passwordField.setDisable(true);
+                        saveButton.setDisable(true);
 
                     }
 
-                    usernameField.setDisable(true);
+                    /*usernameField.setDisable(true);
                     passwordField.setDisable(true);
-                    saveButton.setDisable(true);
+                    saveButton.setDisable(true);*/
 
 
                     /*alert.getButtonTypes().remove(0);
@@ -282,21 +282,21 @@ public class SettingsController{
                     username = settings.get(1);
                     password = settings.get(2);
                     isHeadless = Boolean.parseBoolean(settings.get(3));
-                    useProfile = Boolean.parseBoolean(settings.get(4));
-                    profileDir = settings.get(5);
+                    //useProfile = Boolean.parseBoolean(settings.get(4));
+                    //profileDir = settings.get(5);
 
                     WebScraper.setHeadless(isHeadless);
 
                     setDLdirText(downloadDir);
-                    setProfileDirText(profileDir);
+                    //setProfileDirText(profileDir);
                     usernameField.setText(username);
                     passwordField.setText(password);
                     headlessCBox.setSelected(isHeadless);
-                    profileCBox.setSelected(useProfile);
+                    //profileCBox.setSelected(useProfile);
 
                         /*usernameField.setDisable(useProfile);
                         passwordField.setDisable(useProfile);*/
-                        saveButton.setDisable(useProfile);
+                        //saveButton.setDisable(useProfile);
 
 
 
@@ -306,7 +306,7 @@ public class SettingsController{
                         showCBox.setDisable(true);
                     }
 
-                    if (saveButton.isSelected() || useProfile) {
+                    if (saveButton.isSelected()) {// || useProfile
                         usernameField.setDisable(true);
                         passwordField.setDisable(true);
                     }
@@ -376,10 +376,10 @@ public class SettingsController{
                     writer.write("Password:");
                     writer.newLine();
                     writer.write("Headless:true");
-                    writer.newLine();
+                    /*writer.newLine();
                     writer.write("UseProfile:true");
                     writer.newLine();
-                    writer.write("ProfileDirectory:");
+                    writer.write("ProfileDirectory:");*/
                     writer.close();
 
                 } catch (IOException e) {
@@ -406,12 +406,12 @@ public class SettingsController{
                 writer.newLine();
                 writer.write("Headless:");
                 writer.write(isHeadless + "");
-                writer.newLine();
+                /*writer.newLine();
                 writer.write("UseProfile:");
                 writer.write(useProfile + "");
                 writer.newLine();
                 writer.write("ProfileDirectory:");
-                writer.write(profileDir);
+                writer.write(profileDir);*/
                 writer.close();
 
             } catch (IOException e) {
@@ -500,21 +500,27 @@ public class SettingsController{
     }*/
 
 
+/*
     public static boolean getUseProfile(){
         return useProfile;
     }
+*/
 
     public static String getDownloadDir() {
         return downloadDir;
     }
+/*
     public static String getProfileDir(){ return profileDir; }
+*/
 
     public void setDLdirText(String t){
         directoryLabel.setText(t);
     }
+/*
     public void setProfileDirText(String t){
         profileDirectoryLabel.setText(t);
     }
+*/
 
     public String getUsername() {
         return username;
