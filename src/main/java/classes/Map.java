@@ -53,7 +53,7 @@ public class Map {
                 searchRow = 2;
             }
 
-            mapName = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='u-ellipsis-overflow beatmapset-panel__header-text beatmapset-panel__header-text--title']")).getText();
+            mapName = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='beatmapset-panel__header-text beatmapset-panel__header-text--title']/span[@class='u-ellipsis-overflow']")).getText();
 
             mapHeader = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='u-ellipsis-overflow beatmapset-panel__header-text']")).getText();
 

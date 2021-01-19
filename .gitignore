@@ -4,6 +4,9 @@
 #Specific to project
 settings.txt
 
+#maven target file
+target
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
