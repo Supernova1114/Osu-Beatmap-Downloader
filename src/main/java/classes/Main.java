@@ -41,7 +41,7 @@ public class Main extends Application implements Runnable {
 
     ////////////////////////
     //////Current Version of Application
-    public static final double currentVersion = 1.5;
+    public static final double currentVersion = 1.51;
     ///////MAKE SURE TO CHANGE THIS WITH EVERY NEW UPDATE
     ///////////////////////
 
