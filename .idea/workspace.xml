@@ -23,11 +23,6 @@
     </option>
   </component>
   <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.3.4\plugins\maven\lib\maven3" />
-      </MavenGeneralSettings>
-    </option>
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="jdkForImporter" value="#USE_PROJECT_JDK" />
@@ -67,7 +62,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JAR Application.Jar">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="classes.Main" />
       <module name="Osu-Beatmap-Downloader" />
@@ -109,85 +104,5 @@
       <updated>1603765589740</updated>
     </task>
     <servers />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="552" y="198" key="#Plugins" timestamp="1603765837692">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="552" y="198" key="#Plugins/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1603765837692" />
-    <state x="414" y="194" width="1092" height="787" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605749067028">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="414" y="194" width="1092" height="787" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605749067028" />
-    <state x="689" y="323" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605750317307">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="689" y="323" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605750317307" />
-    <state x="681" y="228" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1605604263142">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="681" y="228" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605604263142" />
-    <state x="633" y="374" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1605750211248">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="633" y="374" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605750211248" />
-    <state x="920" y="715" key="DetectedRootsChooserDialog" timestamp="1605601900949">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="920" y="715" key="DetectedRootsChooserDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605601900949" />
-    <state x="1092" y="463" key="FileChooserDialogImpl" timestamp="1605750719954">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="592" y="235" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1605214677847" />
-    <state x="1092" y="463" key="FileChooserDialogImpl/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605750719954" />
-    <state width="1877" height="236" key="GridCell.Tab.0.bottom" timestamp="1611079205640">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1493" height="11" key="GridCell.Tab.0.bottom/-1920.0.1536.864/0.0.1280.720@-1920.0.1536.864" timestamp="1605219819329" />
-    <state width="1237" height="11" key="GridCell.Tab.0.bottom/-1920.0.1536.864/0.0.1280.720@0.0.1280.720" timestamp="1605216310968" />
-    <state width="1877" height="236" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1611079205640" />
-    <state width="1877" height="236" key="GridCell.Tab.0.center" timestamp="1611079205639">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1493" height="11" key="GridCell.Tab.0.center/-1920.0.1536.864/0.0.1280.720@-1920.0.1536.864" timestamp="1605219819329" />
-    <state width="1237" height="11" key="GridCell.Tab.0.center/-1920.0.1536.864/0.0.1280.720@0.0.1280.720" timestamp="1605216310968" />
-    <state width="1877" height="236" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1611079205639" />
-    <state width="1877" height="236" key="GridCell.Tab.0.left" timestamp="1611079205639">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1493" height="11" key="GridCell.Tab.0.left/-1920.0.1536.864/0.0.1280.720@-1920.0.1536.864" timestamp="1605219819329" />
-    <state width="1237" height="11" key="GridCell.Tab.0.left/-1920.0.1536.864/0.0.1280.720@0.0.1280.720" timestamp="1605216310968" />
-    <state width="1877" height="236" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1611079205639" />
-    <state width="1877" height="236" key="GridCell.Tab.0.right" timestamp="1611079205640">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1493" height="11" key="GridCell.Tab.0.right/-1920.0.1536.864/0.0.1280.720@-1920.0.1536.864" timestamp="1605219819329" />
-    <state width="1237" height="11" key="GridCell.Tab.0.right/-1920.0.1536.864/0.0.1280.720@0.0.1280.720" timestamp="1605216310968" />
-    <state width="1877" height="236" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1611079205640" />
-    <state x="460" y="90" width="1040" height="737" key="SettingsEditor" timestamp="1605750373346">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="348" y="13" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1605214685029" />
-    <state x="460" y="90" width="1040" height="737" key="SettingsEditor/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605750373346" />
-    <state x="656" y="363" key="com.intellij.ide.util.TipDialog" timestamp="1604092048605">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="656" y="363" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604092048605" />
-    <state x="748" y="536" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1605434287133">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="748" y="536" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605434287133" />
-    <state x="571" y="207" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1607448465283">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="571" y="207" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1607448465283" />
-    <state x="616" y="250" width="672" height="677" key="run.anything.popup" timestamp="1604651811345">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="616" y="250" width="672" height="677" key="run.anything.popup/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1604651811345" />
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1605601819681">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080/-1920.0.1536.864@0.0.1920.1080" timestamp="1605601819681" />
   </component>
 </project>

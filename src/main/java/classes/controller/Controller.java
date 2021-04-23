@@ -443,15 +443,15 @@ public class Controller{
 
 
     //shift selection assign from and to.
-    public void setShiftSelected(int mapNumber){
+    public void setShiftSelected(int mapNumber, Label title){
         if ( isFirstSelection == true ){
             selectFrom = mapNumber;
             isFirstSelection = false;
-            System.out.println(selectFrom);
+            System.out.println(selectFrom + " " + title.getText());
         }else {
             selectTo = mapNumber;
             isFirstSelection = true;
-            System.out.println(selectTo);
+            System.out.println(selectTo + " " + title.getText());
             selectMaps();
         }
 
@@ -459,8 +459,10 @@ public class Controller{
 
     //select maps from and to.
     public void selectMaps(){
-        if ( selectFrom > selectTo ){
-            for ( int i=selectTo; i<selectFrom+1; i++ ) {
+        final int from = selectFrom;
+        final int to = selectTo;
+        if ( from > to ){
+            for ( int i=to; i<from+1; i++ ) {
                 if (gridPane.getChildren().get(i+1) instanceof MapPane){
                     ((MapPane) gridPane.getChildren().get(i+1)).selectToggle();
                     System.out.println(i+1);
@@ -470,8 +472,8 @@ public class Controller{
             }
         }
 
-        if ( selectFrom < selectTo ){
-            for ( int i=selectFrom; i<selectTo+1; i++ ){
+        if ( from < to ){
+            for ( int i=from; i<to+1; i++ ){
                 if (gridPane.getChildren().get(i+1) instanceof MapPane){
                     ((MapPane) gridPane.getChildren().get(i+1)).selectToggle();
                     System.out.println(i+1);
@@ -492,7 +494,7 @@ public class Controller{
         maniaRadio.setDisable(true);
         
         RadioButton button = (RadioButton)modeToggles.getSelectedToggle();
-        switch (button.getText()){// FIXME: 3/21/2020 Finish by adding the ability to make new tabs and switch between them in order to load maps for each diff mode using their necessary links.
+        switch (button.getText()){
             case "osu!":
                 System.out.println(0);
                 switcher(0);
@@ -519,16 +521,18 @@ public class Controller{
             @Override
             protected Object doInBackground() throws Exception {
 
-                WebScraper.setSwitched(true);
-
-                WebScraper.switchTabs(mode);
-
-
                 WebScraper.setScraperStop(true);
                 while (WebScraper.getScraperDone() == false){
                     //wait until scraper Thread Finished
                 }
                 System.out.println(WebScraper.getScraperDone());
+
+                isFirstSelection = true;
+
+                WebScraper.setSwitched(true);
+
+                WebScraper.switchTabs(mode);
+
 
                 if ( mode == 1 && taikoStartup) {
                     WebScraper.driver.get("https://osu.ppy.sh/beatmapsets?m=" + mode + "&s=ranked");
@@ -542,7 +546,6 @@ public class Controller{
                     WebScraper.driver.get("https://osu.ppy.sh/beatmapsets?m=" + mode + "&s=ranked");
                     maniaStartup = false;
                 }
-
 
 
                 WebScraper.numLoaded = 0;

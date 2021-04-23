@@ -292,7 +292,7 @@ public class MapPane extends Pane {
                         }
                     }else {
                         if (event.isShiftDown() == true && event.isAltDown() == false ){
-                            Main.controller.setShiftSelected(mapNumber);
+                            Main.controller.setShiftSelected(mapNumber, title);
                         }
                     }
                 }

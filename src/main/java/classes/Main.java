@@ -41,7 +41,7 @@ public class Main extends Application implements Runnable {
 
     ////////////////////////
     //////Current Version of Application
-    public static final double currentVersion = 1.51;
+    public static final double currentVersion = 1.52;
     ///////MAKE SURE TO CHANGE THIS WITH EVERY NEW UPDATE
     ///////////////////////
 
@@ -274,7 +274,11 @@ public class Main extends Application implements Runnable {
             @Override
             protected Object doInBackground() throws Exception {
                 controller.getLoadMoreButton().setDisable(true);
-                scraper.run();
+                try {
+                    scraper.run();
+                }catch (Exception e){
+                    System.out.println("ERR: Failed to run Scraper");
+                }
                 return null;
             }
 

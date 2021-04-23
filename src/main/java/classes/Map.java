@@ -31,7 +31,7 @@ public class Map {
     private static String mapLink;
     private static String mapImageLink;
     private static int mapNumber;
-    private ArrayList<Double> mapDifficulties = new ArrayList<>();
+    private ArrayList<String> mapDifficulties = new ArrayList<>();
     //private ArrayList<String> mapGameTypes;
 
 
@@ -53,15 +53,20 @@ public class Map {
                 searchRow = 2;
             }
 
-            mapName = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='beatmapset-panel__header-text beatmapset-panel__header-text--title']/span[@class='u-ellipsis-overflow']")).getText();
+            //Quick copy
+            //" + searchRow + "
+            //" + column + "
 
-            mapHeader = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/div[@class='beatmapset-panel__title-artist-box']/div[@class='u-ellipsis-overflow beatmapset-panel__header-text']")).getText();
+            mapName = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__info']/div[@class='beatmapset-panel__info-row beatmapset-panel__info-row--title']/a[@class='beatmapset-panel__main-link u-ellipsis-overflow']")).getText();
+        System.out.println(mapName);
+
+            mapHeader = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__info']/div[@class='beatmapset-panel__info-row beatmapset-panel__info-row--artist']/a[@class='beatmapset-panel__main-link u-ellipsis-overflow']")).getText();
 
             //mapAuthor = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='beatmapset-panel__link js-usercard']")).getText();
                     //"//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__row']/div[@class='beatmapset-panel__mapper-source-box']/div[@class='u-ellipsis-overflow'][1]/a[@class='js-usercard']")).getText();
 
 
-            mapImageLink = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a[@class='beatmapset-panel__header']/img[@class='beatmapset-panel__image']")).getAttribute("src");
+            mapImageLink = WebScraper.driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/a[@class='beatmapset-panel__cover-container']/div[@class='beatmapset-panel__cover-col beatmapset-panel__cover-col--info']/img[@class='beatmapset-panel__cover']")).getAttribute("src");
 
 
         // FIXME: 1/6/2020 get map sound
@@ -84,7 +89,7 @@ public class Map {
         //mapPane.label1.setText(mapAuthor);
 
         //mapImageLink = "https://assets.ppy.sh/beatmaps/1166156/covers/card.jpg?1603457154";
-        Image image = new Image(mapImageLink);
+        Image image = new   Image(mapImageLink);
         mapPane.imageView.setImage(image);
         mapPane.mapLink = mapLink;
         mapPane.checkIfNeedSelection();
@@ -147,7 +152,7 @@ public class Map {
         return mapImageLink;
     }
 
-    public ArrayList<Double> getMapDifficulties() {
+    public ArrayList<String> getMapDifficulties() {
         return mapDifficulties;
     }
 
@@ -161,10 +166,11 @@ public class Map {
 
         //WebScraper.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         try {
-            List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__difficulties']/div"));
+            List<WebElement> temps = WebScraper.driver.findElements(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][" + searchRow + "]/div[@class='beatmapsets__item'][" + column + "]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__content']/div[@class='beatmapset-panel__info']/a/div/div[@class='beatmapset-panel__beatmap-dot']"));
+            //System.out.println("Important size: " + temps.size());
 
             //System.out.println(temps.size());
-            for (int i = 0; i < temps.size(); i++) {
+            /*for (int i = 0; i < temps.size(); i++) {
                 if (temps.get(i).getAttribute("class").equals("beatmapset-panel__difficulty-icon")) {
                     mapDifficulties.add(Double.parseDouble(temps.get(i).findElement(By.tagName("div")).getAttribute("data-stars")));
                 } else {
@@ -174,7 +180,19 @@ public class Map {
             }
             System.out.println(mapName);
             System.out.println(mapDifficulties);
-            System.out.println();
+            System.out.println();*/
+
+            for (int i=0; i<temps.size(); i++){
+                String diff = temps.get(i).getAttribute("style");
+                //diff = diff.substring(16, diff.indexOf(")")-1);
+                mapDifficulties.add(diff);
+            }
+
+            //System.out.println(mapDifficulties);
+
+            //--bg:var(--diff-hard); << Style Att
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -185,35 +203,61 @@ public class Map {
     //Sets the colors of the difficulty circles
     public void setCircleColors(){
 
-        for ( int i=0; i<mapDifficulties.size(); i++ ){
+        //max 10 circles rn
+
+        for (int i=0; i<10 && i<mapDifficulties.size(); i++){
+            switch (mapDifficulties.get(i)){
+                case "--bg:var(--diff-easy);":
+                    circles.get(i).setStroke(Color.valueOf("81B70D"));
+                    break;
+                case "--bg:var(--diff-normal);":
+                    circles.get(i).setStroke(Color.valueOf("55D7FF"));
+                    break;
+                case "--bg:var(--diff-hard);":
+                    circles.get(i).setStroke(Color.valueOf("FFDD22"));
+                    break;
+                case "--bg:var(--diff-insane);":
+                    circles.get(i).setStroke(Color.valueOf("FF59AD"));
+                    break;
+                case "--bg:var(--diff-expert);":
+                    circles.get(i).setStroke(Color.valueOf("8358FF"));
+                    break;
+                case "--bg:var(--diff-expert-plus);":
+                    circles.get(i).setStroke(Color.BLACK);
+                    break;
+            }
+        }
+
+
+        /*for ( int i=0; i<mapDifficulties.size(); i++ ){
             double diff = mapDifficulties.get(i);
 
-            if ( diff >= 0.0 && diff <= 1.99 ){
+            if ( diff >= 0.0 && diff <= 1.99 ){//easy
                 circles.get(i).setStroke(Color.valueOf("81B70D"));
                 continue;
             }
-            if ( diff >= 2.0 && diff <= 2.69 ){
+            if ( diff >= 2.0 && diff <= 2.69 ){//normal
                 circles.get(i).setStroke(Color.valueOf("55D7FF"));
                 continue;
             }
-            if ( diff >= 2.7 && diff <= 3.99 ){
+            if ( diff >= 2.7 && diff <= 3.99 ){//hard
                 circles.get(i).setStroke(Color.valueOf("FFDD22"));
                 continue;
             }
-            if ( diff >= 4.0 && diff <= 5.29 ){
+            if ( diff >= 4.0 && diff <= 5.29 ){//insane
                 circles.get(i).setStroke(Color.valueOf("FF59AD"));
                 continue;
             }
-            if ( diff >= 5.3 && diff <= 6.49 ){
+            if ( diff >= 5.3 && diff <= 6.49 ){//expert
                 circles.get(i).setStroke(Color.valueOf("8358FF"));
                 continue;
             }
-            if ( diff >= 6.5 ){
+            if ( diff >= 6.5 ){//expert plus
                 circles.get(i).setStroke(Color.BLACK);
                 continue;
             }
 
-        }//for
+        }//for*/
 
         //System.out.println("diff size: " + mapDifficulties.size());
 

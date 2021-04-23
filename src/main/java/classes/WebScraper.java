@@ -43,7 +43,7 @@ public class WebScraper extends Thread{
     public static int totalNumLoaded;
     public static ArrayList<Map> maps = new ArrayList<>();
 
-    private static int mapNumber;
+    private static int mapNumber = 0;
     
     private static boolean isFirstRun = true;
 
@@ -175,6 +175,7 @@ public class WebScraper extends Thread{
             tempC1 = "";
             tempC2 = "";
 
+
         }else {
             numLoaded = 1;
         }
@@ -198,8 +199,8 @@ public class WebScraper extends Thread{
 
                 if (numLoaded == 0) {
                     try {
-                        mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-                        mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                        mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel js-audio--player']/a")).getAttribute("href");
+                        mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][1]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel js-audio--player']/a")).getAttribute("href");
                     }catch (Exception e){e.printStackTrace();}
                     //System.out.println(mapLinkC1 + " " + mapLinkC2);
                 }
@@ -207,8 +208,8 @@ public class WebScraper extends Thread{
 
             if ( numLoaded != 0 ){
                 try {
-                    mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
-                    mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel js-audio--player']/div[@class='beatmapset-panel__panel']/a")).getAttribute("href");
+                    mapLinkC1 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][1]/div[@class='beatmapset-panel js-audio--player']/a")).getAttribute("href");
+                    mapLinkC2 = driver.findElement(By.xpath("//div[@class='beatmapsets__items']/div[@class='beatmapsets__items-row'][2]/div[@class='beatmapsets__item'][2]/div[@class='beatmapset-panel js-audio--player']/a")).getAttribute("href");
                 }catch (Exception e){e.printStackTrace();}
                 //System.out.println(mapLinkC1 + " " + mapLinkC2);
             }
@@ -219,11 +220,10 @@ public class WebScraper extends Thread{
                 tempC2 = mapLinkC2;
 
                 try {
-
-                    maps.add(new Map(1, mapLinkC1, mapNumber));
-                    mapNumber++;
-                    maps.add(new Map(2, mapLinkC2, mapNumber));
-                    mapNumber++;
+                        maps.add(new Map(1, mapLinkC1, mapNumber));
+                        mapNumber++;
+                        maps.add(new Map(2, mapLinkC2, mapNumber));
+                        mapNumber++;
                 }catch (Exception e){e.printStackTrace();}
 
                 numLoaded++;
