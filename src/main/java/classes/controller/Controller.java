@@ -83,6 +83,14 @@ public class Controller{
     private ArrayList<String> selectedMaps = new ArrayList<String>();//Maps that are selected
 
 
+    //debug
+    @FXML
+    void Debug(){
+        System.out.println(WebScraper.driver.getCapabilities().getCapabilityNames());
+
+    }
+
+
     @FXML
     void initialize(){
         loadMoreButton.setDisable(true);

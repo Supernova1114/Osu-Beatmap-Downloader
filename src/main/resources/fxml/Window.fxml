@@ -62,6 +62,11 @@
               <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#openHelp" text="About" />
             </items>
           </Menu>
+            <Menu disable="true" mnemonicParsing="false" text="Debug" visible="false">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#Debug" text="About" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <Button fx:id="downloadButton" layoutX="10.0" layoutY="664.0" mnemonicParsing="false" onAction="#download" text="Download" />
