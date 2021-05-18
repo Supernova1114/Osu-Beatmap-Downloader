@@ -1,5 +1,5 @@
 # Osu-Beatmap-Downloader
-Makes it possible to download Osu! beatmaps in bulk!
+##Makes it possible to download Osu! beatmaps in bulk!##
 
 *A little project that I challenged myself to make in order to learn more Java*
 
