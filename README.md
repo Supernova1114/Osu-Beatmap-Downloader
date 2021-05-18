@@ -29,3 +29,6 @@ all maps in between inclusive. Can be used to deselect maps as well.
 Source Code: https://github.com/Supernova1114/Osu-Beatmap-Downloader
 
 **You can notify me of any problems by creating an "Issue" on the GitHub page.**
+
+![](repoimages/osubmdl-v1.52.png)
+
