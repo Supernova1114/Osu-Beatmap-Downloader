@@ -14,7 +14,7 @@ and restart the application.
 1. Correct your credentials in-app.
 2. Go to Osu! website: https://osu.ppy.sh/
 3. Log out.
-4. Solve Captcha and login.
+4. Solve Captcha and log in.
 5. Restart app.
 
 #### OR
@@ -22,7 +22,7 @@ and restart the application.
 1. Correct your credentials in-app.
 2. Uncheck "Headless".
 3. Restart app.
-4. Solve Captcha and login.
+4. Solve Captcha and log in.
 5. Check "Headless".
 6. Restart app.
 
