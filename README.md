@@ -5,7 +5,6 @@
 *A little project that I challenged myself to make in order to learn more Java*
 
 
-### #IMPORTANT#
 ### *PREREQUISITES: Google Chrome, Java 8+
 
 
