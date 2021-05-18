@@ -1,10 +1,12 @@
 # Osu-Beatmap-Downloader
 ### Makes it possible to download Osu! beatmaps in bulk!
 
+
 *A little project that I challenged myself to make in order to learn more Java*
 
-#IMPORTANT#
-*PREREQUISITES: Google Chrome, Java 8+
+
+### #IMPORTANT#
+### *PREREQUISITES: Google Chrome, Java 8+
 
 
 **Make sure you put in username and password 
