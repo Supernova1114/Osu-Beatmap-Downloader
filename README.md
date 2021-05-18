@@ -17,6 +17,9 @@ and restart the application.
 5. Check "Headless".
 6. Restart app.
 
+* **You will be able to download maps without logging in, but you will
+not get full functionality. (Switching game modes, Ranked page etc.)**
+
 * **If things are not working, you may need to wait for an update.**
 
 **Controls:**
