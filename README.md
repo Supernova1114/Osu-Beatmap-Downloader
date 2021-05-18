@@ -10,10 +10,19 @@
 and restart the application.
 
 **Due to an Osu! website captcha, if you enter your Osu! login incorrectly, you must:**
+
+1. Correct your credentials in-app.
+2. Go to Osu! website: https://osu.ppy.sh/
+3. Log out.
+4. Solve Captcha and login.
+5. Restart app.
+
+#### OR
+
 1. Correct your credentials in-app.
 2. Uncheck "Headless".
 3. Restart app.
-4. Solve Captcha.
+4. Solve Captcha and login.
 5. Check "Headless".
 6. Restart app.
 
