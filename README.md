@@ -4,7 +4,7 @@
 
 * *A little project that I challenged myself to make in order to learn more Java*
 
-### Prerequisites: Google Chrome, Java 8+
+### Prerequisites: Google Chrome, Java
 
 * Open the application and click **Edit > Settings** in the menu bar and login to your Osu! account, change your download directory,
 and restart the application.
@@ -27,7 +27,8 @@ and restart the application.
 6. Restart app.
 
 * **You will be able to download maps without logging in, but you will
-not get full functionality. (Switching game modes, Ranked page etc.)**
+not get full functionality. 
+(Filter: osu, taiko, catch, mania; Ranked page etc.)**
 
 * **If things are not working, you may need to wait for an update.**
 
