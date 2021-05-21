@@ -6,6 +6,8 @@
 
 ### Prerequisites: Google Chrome, Java
 
+## App Status: Currently functioning! 🟩
+
 * Open the application and click **Edit > Settings** in the menu bar and login to your Osu! account, change your download directory,
 and restart the application.
 
@@ -44,4 +46,6 @@ Source Code: https://github.com/Supernova1114/Osu-Beatmap-Downloader
 **You can notify me of any problems by creating an "Issue" on the GitHub page.**
 
 ![](repoimages/osubmdl-v1.52.png)
+
+🟥 🟩
 
