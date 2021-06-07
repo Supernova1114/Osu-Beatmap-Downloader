@@ -6,7 +6,7 @@
 
 ### Prerequisites: Google Chrome, Java
 
-## App Status: 🟩 Currently functioning! 🟩
+## App Status: 🟥 Not Functioning! 🟥
 
 * Open the application and click **Edit > Settings** in the menu bar and login to your Osu! account, change your download directory,
 and restart the application.
