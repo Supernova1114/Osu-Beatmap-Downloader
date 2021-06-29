@@ -1,6 +1,6 @@
 # Osu-Beatmap-Downloader
 ### Makes it possible to download Osu! beatmaps in bulk!
-
+![GitHub Version](https://img.shields.io/github/v/release/Supernova1114/Osu-Beatmap-Downloader)
 
 * *A little project that I challenged myself to make in order to learn more Java*
 
