@@ -4,6 +4,8 @@
 
 * *A little project that I challenged myself to make in order to learn more Java*
 
+https://youtu.be/TJYNptMjzjo
+
 ### Prerequisites: Google Chrome, Java
 
 ## App Status: 🟥 Not Functioning! 🟥
