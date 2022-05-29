@@ -6,7 +6,7 @@
 
 https://youtu.be/TJYNptMjzjo
 
-### Prerequisites: Google Chrome, Java
+### Prerequisites: Google Chrome, Java 8
 
 ## App Status: 🟥 Not Functioning! / Archived 🟥
 
