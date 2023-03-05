@@ -8,7 +8,7 @@ https://youtu.be/TJYNptMjzjo
 
 ### Prerequisites: Google Chrome, Java 8
 
-## App Status: 🟥 Ceased Maintenance 🟥
+## App Status: 🟥 Archived / Ceased Maintenance 🟥
 
 * Open the application and click **Edit > Settings** in the menu bar and login to your Osu! account, change your download directory,
 and restart the application.
